@@ -11,9 +11,13 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/listing" element={<ListingPage />} />
         <Route path="/register" element={<RegisterPage />} />
+
+        {/* 404 Page */}
+        <Route path="*" element={<h1>Page Not Found</h1>} /> 
       </Routes>
     </BrowserRouter>
 
