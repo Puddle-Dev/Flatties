@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import Router from './router/Router';
-import HomePage from './pages/home/HomePage';
+import Router from "./router/Router";
+import HomePage from "./pages/home/HomePage";
+import Layout from "./components/layout/Layout";
 // import HomePage from './pages/home/HomePage';
 // // material ui imports
 // import Alert from '@mui/material/Alert';
@@ -9,11 +10,10 @@ import HomePage from './pages/home/HomePage';
 // import AlertTitle from '@mui/material/AlertTitle';
 // import Container from '@mui/material/Container';
 
-
 function App() {
   return (
     <div>
-        <Router />
+      <Router />
     </div>
   );
 }
