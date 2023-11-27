@@ -1,51 +1,7 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import './App.css';
+import React from "react";
+import NavBar from "../../components/layout/navBar/NavBar";
 
-interface RegisterFormState {
-  firstname: string;
-  lastname: string;
-  email: string;
-  dob: string;
-  username: string;
-  gender: string;
-  phone: string;
-  ethnicity: string; 
-  password: string;
-}
-
-const RegisterPage: React.FC = () => {
-  const [formData, setFormData] = useState<RegisterFormState>({
-    firstname: '',
-    lastname: '',
-    email: '',
-    dob: '',
-    username: '',
-    gender: '',
-    phone: '',
-    ethnicity: '',
-    password: ''
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    try {
-
-      // Axios is for a back end, currently that data has no where to go so it is just displayed in the console log
-
-      //const response = await axios.post('http://localhost:3000/RegisterPage', formData);
-      //console.log(response);
-
-      console.log(formData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+function RegisterPage() {
   return (
     <div className="RegisterPage">
       <form onSubmit={handleSubmit}>
@@ -178,6 +134,6 @@ const RegisterPage: React.FC = () => {
       </form>
     </div>
   );
-};
+}
 
 export default RegisterPage;
