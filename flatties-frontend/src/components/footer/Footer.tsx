@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream:flatties-frontend/src/components/footer/Footer.tsx
-//footer
-import React from 'react';
-=======
 import React from "react";
 import { Typography, List, ListItem, Link } from "@mui/material";
->>>>>>> Stashed changes:flatties-frontend/src/components/layout/footer/Footer.tsx
 
 function Footer() {
   return (
@@ -46,4 +41,4 @@ function Footer() {
       </div>
     </div>
   );
-};
+}
