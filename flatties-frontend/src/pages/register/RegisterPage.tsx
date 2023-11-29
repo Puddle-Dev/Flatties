@@ -26,7 +26,7 @@ function RegisterPage() {
     password: '',
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -114,17 +114,21 @@ function RegisterPage() {
         </div>
 
         <div>
-          <label htmlFor="gender"> gender:</label>
+          <label htmlFor="gender"> Gender:</label>
           <br />
-          <input
-            type="text"
+          <select
             name="gender"
             id="gender"
             onChange={handleChange}
             value={formData.gender}
             required
-            maxLength={20}
-          />
+          >
+            <option value="">Select</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Other">Other</option>
+            <option value="NA">Prefer not to say</option>
+          </select>
         </div>
 
         <div>
@@ -168,8 +172,6 @@ function RegisterPage() {
             maxLength={20}
           />
         </div>
-
-      
 
         <button type="submit">Sign Up</button>
       </form>
