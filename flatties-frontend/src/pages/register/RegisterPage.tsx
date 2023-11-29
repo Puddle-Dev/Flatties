@@ -1,7 +1,46 @@
-import React from "react";
-import NavBar from "../../components/layout/navBar/NavBar";
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import NavBar from '../../components/layout/navBar/NavBar';
+
+interface FormData {
+  firstname: string;
+  lastname: string;
+  email: string;
+  dob: string;
+  username: string;
+  gender: string;
+  phone: string;
+  ethnicity: string;
+  password: string;
+}
 
 function RegisterPage() {
+  const [formData, setFormData] = useState<FormData>({
+    firstname: '',
+    lastname: '',
+    email: '',
+    dob: '',
+    username: '',
+    gender: '',
+    phone: '',
+    ethnicity: '',
+    password: '',
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Perform form submission logic here using formData
+    console.log('Form submitted:', formData);
+    // You can send the form data to an API or perform other actions
+  };
+
   return (
     <div className="RegisterPage">
       <form onSubmit={handleSubmit}>
@@ -130,7 +169,9 @@ function RegisterPage() {
           />
         </div>
 
-        <button>Sign Up</button>
+      
+
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
