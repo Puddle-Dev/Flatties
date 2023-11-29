@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import './App.css';
+import NavBar from '../../components/layout/navBar/NavBar';
 
-interface RegisterFormState {
+interface FormData {
   firstname: string;
   lastname: string;
   email: string;
@@ -9,12 +9,12 @@ interface RegisterFormState {
   username: string;
   gender: string;
   phone: string;
-  ethnicity: string; 
+  ethnicity: string;
   password: string;
 }
 
-const RegisterPage: React.FC = () => {
-  const [formData, setFormData] = useState<RegisterFormState>({
+function RegisterPage() {
+  const [formData, setFormData] = useState<FormData>({
     firstname: '',
     lastname: '',
     email: '',
@@ -23,27 +23,22 @@ const RegisterPage: React.FC = () => {
     gender: '',
     phone: '',
     ethnicity: '',
-    password: ''
+    password: '',
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-
-      // Axios is for a back end, currently that data has no where to go so it is just displayed in the console log
-
-      //const response = await axios.post('http://localhost:3000/RegisterPage', formData);
-      //console.log(response);
-
-      console.log(formData);
-    } catch (error) {
-      console.error(error);
-    }
+    // Perform form submission logic here using formData
+    console.log('Form submitted:', formData);
+    // You can send the form data to an API or perform other actions
   };
 
   return (
@@ -119,17 +114,21 @@ const RegisterPage: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="gender"> gender:</label>
+          <label htmlFor="gender"> Gender:</label>
           <br />
-          <input
-            type="text"
+          <select
             name="gender"
             id="gender"
             onChange={handleChange}
             value={formData.gender}
             required
-            maxLength={20}
-          />
+          >
+            <option value="">Select</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Other">Other</option>
+            <option value="NA">Prefer not to say</option>
+          </select>
         </div>
 
         <div>
@@ -174,10 +173,10 @@ const RegisterPage: React.FC = () => {
           />
         </div>
 
-        <button>Sign Up</button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
-};
+}
 
 export default RegisterPage;
