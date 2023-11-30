@@ -1,8 +1,9 @@
 import React from "react";
 import NavBar from "../../components/layout/navBar/NavBar";
 import Card from '@mui/material/Card';
-import { CardContent, CardHeader, CardMedia, Paper } from "@mui/material";
-import flattieslogo from "../../assets/images/flatties-logo.png"
+import { Stack, Paper, Box } from "@mui/material";
+
+import ListingCard from "../../components/listingCard/ListingCard";
 
 function ListingPage() {
   return (
@@ -10,14 +11,25 @@ function ListingPage() {
       <div>
         <h1>Listing Page</h1>
       </div>
+      
+      <Box>
 
-      <Card sx={{maxWidth:345}}>
-        <CardHeader title="New Property" subheader="Avaliable: Today"> </CardHeader>
-        <CardMedia component="img" image={flattieslogo}></CardMedia>
-        <CardContent>
-          This is a new House, 4 bedroom 2 bothroom. close to the city.
-        </CardContent>
-      </Card>
+        <Stack direction="row" spacing={1} >
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+          <ListingCard></ListingCard>
+
+        </Stack>  
+      </Box>
+    
     </Paper>
   );
 }
