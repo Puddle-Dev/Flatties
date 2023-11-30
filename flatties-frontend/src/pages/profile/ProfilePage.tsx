@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import NavBar from "../../components/layout/navBar/NavBar";
+import profilePic from "../../assets/images/flatties-icon-logo.png"
 
 function ProfilePage() {
   const [editable, setEditable] = useState(false);
   const [text, setText] = useState("Add a Bio");
-  const [profilePic] = useState("../../../assets/images/flatties-icon-logo.png")
 
   const handleEditToggle = () => {
     setEditable(!editable);
@@ -16,7 +16,7 @@ function ProfilePage() {
 
   return (
     <div>
-      <img src={profilePic} alt="Null" style={{ width: "500px", height: "500px"}} />
+      <img src={profilePic} alt="Null" style={{ width: "250px", height: "250px"}} />
       <h2> Zephr Evergreen </h2>
       <h3> Username: Ze2002</h3>
       {editable ? ( 
