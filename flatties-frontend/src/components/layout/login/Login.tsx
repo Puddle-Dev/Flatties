@@ -39,7 +39,7 @@ function Login({ open, handleClose }: LoginModalProps) {
         }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Modal Header
+          Login
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <TextField
