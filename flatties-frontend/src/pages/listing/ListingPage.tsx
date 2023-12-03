@@ -14,7 +14,7 @@ function ListingPage() {
       
       <Box>
 
-        <Stack direction="row" spacing={1} >
+        <Stack direction="row" spacing={1} sx={{flexWrap:'wrap', justifyContent:'flex-start'}}  >
           <ListingCard></ListingCard>
           <ListingCard></ListingCard>
           <ListingCard></ListingCard>
