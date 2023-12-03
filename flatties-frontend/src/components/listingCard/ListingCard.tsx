@@ -5,7 +5,7 @@ import flattieslogo from "../../assets/images/flatties-logo.png"
 function ListingCard(){
 
     return (
-    <Card sx={{maxWidth:345, minWidth:250}}>
+    <Card sx={{maxWidth:345, minWidth:250, marginLeft:'0 !important'}}>
         <CardHeader title="New Property" subheader="Avaliable: Today"> </CardHeader>
         <CardMedia component="img" image={flattieslogo}></CardMedia>
         <CardContent>
