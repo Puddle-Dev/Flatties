@@ -1,0 +1,6 @@
+@flatties_backend_HostAddress = http://localhost:5231
+
+GET {{flatties_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
