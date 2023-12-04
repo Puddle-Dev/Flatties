@@ -1,13 +1,13 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import NavBar from '../../components/layout/navBar/NavBar';
-import Box from '@mui/material/Box';
-import TextField  from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import { InputLabel, OutlinedInput } from '@mui/material';
-//import Visibility from '@mui/icons-material/Visibility';
-//import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import NavBar from "../../components/layout/navBar/NavBar";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import { InputLabel, OutlinedInput } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Button from "@mui/material/Button";
 
 interface FormData {
   firstname: string;
@@ -23,28 +23,20 @@ interface FormData {
 
 function RegisterPage() {
   const [formData, setFormData] = useState<FormData>({
-    firstname: '',
-    lastname: '',
-    email: '',
-    dob: '',
-    username: '',
-    gender: '',
-    phone: '',
-    ethnicity: '',
-    password: '',
+    firstname: "",
+    lastname: "",
+    email: "",
+    dob: "",
+    username: "",
+    gender: "",
+    phone: "",
+    ethnicity: "",
+    password: "",
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    event.preventDefault();
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -55,170 +47,79 @@ function RegisterPage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Perform form submission logic here using formData
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
     // You can send the form data to an API or perform other actions
   };
+
+  const [gender, setGender] = React.useState("");
+
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    setGender(event.target.value);
+  };
+
+  const todayDate: string = new Date().toLocaleDateString();
 
   return (
     <div className="RegisterPage">
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstname"> First Name:</label>
-          <br />
-          <input
-            type="text"
-            name="firstname"
-            id="fname"
-            onChange={handleChange}
-            value={formData.firstname}
-            required
-            maxLength={20}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="lastname"> Last Name:</label>
-          <br />
-          <input
-            type="text"
-            name="lastname"
-            id="lname"
-            onChange={handleChange}
-            value={formData.lastname}
-            required
-            maxLength={20}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="email"> Email:</label>
-          <br />
-          <input
-            type="text"
-            name="email"
-            id="email"
-            onChange={handleChange}
-            value={formData.email}
-            required
-            maxLength={40}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="dob"> Date of Birth:</label>
-          <br />
-          <input
-            type="date"
-            name="dob"
-            id="dob"
-            onChange={handleChange}
-            value={formData.dob}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="username"> Username:</label>
-          <br />
-          <input
-            type="text"
-            name="username"
-            id="uname"
-            onChange={handleChange}
-            value={formData.username}
-            required
-            maxLength={20}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="gender"> Gender:</label>
-          <br />
-          <select
-            name="gender"
-            id="gender"
-            onChange={handleChange}
-            value={formData.gender}
-            required
-          >
-            <option value="">Select</option>
-            <option value="Female">Female</option>
-            <option value="Male">Male</option>
-            <option value="Other">Other</option>
-            <option value="NA">Prefer not to say</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="phone"> Phone number:</label>
-          <br />
-          <input
-            type="text"
-            name="phone"
-            id="phone"
-            onChange={handleChange}
-            value={formData.phone}
-            required
-            maxLength={20}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="ethnicity"> Ethnicity:</label>
-          <br />
-          <input
-            type="text"
-            name="ethnicity"
-            id="ethnicity"
-            onChange={handleChange}
-            value={formData.ethnicity}
-            required
-            maxLength={20}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="password"> Password:</label>
-          <br />
-          <input
-            type="text"
-            name="password"
-            id="pword"
-            onChange={handleChange}
-            value={formData.password}
-            required
-            maxLength={20}
-          />
-        </div>
-
         <Box
-        component="form"
-        sx={{'& .MuiTextField-root' : { m: 1, width: '25ch'},
-       }}
-       noValidate
-       autoComplete="off"
-       ><div>
-        <TextField
-          id="outlined-helperText"
-          label="First Name"
-        ></TextField>
-      </div>
-      <div>
-        <TextField
-          id="outlined-helperText"
-          label="Last Name"
-        ></TextField>
-      </div>
-      <TextField
-          id="standard-password-input"
+          component="form"
+          sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+          noValidate
+          autoComplete="off"
+        >
+          <div>
+            <TextField id="outlined-helperText" label="First Name"></TextField>
+            <TextField id="outlined-helperText" label="Last Name"></TextField>
+          </div>
+          <div>
+            <TextField id="outlined-helperText" label="Email"></TextField>
+            <TextField
+          id="outlined-password-input"
           label="Password"
           type="password"
           autoComplete="current-password"
-          variant="standard"
         />
-       </Box>
+          </div>
 
-        <button type="submit">Sign Up</button>
+          <div>
+            <FormControl required sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-required-label">
+                Gender
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-required-label"
+                id="demo-simple-select-required"
+                value={gender}
+                label="Gender *"
+                onChange={handleSelectChange}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Female</MenuItem>
+                <MenuItem value={20}>Male</MenuItem>
+                <MenuItem value={30}>Other</MenuItem>
+                <MenuItem value={30}>Prefer not to say</MenuItem>
+              </Select>
+              <FormHelperText>Required</FormHelperText>
+            </FormControl>
+
+            <TextField
+              id="outlined-required"
+              label="Date of Birth:"
+              type="date"
+              placeholder={todayDate}
+            ></TextField>
+          </div>
+
+          <div>
+            <TextField id="outlined-helperText" label="Phone"></TextField>
+            <TextField id="outlined-helperText" label="Ethnicity"></TextField>
+          </div>
+
+          <Button variant="contained">Sign Up</Button>
+        </Box>
       </form>
     </div>
   );
