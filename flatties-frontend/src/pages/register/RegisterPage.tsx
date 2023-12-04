@@ -1,5 +1,13 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import NavBar from '../../components/layout/navBar/NavBar';
+import Box from '@mui/material/Box';
+import TextField  from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import { InputLabel, OutlinedInput } from '@mui/material';
+//import Visibility from '@mui/icons-material/Visibility';
+//import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 interface FormData {
   firstname: string;
@@ -25,6 +33,16 @@ function RegisterPage() {
     ethnicity: '',
     password: '',
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -172,6 +190,33 @@ function RegisterPage() {
             maxLength={20}
           />
         </div>
+
+        <Box
+        component="form"
+        sx={{'& .MuiTextField-root' : { m: 1, width: '25ch'},
+       }}
+       noValidate
+       autoComplete="off"
+       ><div>
+        <TextField
+          id="outlined-helperText"
+          label="First Name"
+        ></TextField>
+      </div>
+      <div>
+        <TextField
+          id="outlined-helperText"
+          label="Last Name"
+        ></TextField>
+      </div>
+      <TextField
+          id="standard-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          variant="standard"
+        />
+       </Box>
 
         <button type="submit">Sign Up</button>
       </form>
