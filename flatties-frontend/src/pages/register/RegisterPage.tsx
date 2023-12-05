@@ -75,14 +75,21 @@ function RegisterPage() {
           <div>
             <TextField id="outlined-helperText" label="Email"></TextField>
             <TextField
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-        />
+              id="outlined-password-input"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+            />
           </div>
 
           <div>
+            <TextField
+              id="outlined-required"
+              label=""
+              type="date"
+              placeholder={todayDate}
+              helperText="Date of Birth"
+            ></TextField>
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-required-label">
                 Gender
@@ -102,15 +109,7 @@ function RegisterPage() {
                 <MenuItem value={30}>Other</MenuItem>
                 <MenuItem value={30}>Prefer not to say</MenuItem>
               </Select>
-              <FormHelperText>Required</FormHelperText>
             </FormControl>
-
-            <TextField
-              id="outlined-required"
-              label="Date of Birth:"
-              type="date"
-              placeholder={todayDate}
-            ></TextField>
           </div>
 
           <div>
