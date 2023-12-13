@@ -27,8 +27,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 //import the models
-const Users = require('./models/Users');
-
+const Users = require('./models/users');
 
 // Connect to MongoDB
 mongoose.connect(mongodbURL,{
