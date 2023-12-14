@@ -1,5 +1,8 @@
+import axios from 'axios';
 
+const baseUrl = 'http://localhost:3001/api';
 
-export const getFlats = async () => {
-  return null;
-};
+const getAllUsers = async () => {
+  const response = await axios.get(`${baseUrl}/users`);
+  return response.data;
+}

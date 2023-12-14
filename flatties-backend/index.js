@@ -13,24 +13,17 @@
 // Load environment variables
 require('dotenv').config();
 
-//get the environment variables from the .env file
-const PORT = process.env.PORT; 
-const mongodbURL = process.env.MONGODB_URL;
-
-
-// console.log(`Puddle-PORT: ${PORT}`);
-// console.log(`Puddle-mongodbURL: ${mongodbURL}`);
-
 //ininialize express app
 const express = require('express'); 
 const mongoose = require('mongoose');
+const config = require('./config/database');
+
+const userRoutes = require('./routes/userRoutes');
+
 const app = express();
 
-//import the models
-const Users = require('./models/users');
-
 // Connect to MongoDB
-mongoose.connect(mongodbURL,{
+mongoose.connect(config.connectionString,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -49,6 +42,9 @@ app.get('/', (req, res) => {
     res.send('Hello World! - from flatties-backend');
     });
 
-app.listen(PORT, () => {
+app.listen(config.port, () => {
     console.log(`Puddle-Server listening on port ${PORT}`);
     });
+
+
+app.use('api/users', userRoutes);
