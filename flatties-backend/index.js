@@ -17,17 +17,25 @@ require('dotenv').config();
 const PORT = process.env.PORT; 
 const mongodbURL = process.env.MONGODB_URL;
 
-
-// console.log(`Puddle-PORT: ${PORT}`);
-// console.log(`Puddle-mongodbURL: ${mongodbURL}`);
-
 //ininialize express app
 const express = require('express'); 
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+//import the routers
+const propertyRouter = require('./routers/propertyRouter');
+
 
 //import the models
-const Users = require('./models/users');
+// const Users = require('./models/users');
+const Property = require('./models/PropertyModel');
+app.use('/api/property', propertyRouter);
 
 // Connect to MongoDB
 mongoose.connect(mongodbURL,{
@@ -42,7 +50,6 @@ db.once('open', function() {
     console.info('Puddle-Connected to MongoDB');
     console.info(`----------------------------`);
 });
-
 
 // Start the server
 app.get('/', (req, res) => {
