@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardHeader, CardMedia, CardContent } from "@mui/material";
 import flattieslogo from "../../assets/images/flatties-logo.png"
+import propretyTypes from "./propertyTypes";
 
-function ListingCard(){
+interface ListingCardProps{
+    proprety: propretyTypes;
+}
 
+function ListingCard({proprety}: ListingCardProps){
     return (
-    <Card sx={{maxWidth:345, minWidth:250, marginLeft:'0 !important'}}>
-        <CardHeader title="New Property" subheader="Avaliable: Today"> </CardHeader>
+    <Card sx={{maxWidth:345, minWidth:250, marginBottom: '8px'}}>
+        <CardHeader title={proprety.title} subheader={proprety.city}> </CardHeader>
         <CardMedia component="img" image={flattieslogo}></CardMedia>
         <CardContent>
-          This is a new House, 4 bedroom 2 bothroom. close to the city.
+          {proprety.description}
         </CardContent>
       </Card>
     );
