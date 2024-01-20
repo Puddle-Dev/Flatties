@@ -24,7 +24,7 @@ const propertyController = {
     //get properties by city
     getPropertiesByCity: async (req, res) => {
         try {
-            const properties = await propertyModel.find({property_city: req.params.city});
+            const properties = await propertyModel.find({city: req.params.city});
             res.json(properties);
         } catch (error) {
             console.log(error);

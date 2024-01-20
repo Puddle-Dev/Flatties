@@ -13,11 +13,12 @@ function ListingCard({proprety}: ListingCardProps){
         <CardHeader title={proprety.title} subheader={proprety.city}> </CardHeader>
         <CardMedia component="img" image={flattieslogo}></CardMedia>
         <CardContent>
-          {proprety.description}
+          Price: {proprety.price}
+          <br/>
+          Description: {proprety.description}
         </CardContent>
       </Card>
     );
 }
-
 
 export default ListingCard;

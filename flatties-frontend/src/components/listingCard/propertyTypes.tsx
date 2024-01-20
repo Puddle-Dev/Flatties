@@ -10,7 +10,8 @@ interface propretyTypes{
     year_built: Date;
     parking: string;
     image: string;
-    date: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export default propretyTypes;
