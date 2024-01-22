@@ -55,7 +55,7 @@ function NavBar() {
           <NavLink to="/">HOME</NavLink>
           <NavLink to="/profile">PROFILE</NavLink>
           <NavLink to="/listing">LISTING</NavLink>
-          <NavLink to="/newproperty">NEW PROPERTY</NavLink>
+          <NavLink to="/new-property">NEW PROPERTY</NavLink>
         </Stack>
 
         {/* Render the Login Modal */}

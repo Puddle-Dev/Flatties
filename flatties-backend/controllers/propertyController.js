@@ -1,6 +1,6 @@
 const propertyModel = require('../models/PropertyModel');
 
-const propertyController = {
+const PropertyController = {
     //create a new property
     createProperty: async (req, res) => {
         try {
@@ -62,4 +62,4 @@ const propertyController = {
     },
 };
 
-module.exports = propertyController;
+module.exports = PropertyController;

@@ -5,15 +5,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
-    user_id:{type:String, required:true},
-    user_first_name:{type:String, required:true},
-    user_last_name:{type:String, required:true},
-    user_email:{type:String, required:true},
-    user_phone:{type:String, required:true},
-    user_password:{type:String, required:true},
-    user_gender:{type:String, required:true},
-    user_dob:{type:Date, required:false},
-});
+    first_name:{type:String, required:true},
+    last_name:{type:String, required:true},
+    email:{type:String, required:true},
+    phone:{type:String, required:true},
+    password:{type:String, required:true},
+    gender:{type:String, required:true},
+    dob:{type:Date, required:false},
+    isActive:{type:Boolean, default:true},
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+},{
+    timestamps:true,
+}
+);
 
 const Users = mongoose.model('Users', userSchema);
 module.exports = Users;
