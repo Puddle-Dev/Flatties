@@ -28,7 +28,8 @@ main {
   /* border: 2px dashed red; */
   background-color: #F0F0F0;
   color: #333333;
-  max-width: 100vh;
+  max-width: 120vh;
+  min-width: 80vh;
   margin-left: auto;
   margin-right: auto;
 }
