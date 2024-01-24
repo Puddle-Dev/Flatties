@@ -8,12 +8,12 @@ import { Paper } from "@mui/material";
 
 function Layout() {
   return (
-    <div>
+    <div className="container">
       <header>
         <NavBar />
       </header>
       <main>
-        <Paper elevation={3} square style={{ padding: "10px" }}>
+        <Paper elevation={3} square style={{ padding: "8px" }}>
         <Outlet />
         </Paper>
       </main>
