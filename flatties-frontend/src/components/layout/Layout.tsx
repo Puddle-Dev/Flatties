@@ -13,7 +13,7 @@ function Layout() {
         <NavBar />
       </header>
       <main>
-        <Paper elevation={3} square style={{ padding: "8px" }}>
+        <Paper elevation={3} square={false} style={{ padding: "8px" }}>
         <Outlet />
         </Paper>
       </main>

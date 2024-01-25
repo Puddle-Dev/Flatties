@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import LOGO from "../../../assets/images/AUT-logo-block.jpg";
-import { Avatar, Stack, Paper, Button } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Avatar, Stack, Paper, IconButton, ListItemIcon, Typography } from "@mui/material";
+import LoginIcon from '@mui/icons-material/Login';
+import { Link, NavLink } from "react-router-dom";
 import LoginModal from "../login/Login"; // Import the LoginModal component
 
 function NavBar() {
@@ -16,9 +17,10 @@ function NavBar() {
   };
 
   return (
-    <Paper elevation={3} square style={{ padding: "10px" }}>
+    <Paper elevation={3} square={false} style={{ padding: "10px" }}>
       <Stack className="Container" direction="column">
-        <Stack className="Container-top" direction="row" borderBottom={1}>
+        <Stack className="Container-top" direction="row" borderBottom={1} justifyContent={"space-between"}>
+          {/* top-left part */}
           <Stack className="Container-left" direction="row">
             <img
               src={LOGO}
@@ -32,25 +34,31 @@ function NavBar() {
             />
             <h1>Flatties</h1>
           </Stack>
-          <Stack
-            className="Container-right"
-            direction="row-reverse"
-            spacing={2}
-          >
-            <NavLink
-              to="#"
-              style={{ marginLeft: "10px" }}
+          {/* top-right part */}
+          <Stack className="Container-right" direction="row-reverse" spacing={2}>
+
+            <IconButton
+              edge="end"
+              aria-label="Log In"
+              size="large"
+              color="inherit"
+              style={{ background: 'transparent' }}
               onClick={handleLoginClick}
             >
-              Log In
-            </NavLink>
-            <NavLink to="/register" style={{ marginLeft: "10px" }}>
-              Register
-            </NavLink>
-            <Avatar alt="Null" src="/static/images/avatar/1.jpg" />
+              <ListItemIcon>
+
+                <LoginIcon />
+              </ListItemIcon>
+              <Typography variant="body1" component="span">
+                <Link to="#" style={{ color: 'inherit', textDecoration: 'none' }}>
+                  Log In
+                </Link>
+                </Typography>
+            </IconButton>
+
           </Stack>
         </Stack>
-
+        {/* buttom part */}
         <Stack className="NavBar" direction="row" spacing={5}>
           <NavLink to="/">HOME</NavLink>
           <NavLink to="/profile">PROFILE</NavLink>
@@ -58,7 +66,6 @@ function NavBar() {
           <NavLink to="/new-property">NEW PROPERTY</NavLink>
         </Stack>
 
-        {/* Render the Login Modal */}
         <LoginModal open={loginModalOpen} handleClose={handleLoginModalClose} />
       </Stack>
     </Paper>
