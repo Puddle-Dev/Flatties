@@ -22,7 +22,7 @@ function Router() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/listing" element={<ListingPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/new-property" element={<NewPropertyForm onSubmit={handlePropertySubmit}/>} />
+          <Route path="/new-property" element={<NewPropertyForm />} />
 
           {/* 404 Page */}
           <Route path="*" element={<h1>Page Not Found</h1>} />

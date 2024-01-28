@@ -1,0 +1,28 @@
+Property Data:
+Property type,
+Address,
+City,
+Number of bedrooms
+Number of bathrooms
+
+Rental Data:
+Listing title,
+Rental Method,
+Furniture and Applicances
+Condition
+Nearyby Facilities
+Rent
+Rent payment period
+Deposit
+Availability Date
+Lease term
+Property Photos
+Description
+Contact Information
+
+Pet policy
+Somking policy
+parking lot
+
+
+
