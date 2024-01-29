@@ -28,4 +28,4 @@ PropertySchema.pre('updateOne', function(next){
     next();
 });
 
-module.exports = mongoose.model('Properties', PropertySchema);
+module.exports = mongoose.model('Property', PropertySchema);

@@ -32,4 +32,4 @@ propertySchema.pre('updateOne', function(next){
     next();
 });
 
-module.exports = mongoose.model('Properties', propertySchema);
+module.exports = mongoose.model('Listing', propertySchema);

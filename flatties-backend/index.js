@@ -28,14 +28,19 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//import the routers
-const propertyRouter = require('./routers/propertyRouter');
 
 
 //import the models
-// const Users = require('./models/users');
-const Property = require('./models/PropertyModel');
+// const user = require('./models/UserModel');
+const property = require('./models/PropertyModel');
+const listing = require('./models/ListingModel');
+
+//import the routers
+const propertyRouter = require('./routers/PropertyRouter');
 app.use('/api/property', propertyRouter);
+
+const listingRouter = require('./routers/ListingRouter');
+app.use('/api/listing', listingRouter);
 
 // Connect to MongoDB
 mongoose.connect(mongodbURL,{
