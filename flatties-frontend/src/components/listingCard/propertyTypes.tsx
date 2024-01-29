@@ -16,4 +16,4 @@ interface propretyTypes{
     bathRooms: string;
 }
 
-export default propretyTypes;
+export default "this interface is no longer used";

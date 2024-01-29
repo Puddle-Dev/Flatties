@@ -1,21 +1,23 @@
 import React, { useEffect } from "react";
 import { Card, CardHeader, CardMedia, CardContent } from "@mui/material";
 import flattieslogo from "../../assets/images/flatties-logo.png"
-import propretyTypes from "./propertyTypes";
+import RentalInfo from "../../models/RentalInfo";
+import PropertyInfo from "../../models/PropertyInfo";
 
 interface ListingCardProps{
-    proprety: propretyTypes;
+    Listing: RentalInfo;
+    Property: PropertyInfo;
 }
 
-function ListingCard({proprety}: ListingCardProps){
+function ListingCard({Listing, Property}: ListingCardProps){
     return (
     <Card sx={{maxWidth:345, minWidth:250, marginBottom: '8px'}}>
-        <CardHeader title={proprety.title} subheader={proprety.city}> </CardHeader>
+        <CardHeader title={Listing.listingTitle} subheader={Property.city}> </CardHeader>
         <CardMedia component="img" image={flattieslogo}></CardMedia>
         <CardContent>
-          Price: {proprety.price}
+          Price: {Listing.rent}
           <br/>
-          Description: {proprety.description}
+          Description: {Listing.description}
         </CardContent>
       </Card>
     );

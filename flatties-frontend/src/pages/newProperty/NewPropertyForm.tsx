@@ -2,20 +2,23 @@
 
 import React, { useState } from "react";
 import { TextField, Button, Typography, Grid, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Dialog, DialogTitle, DialogContent, DialogActions, FormHelperText, Input, Menu } from "@mui/material";
-import propertyInfor from "../../models/propertyInfor";
 import { act } from "react-dom/test-utils";
+import PropertyInfo from "../../models/PropertyInfo";
 
 function NewPropertyForm() {
 
-    const [formData, setFormData] = useState<propertyInfor>({
+    const [formData, setFormData] = useState<PropertyInfo>({
+        _id: "",
         address: "",
         city: "",
         propertyType: "",
         bedRooms: "",
         bathRooms: "",
+        updatedAt: new Date(),
+        createdAt: new Date(),
     });
 
-    const handleInputChange = (filedName: keyof propertyInfor) => (
+    const handleInputChange = (filedName: keyof PropertyInfo) => (
         event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
