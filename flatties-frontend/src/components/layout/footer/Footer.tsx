@@ -10,7 +10,6 @@ function Footer() {
       <IconButton
         href="https://www.linkedin.com/in/benjamin-polglase-ba3022275"
         color="primary"
-        target="_blank"
       ><LinkedInIcon fontSize="large" /></IconButton>
       <strong>Benjamin Polglase</strong>
       <Tab />
@@ -18,7 +17,6 @@ function Footer() {
       <IconButton
         href="https://www.linkedin.com/in/eirik-mykel-navarro-enriquez"
         color="primary"
-        target="_blank"
       ><LinkedInIcon fontSize="large" /></IconButton>
       <strong>Eirik Enriquez</strong>
       <Tab />
@@ -26,7 +24,6 @@ function Footer() {
       <IconButton
         href="https://www.linkedin.com/in/william-wang-shuai"
         color="primary"
-        target="_blank"
       ><LinkedInIcon fontSize="large" /></IconButton>
       <strong>William Wang</strong>
       <Tab />
