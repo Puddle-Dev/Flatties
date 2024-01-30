@@ -33,9 +33,10 @@ const propertyRouter = require('./routers/propertyRouter');
 
 
 //import the models
-// const Users = require('./models/users');
+const Users = require('./models/Users');
 const Property = require('./models/PropertyModel');
 app.use('/api/property', propertyRouter);
+app.use('/api/user', Users);
 
 // Connect to MongoDB
 mongoose.connect(mongodbURL,{
