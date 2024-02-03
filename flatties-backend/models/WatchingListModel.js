@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 
-const WatchingListSchema = new mongoose.Schema({
-    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    propertyId: [{type: mongoose.Schema.Types.ObjectId, ref: 'Listing', required: true}],
-    createdAt: {type: Date, default: Date.now, required: true},
-    updatedAt: {type: Date, default: Date.now, required: true},
+const WatchingListModel = new mongoose.Schema({
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true},
+    listings: [{
+        propertyId: {type: mongoose.Schema.Types.ObjectId, ref: 'property', required: true},
+        status: String, // status: 'watching', 'interested', 'not-interested'
+        appointmentDate: Date,
+    }],
 },{
     timestamps: true,
 });
 
-module.exports = mongoose.model('WatchingList', WatchingListSchema);
+module.exports = mongoose.model('watchinglist', WatchingListModel);

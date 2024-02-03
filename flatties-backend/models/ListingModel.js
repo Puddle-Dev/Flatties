@@ -1,35 +1,24 @@
 const mongoose = require('mongoose');
 
-const propertySchema = new mongoose.Schema({
-    // propertyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Property', required: true},
+const ListingModel = new mongoose.Schema({
+    propertyId: {type: mongoose.Schema.Types.ObjectId, ref: 'property', required: true},
     title: String,
-    description: String,
     rent: Number,
+    rentMethod: String,
     rentPaymentPeriod: String,
     deposit: Number,
     availabilityDate: Date,
     leaseTerm: String,
-    propertyPhotos: String,
-    petAllowed: Boolean,
-    smokingAllowed: Boolean,
-    parkingAllowed:Boolean,
-    parking: String,
-    image: String,
+    isFurnished: Boolean,
+    isPetAllowed: Boolean,
+    isSmokingAllowed: Boolean,
+    isParkingAllowed:Boolean,
     year_built: Date,
-    createdAt: {type: Date, default: Date.now, required: true},
-    updatedAt: {type: Date, default: Date.now, required: true},
+    imagesUrl: [String],
+    nearbyFacilities: [String],
+    description: String,
 },{
     timestamps: true,
 });
 
-propertySchema.pre('save', function(next){
-    this.updatedAt = Date.now();
-    next();
-});
-
-propertySchema.pre('updateOne', function(next){
-    this.updatedAt = Date.now();
-    next();
-});
-
-module.exports = mongoose.model('Listing', propertySchema);
+module.exports = mongoose.model('listing', ListingModel);
