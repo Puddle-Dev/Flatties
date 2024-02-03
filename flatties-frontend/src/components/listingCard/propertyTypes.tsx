@@ -12,6 +12,8 @@ interface propretyTypes{
     image: string;
     createdAt: Date;
     updatedAt: Date;
+    bedRooms: string;
+    bathRooms: string;
 }
 
-export default propretyTypes;
+export default "this interface is no longer used";

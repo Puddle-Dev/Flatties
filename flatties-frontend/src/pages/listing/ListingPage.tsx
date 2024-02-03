@@ -1,16 +1,12 @@
 import React,{useState, useEffect} from "react";
-import NavBar from "../../components/layout/navBar/NavBar";
-import Card from '@mui/material/Card';
-import { Stack, Paper, Box, Button } from "@mui/material";
 
-import ListingCard from "../../components/listingCard/ListingCard";
-import propretyTypes from "../../components/listingCard/propertyTypes";
-import { resolve } from "path";
-import { error } from "console";
+import { Stack, Paper, Box, Button, List } from "@mui/material";
+
+import PropertyInfo from "../../models/PropertyInfo";
 
 function ListingPage() {
 
-  const [listingsData, setListingsData] = useState<propretyTypes []>([]);
+  const [listingsData, setListingsData] = useState<PropertyInfo []>([]);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/property/all',{
@@ -30,49 +26,30 @@ function ListingPage() {
     .catch(error => console.error('Error fetching data:', error))
   }, [])
 
-  const [sortOrder, setSortOrder] = useState('date'); // 'date' or 'price'
-  const [sortDirection, setSortDirection] = useState('asc'); // 'asc' or 'desc'
-
-  const handleSort = (sortType: 'date' | 'price') => {
-    if (sortOrder === sortType) {
-      setSortDirection((prevDirection) => (prevDirection === 'asc' ? 'desc' : 'asc'));
-    } else {
-      setSortOrder(sortType);
-      setSortDirection('asc');
-    }
-  };
-  
-  const sortedListings = [...listingsData].sort((a, b) => {
-    const dateA = new Date(a.updatedAt);
-    const dateB = new Date(b.updatedAt);
-  
-    if (sortOrder === 'date') {
-      return sortDirection === 'asc' ? +dateA - +dateB : +dateB - +dateA;
-    } else if (sortOrder === 'price') {
-      return sortDirection === 'asc' ? Number(a.price) - Number(b.price) : Number(b.price) - Number(a.price);
-    }
-  
-    return 0;
-  });
-
 
   return (
     <div>
       
       <div>
-        <h1>Listing Page</h1>
-      </div>
-      <div>
-        <Button variant="contained" onClick={() => handleSort('date')}>Sort by Date</Button>
-        <Button variant="contained" onClick={() => handleSort('price')}>Sort by Price</Button>
+        <h1>Properties Page</h1>
       </div>
 
       <Stack direction={"row"} spacing={1} sx={{flexWrap:'wrap', justifyContent:'flex-start', columnGap:'16px', rowGap:'16px'}}>
-        {listingsData.length === 0 && <p>No listings found.</p>}
+        <List>
+          {listingsData.map((property, index) => (
+            <Paper key={property._id} sx={{width: 500, minWidth: 250, marginBottom: '8px'}}>
 
-        {listingsData.map((property, index) => (
-          <ListingCard proprety={property} key={index}></ListingCard>
-        ))}
+              <Box sx={{display: 'flex', flexDirection: 'column', justifyContent:'center', p: 2, fontStyle: {textAlign:'left'}}}>
+                <h3>Index:{index + 1} </h3>
+                <h3>Property ID: {property._id}</h3>
+                <h3>City: {property.city}</h3>
+                <h3>Property Type: {property.propertyType}</h3>
+                <h3>BedRooms: {property.bedRooms}</h3>
+                <h3>BathRooms: {property.bathRooms}</h3>
+              </Box>
+            </Paper>
+          ))}
+        </List>
       </Stack>
 
     </div>
