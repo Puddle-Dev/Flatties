@@ -1,74 +1,21 @@
 const WatchingListModel = require("../models/WatchingListModel")
-const PropertyModel = require("../models/PropertyModel")
 const UserModel = require("../models/UserModel")
 
 const WatchingListController = {
-    //get all watching lists
-    getAllWatchingLists: async (req, res)=>{
-        try {
-            const watchingLists = await WatchingListModel.find({});
-            res.json(watchingLists);
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({message: "Server Error"});
-        }
-    },
+
     //create a new watching list
-    createWatchingList: async (userId)=>{
+    //***Note:new watching list should be created when a new user is being created***//
+    createWatchingList: async (req, res)=>{
         try {
             const watchingList = await WatchingListModel.create(req.body);
-            res.json(watchingList);
+            res.status(200).json({success:true, watchingList});
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Server Error"});
         }
     },
-    //add a property to a watching list
-    addPropertyToWatchingList: async (req, res)=>{
-        try{
-            //get the property id from the request 
-            const propertyId = req.body.propertyId;
-
-            //check the id is exits in the property collection
-            const property = await PropertyModel.findById(propertyId);
-            if(!property){
-                return res.status(404).json({message: "Property not found"});
-            }
-            //check user exists
-            const user = await UserModel.findById(req.UserModel._id);
-            if(!user){
-                return res.status(404).json({message: "User not found"});
-            }
-
-            //get the current user's watching list
-            const watchingList = await WatchingListModel.findOne({userId: req.UserModel._id});
-            if(!watchingList){
-                //create a new watching list
-                const newWatchingList = new WatchingListModel({
-                    userId: req.UserModel._id,
-                    propertyId: [propertyId],
-                });
-                await newWatchingList.save();
-                return res.json({message: "Property added to the watching list"});
-            }
-
-            if(watchingList.propertyId.includes(propertyId)){
-                return res.status(400).json({message: "Property already in the watching list"});
-            }
-
-            //add this property id to the watching list
-            watchingList.propertyId.push(propertyId);
-
-            await watchingList.save();
-            res.json({message: "Property added to the watching list"});
-
-        }catch(error){
-            console.log(error);
-            res.status(500).json({message: "Server Error"});
-        }
-      
-    },
     //delete a watching list by id
+    //***Note: user's watching list should be deleted when a new user is being deleted***//
     deleteWatchingListById: async (req, res) => {
         try {
             const watchingList = await WatchingListModel.deleteOne({_id: req.params.id});
@@ -81,6 +28,134 @@ const WatchingListController = {
             res.status(500).json({message: "Server Error"});
         }
     },
+
+    //add a property to a watching list
+    addPropertyToWatchingList: async (req, res)=>{
+        try{
+            //get user and property from request
+            const userId = req.parmas.userId;
+            const propertyId = req.params.propertyId;
+
+            //check if user exist
+            const user = await UserModel.findById(userId);
+            if(!user){
+                return res.status(404).json({message: "User not found"});
+            }
+
+            //check if property exist in user's watching list
+            const isPropertyExist = user.watchingList.some(item => item.propertyId.equals(propertyId));
+            if(isPropertyExist){
+                return res.status(400).json({message: "Property already in the watching list"});
+            }
+
+            //add property to user's watching list
+            user.watchingList.push({propertyId: propertyId, status: "watching"});
+            const updatedWatchingList = await user.save();
+            res.status(200).json({ success: true, message: 'Property added to watching list successfully', updatedWatchingList });
+        }catch(error){
+            console.log(error);
+            res.status(500).json({message: "Server Error"});
+        }
+    },
+    //remove a property from a watching list
+    removePropertyFromWatchingList: async (req, res)=>{
+        try{
+            //get user and property from request
+            const userId = req.parmas.userId;
+            const propertyId = req.params.propertyId;
+
+            //check if user exist
+            const user = await UserModel.findById(userId);
+            if(!user){
+                return res.status(404).json({message: "User not found"});
+            }
+
+            //check if property exist in user's watching list
+            const isPropertyExist = user.watchingList.some(item => item.propertyId.equals(propertyId));
+            if(!isPropertyExist){
+                return res.status(400).json({message: "Property not found in the watching list"});
+            }
+
+            //remove property from user's watching list
+            user.watchingList = user.watchingList.filter(item => !item.propertyId.equals(propertyId));
+            const updatedWatchingList = await user.save();
+            res.status(200).json({ success: true, message: 'Property removed from watching list successfully', updatedWatchingList });
+        }catch(error){
+            console.log(error);
+            res.status(500).json({message: "Server Error"});
+        }
+    },
+    //update watching status of a property
+    updateWatchingStatus: async (req, res)=>{
+try{
+            //get user and property from request
+            const userId = req.parmas.userId;
+            const propertyId = req.params.propertyId;
+            const status = req.body.status;
+
+            //check if user exist
+            const user = await UserModel.findById(userId);
+            if(!user){
+                return res.status(404).json({message: "User not found"});
+            }
+
+            //check if property exist in user's watching list
+            const isPropertyExist = user.watchingList.some(item => item.propertyId.equals(propertyId));
+            if(!isPropertyExist){
+                return res.status(400).json({message: "Property not found in the watching list"});
+            }
+
+            //update property status in user's watching list
+            user.watchingList.forEach(item => {
+                if(item.propertyId.equals(propertyId)){
+                    item.status = status;
+                }
+            });
+            const updatedWatchingList = await user.save();
+            res.status(200).json({ success: true, message: 'Property status updated successfully', updatedWatchingList });
+        }catch(error){
+            console.log(error);
+            res.status(500).json({message: "Server Error"});
+        }
+
+    },
+    //update an appointment date to a watching property
+    updateAppointmentDate: async (req, res)=>{
+        try{
+            //get user and property from request
+            const userId = req.parmas.userId;
+            const propertyId = req.params.propertyId;
+            const appointmentDate = req.body.appointmentDate;
+
+            //check if user exist
+            const user = await UserModel.findById(userId);
+            if(!user){
+                return res.status(404).json({message: "User not found"});
+            }
+
+            //check if property exist in user's watching list
+            const isPropertyExist = user.watchingList.some(item => item.propertyId.equals(propertyId));
+            if(!isPropertyExist){
+                return res.status(400).json({message: "Property not found in the watching list"});
+            }
+
+            //update property status in user's watching list
+            user.watchingList.forEach(item => {
+                if(item.propertyId.equals(propertyId)){
+                    item.appointmentDate = appointmentDate;
+                }
+            });
+            const updatedWatchingList = await user.save();
+            res.status(200).json({ success: true, message: 'Appointment date updated successfully', updatedWatchingList });
+        }catch(error){
+            console.log(error);
+            res.status(500).json({message: "Server Error"});
+        }
+
+    },
+
+
+
 
 };
 
