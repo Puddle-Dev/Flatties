@@ -8,7 +8,9 @@ const userController = {
             const user = await userModels.create(req.body);
             //create a new watching list for the user
             const watchingList = await watchingListModel.create({userId: user._id});
-            res.json(user, watchingList);
+            user.watchingList = watchingList._id;
+            const userWithWatchingList = await user.save();
+            res.json({user: userWithWatchingList, watchingList});
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Server Error"});
@@ -18,7 +20,7 @@ const userController = {
     getAllUser : async (req, res) => {
         try {
             const users = await userModels.find({});
-            res.json(users);
+            res.status(200).json(users);
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Server Error"});
@@ -27,7 +29,7 @@ const userController = {
     //get user by id
     getUserById : async (req, res) => {
         try {
-            const user = await userModels.findById(req.params._id);
+            const user = await userModels.findOne(req.body._id);
             if(!user){
                 return res.status(404).json({message: "User not found"});
             }
@@ -44,8 +46,10 @@ const userController = {
             const updatedUser = await userModels.findOneAndUpdate(
                 { _id: req.params._id, isActive: true }, // Ensure user is active
                 { $set: req.body },
-                { new: true } // Return the updated document
+                { new: true, useFindAndModify: false } // Return the updated document
             );
+
+            console.log(updatedUser)
 
             // Check if the user was found and updated
             if (updatedUser) {
@@ -73,7 +77,7 @@ const userController = {
         }
     },
     //deactivate user by id
-    deactivateUserById : async (req, res) => {
+    inactiveUserById : async (req, res) => {
         try {
             const user = await userModels.updateOne(
                 {_id: req.params._id},
@@ -82,7 +86,7 @@ const userController = {
             if(!user){
                 return res.status(404).json({message: "User not found"});
             }
-            res.json(user);
+            res.status(200).json(user);
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Server Error"});
@@ -124,7 +128,6 @@ const userController = {
             res.status(500).json({message: "Server Error"});
         }
     }
-
 };
 
 module.exports = userController;

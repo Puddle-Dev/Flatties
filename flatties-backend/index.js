@@ -17,7 +17,7 @@ require('dotenv').config();
 const PORT = process.env.PORT; 
 const mongodbURL = process.env.MONGODB_URL;
 
-//ininialize express app
+//initialize express app
 const express = require('express'); 
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -28,12 +28,12 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-
 //import the models
 // const user = require('./models/UserModel');
 const property = require('./models/PropertyModel');
 const listing = require('./models/ListingModel');
+const user = require('./models/UserModel');
+const watchingList = require('./models/WatchingListModel');
 
 //import the routers
 const propertyRouter = require('./routers/PropertyRouter');
@@ -41,6 +41,9 @@ app.use('/api/property', propertyRouter);
 
 const listingRouter = require('./routers/ListingRouter');
 app.use('/api/listing', listingRouter);
+
+const userRouter = require('./routers/UserRouter');
+app.use('/api/user', userRouter);
 
 // Connect to MongoDB
 mongoose.connect(mongodbURL,{

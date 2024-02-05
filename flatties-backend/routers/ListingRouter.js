@@ -11,11 +11,11 @@ router.get('/city/:city', listingController.getListingsByCity);
 //get listing by id
 router.get('/:id', listingController.getListingById);
 
-//create a new listing
-router.post('/create', listingController.createListing);
-
 //update a listing by id
 router.put('/update/:id', listingController.updateListingById);
+
+//create a new listing
+router.post('/create', listingController.createListing);
 
 //delete a listing by id
 router.delete('/delete/:id', listingController.deleteListingById);
