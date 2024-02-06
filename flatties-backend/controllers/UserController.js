@@ -1,5 +1,6 @@
 const userModels = require('../models/UserModel');
 const watchingListModel = require('../models/WatchingListModel');
+const propertyModel = require('../models/PropertyModel');
 
 const userController = {
     //create a new user
@@ -19,6 +20,7 @@ const userController = {
     //get all user
     getAllUser : async (req, res) => {
         try {
+            //get all users
             const users = await userModels.find({});
             res.status(200).json(users);
         } catch (error) {
@@ -33,7 +35,8 @@ const userController = {
             if(!user){
                 return res.status(404).json({message: "User not found"});
             }
-            res.json(user);
+            const watchingList = await watchingListModel.findOne({userId: user._id});
+            res.json({user: user, watchingList: watchingList});
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Server Error"});
@@ -127,7 +130,21 @@ const userController = {
             console.log(error);
             res.status(500).json({message: "Server Error"});
         }
-    }
+    },
+    //get all the properties that a user owns
+    getUserProperties : async (req, res) => {
+        try {
+            const user = await userModels.findOne({_id: req.params._id});
+            if(!user){
+                return res.status(404).json({message: "User not found"});
+            }
+            const properties = await propertyModel.find({ownerId: user._id});
+            res.json(properties);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message: "Server Error"});
+        }
+    },
 };
 
 module.exports = userController;

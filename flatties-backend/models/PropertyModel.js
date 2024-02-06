@@ -5,8 +5,8 @@ const PropertyModel = new mongoose.Schema({
     address: {type: String, required: true},
     city: {type: String, required: true},
     type: {type: String, required: true},
-    bedRooms: Number,
-    bathRooms: Number,
+    bedrooms: Number,
+    bathrooms: Number,
     imagesUrl: [String],
 },{
     timestamps: true,

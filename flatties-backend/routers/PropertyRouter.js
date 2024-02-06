@@ -3,10 +3,10 @@ const router = express.Router();
 const propertyController = require('../controllers/PropertyController');
 
 //get all properties
-router.get('/all', propertyController.getAllProperties);
+router.get('/all', propertyController.getAllProperties);    //test passed
 
 //get properties by city
-router.get('/city/:city', propertyController.getPropertiesByCity);
+router.get('/city/:city', propertyController.getPropertiesByCity);  //test passed
 
 //update a property by id
 router.put('/update/:id', propertyController.updatePropertyById);
