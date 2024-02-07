@@ -1,4 +1,6 @@
 import React, {useState, ChangeEvent, FormEvent} from "react";
+import axios  from "../../services/api";
+
 import NavBar from "../../components/layout/navBar/NavBar";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -93,7 +95,22 @@ function RegisterPage() {
     //to handle form submission
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // Log user info to the console, delete this line before deploying to production
         console.log('Form Data:', userInfo);
+
+        // if (!isValidUserInfo(userInfo)) {
+        //     console.error('Invalid user info:', userInfo);
+        //     return;
+        // }
+
+        // Save user info to the backend
+        axios.post('/user/create', userInfo)
+            .then((response) => {
+                console.log('User info saved:', response.data);
+            })
+            .catch((error) => {
+                console.error('Failed to save user info:', error);
+            });
     };
 
     //return the form

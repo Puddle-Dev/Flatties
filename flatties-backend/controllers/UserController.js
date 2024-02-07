@@ -5,17 +5,19 @@ const propertyModel = require('../models/PropertyModel');
 const userController = {
     //create a new user
     createUser : async (req, res) => {
-        try {
-            const user = await userModels.create(req.body);
-            //create a new watching list for the user
-            const watchingList = await watchingListModel.create({userId: user._id});
-            user.watchingList = watchingList._id;
-            const userWithWatchingList = await user.save();
-            res.json({user: userWithWatchingList, watchingList});
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({message: "Server Error"});
-        }
+        console.log("createUser api called");
+        console.log(req.body);
+        // try {
+        //     const user = await userModels.create(req.body);
+        //     //create a new watching list for the user
+        //     const watchingList = await watchingListModel.create({userId: user._id});
+        //     user.watchingList = watchingList._id;
+        //     const userWithWatchingList = await user.save();
+        //     res.json({user: userWithWatchingList, watchingList});
+        // } catch (error) {
+        //     console.log(error);
+        //     res.status(500).json({message: "Server Error"});
+        // }
     },
     //get all user
     getAllUser : async (req, res) => {
