@@ -1,127 +1,238 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, {useState, ChangeEvent, FormEvent} from "react";
 import NavBar from "../../components/layout/navBar/NavBar";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
-import { InputLabel, OutlinedInput } from "@mui/material";
+import {InputLabel, OutlinedInput} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select, {SelectChangeEvent} from "@mui/material/Select";
 import Button from "@mui/material/Button";
-
-interface FormData {
-  firstname: string;
-  lastname: string;
-  email: string;
-  dob: string;
-  username: string;
-  gender: string;
-  phone: string;
-  ethnicity: string;
-  password: string;
-}
+import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import Stack from "@mui/material/Stack";
+import UserInfo from "../../models/UserInfo";
 
 function RegisterPage() {
-  const [formData, setFormData] = useState<FormData>({
-    firstname: "",
-    lastname: "",
-    email: "",
-    dob: "",
-    username: "",
-    gender: "",
-    phone: "",
-    ethnicity: "",
-    password: "",
-  });
+    //initial user info
+    const generateInitialUserInfo = (): UserInfo => {
+        // const initialUserInfo: UserInfo = {} as UserInfo;
+        // Object.keys(initialUserInfo).forEach((key) => {
+        //     if (key === 'dob') {
+        //         initialUserInfo[key as keyof UserInfo] = null;
+        //     } else {
+        //         initialUserInfo[key as keyof UserInfo] = '';
+        //     }
+        // });
+        return {
+            userName: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            gender: '',
+            dob: null,
+            password: '',
+        };
+    };
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    //to store user info
+    const [userInfo, setUserInfo] = useState<UserInfo>(generateInitialUserInfo());
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Perform form submission logic here using formData
-    console.log("Form submitted:", formData);
-    // You can send the form data to an API or perform other actions
-  };
+    //to handle user input
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const { id, value } = e.target;
+        setUserInfo((prevState) => ({
+            ...prevState,
+            [id]: value,
+        }));
+    };
 
-  const [gender, setGender] = React.useState("");
+    //to handle date input
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUserInfo((prevState) => ({
+            ...prevState,
+            dob: new Date(event.target.value),
+        }));
+    };
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
-    setGender(event.target.value);
-  };
+    //get selected gender
+    const [selectedGender, setSelectedGender] = useState<string>("");
+    const handleCustomGenderChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const { value } = e.target;
+        setUserInfo((prevState) => ({
+            ...prevState,
+            customGender: value,
+        }));
+    };
 
-  const todayDate: string = new Date().toLocaleDateString();
+    //to store confirm password
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordMatch, setPasswordMatch] = useState(true);
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {value} = e.target;
+        setUserInfo(prevState => ({
+            ...prevState,
+            password: value,
+        }));
+        setPasswordMatch(value === confirmPassword);
+    };
 
-  return (
-    <div className="RegisterPage">
-      <form onSubmit={handleSubmit}>
-        <Box
-          component="form"
-          sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            <TextField id="outlined-helperText" label="First Name"></TextField>
-            <TextField id="outlined-helperText" label="Last Name"></TextField>
-          </div>
-          <div>
-            <TextField id="outlined-helperText" label="Email"></TextField>
-            <TextField
-              id="outlined-password-input"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-            />
-          </div>
+    const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {value} = e.target;
+        setConfirmPassword(value);
+        setPasswordMatch(userInfo.password === value);
+    };
 
-          <div>
-            <TextField
-              id="outlined-required"
-              label=""
-              type="date"
-              placeholder={todayDate}
-              helperText="Date of Birth"
-            ></TextField>
-            <FormControl required sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-required-label">
-                Gender
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-required-label"
-                id="demo-simple-select-required"
-                value={gender}
-                label="Gender *"
-                onChange={handleSelectChange}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Female</MenuItem>
-                <MenuItem value={20}>Male</MenuItem>
-                <MenuItem value={30}>Other</MenuItem>
-                <MenuItem value={30}>Prefer not to say</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
+    //to handle form submission
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log('Form Data:', userInfo);
+    };
 
-          <div>
-            <TextField id="outlined-helperText" label="Phone"></TextField>
-            <TextField id="outlined-helperText" label="Ethnicity"></TextField>
-          </div>
+    //return the form
+    return (
+        <form onSubmit={handleSubmit}>
+            <Stack spacing={2} alignItems="center" justifyContent="center">
+                <h3>Basic Information</h3>
+                <FormControl>
+                    <TextField
+                        id="firstName"
+                        label="First Name"
+                        variant="standard"
+                        margin="normal"
+                        value={userInfo.firstName}
+                        onChange={handleChange}
+                        required={true}
+                    />
+                    <TextField
+                        id="lastName"
+                        label="Last Name"
+                        variant="standard"
+                        margin="normal"
+                        value={userInfo.lastName}
+                        onChange={handleChange}
+                        required={true}
+                    />
+                    <TextField
+                        id="email"
+                        label="Email"
+                        variant="standard"
+                        margin="normal"
+                        value={userInfo.email}
+                        onChange={handleChange}
+                        required={true}
+                    />
+                    <TextField
+                        id="phone"
+                        label="Phone"
+                        variant="standard"
+                        margin="normal"
+                        value={userInfo.phone}
+                        onChange={handleChange}
+                        required={true}
+                    />
+                    <TextField
+                        id="gender"
+                        label="Gender"
+                        variant="standard"
+                        margin="normal"
+                        select
+                        required={true}
+                        value={userInfo.gender}
+                        onChange={(e) => {
+                            setSelectedGender(e.target.value);
+                            setUserInfo((prevState) => ({
+                                ...prevState,
+                                gender: e.target.value,
+                            }));
+                        }}
+                    >
+                        <MenuItem value={"Male"}>Male</MenuItem>
+                        <MenuItem value={"Female"}>Female</MenuItem>
+                        <MenuItem value={"custom"}>Input my Identity</MenuItem>
+                        <MenuItem value={"Prefer not to say"}>Prefer not to say</MenuItem>
+                    </TextField>
+                    {selectedGender === 'custom' && (
+                        <TextField
+                            id="customGender"
+                            label="Indentity"
+                            variant="standard"
+                            margin="normal"
+                            required={true}
+                            value={userInfo.gender}
+                            onChange={handleCustomGenderChange}
+                        />
+                    )}
 
-          <Button variant="contained">Sign Up</Button>
-        </Box>
-      </form>
-    </div>
-  );
+                    {/*<LocalizationProvider dateAdapter={AdapterDayjs} >*/}
+                    {/*    <DemoContainer components={['DatePicker']} >*/}
+                    {/*        <DatePicker*/}
+                    {/*            label="Birthday"*/}
+                    {/*            value={userInfo.dob}*/}
+                    {/*            onChange={handleDateChange}*/}
+                    {/*        />*/}
+                    {/*    </DemoContainer>*/}
+                    {/*</LocalizationProvider>*/}
+
+                    <TextField
+                        label="Birthday"
+                        variant="standard"
+                        type="date"
+                        margin="normal"
+                        // defaultValue="2017-05-24"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        // value={userInfo.dob}
+                        onChange={handleDateChange}
+                    />
+                    <br/>
+                    <h3>Login Information</h3>
+
+                    <TextField
+                        id="userName"
+                        label="Username"
+                        variant="standard"
+                        margin="normal"
+                        value={userInfo.userName}
+                        onChange={handleChange}
+                        required={true}
+                    />
+                    <TextField
+                        id="password"
+                        label="Password"
+                        variant="standard"
+                        margin="normal"
+                        type="password"
+                        value={userInfo.password}
+                        onChange={handlePasswordChange}
+                        required={true}
+                    />
+                    <TextField
+                        id="confirmPassword"
+                        label="Confirm Password"
+                        variant="standard"
+                        margin="normal"
+                        type="password"
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                        error={!passwordMatch}
+                        helperText={!passwordMatch ? 'Passwords do not match' : ''}
+                        required={true}
+                    />
+                    <br/>
+                    <Button variant="contained" color="primary" type="submit">Register</Button>
+                </FormControl>
+            </Stack>
+        </form>
+    );
 }
 
 export default RegisterPage;
