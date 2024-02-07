@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import LOGO from "../../../assets/images/AUT-logo-block.jpg";
-import { Avatar, Stack, Paper, IconButton, ListItemIcon, Typography } from "@mui/material";
+import LOGO from "../../../assets/images/flatties-long.png";
+import { Stack, Paper, IconButton, ListItemIcon, Typography } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import { Link, NavLink } from "react-router-dom";
 import LoginModal from "../login/Login"; // Import the LoginModal component
@@ -17,7 +17,7 @@ function NavBar() {
   };
 
   return (
-    <Paper elevation={3} square={false} style={{ padding: "10px" }}>
+    <Paper elevation={3} square={false} style={{ padding: "10px", backgroundColor:"#F2F6F9"}}>
       <Stack className="Container" direction="column">
         <Stack className="Container-top" direction="row" borderBottom={1} justifyContent={"space-between"}>
           {/* top-left part */}
@@ -26,13 +26,12 @@ function NavBar() {
               src={LOGO}
               alt="LOGO"
               style={{
-                width: "20%",
+                // width: "20%",
                 maxWidth: "400px",
                 height: "auto",
                 marginRight: "10px",
               }}
             />
-            <h1>Flatties</h1>
           </Stack>
           {/* top-right part */}
           <Stack className="Container-right" direction="row-reverse" spacing={2}>

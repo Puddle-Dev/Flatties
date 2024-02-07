@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Link, Tab, IconButton } from "@mui/material";
+import { Typography, Tab, IconButton } from "@mui/material";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 function Footer() {
