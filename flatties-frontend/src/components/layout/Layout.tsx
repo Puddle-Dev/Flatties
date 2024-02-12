@@ -9,15 +9,15 @@ import { Paper } from "@mui/material";
 function Layout() {
   return (
     <div className="container">
-      <header>
+      <header className="maxContainer">
         <NavBar />
       </header>
-      <main>
+      <main className="maxContainer">
         <Paper elevation={3} square={false} style={{ padding: "8px" }}>
         <Outlet />
         </Paper>
       </main>
-      <footer>
+      <footer className="maxContainer">
         <Footer />
       </footer>
     </div>

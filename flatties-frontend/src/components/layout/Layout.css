@@ -1,3 +1,8 @@
+:root {
+  --var-active: #1976d2;
+  --var-linkedin-logo: #1976d2;
+}
+
 * {
   box-sizing: border-box;
   text-align: center;
@@ -5,13 +10,28 @@
   padding: 0;
 }
 
+a:visited {
+  color: inherit;
+}
+
 .container {
   min-height: 100vh;
+
   display: flex; 
   flex-direction: column; 
   background-color: #9DB2BF;
+  row-gap: 8px;
 }
+.maxContainer{
+  max-width: 1200px;
+  width: 100%;
+  margin:0 auto;
+  box-shadow: 1px -1px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 1px -1px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 1px -1px 5px 0px rgba(0,0,0,0.75);
+border-radius: 8px;
 
+}
 header, footer {
   color: #FFF;
   padding: 20px;
@@ -22,7 +42,40 @@ header {
   color: #FFFFFF;
   /*color: #F2F6F9;*/
 
+
 }
+
+header a{
+  /* color: #F2F6F9; */
+  text-decoration: none;
+  /* margin: 0 10px; */
+  
+  position: relative;
+}
+
+header a.active{
+  color: var(--var-active);
+}
+
+header a.active:before {
+  width: 100%;
+}
+
+header a:before{
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  background: var(--var-active);
+  width: 0;
+  height: 2px;
+  transition: all 0.2s;
+}
+
+header a:hover:before {
+  width: 100%;
+}
+
 main {
   /* min-height: 100vh; */
   flex: 1;
@@ -33,11 +86,15 @@ main {
   width: 100%;
   /*max-width: 120vh;*/
   /*min-width: 100vh;*/
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
 }
 footer {
   margin-top: auto;
   background-color: #333333;
   color: #FFFFFF;
+}
+
+footer a:visited {
+  color: var(--var-linkedin-logo);
 }
