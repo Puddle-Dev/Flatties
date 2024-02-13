@@ -2,9 +2,9 @@ interface UserInfo{
     userName: string;
     firstName: string;
     lastName: string;
+    gender: string;
     email: string;
     phone: string;
-    gender: string;
     dob: Date | null;
     password: string;
 }

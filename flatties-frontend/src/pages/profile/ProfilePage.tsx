@@ -1,60 +1,92 @@
-import React, { useState } from "react";
-import NavBar from "../../components/layout/navBar/NavBar";
+import React, { useEffect, useState } from "react";
 import profilePic from "../../assets/images/flatties-icon-logo.png"
 import "./ProfilePage.css";
+import UserInfo from "../../models/UserInfo";
+import axios from "../../services/api";
+import { Button } from "@mui/material";
+
 
 function ProfilePage() {
-  // const [editable, setEditable] = useState(false);
-  // const [text, setText] = useState("Add a Bio");
 
-  // const handleEditToggle = () => {
-  //   setEditable(!editable);
-  // };
+  const generateInitialUserInfo = (): UserInfo => {
+    return {
+        userName: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        gender: '',
+        dob: null,
+        password: '',
+    };
+};
 
-  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setText(event.target.value);
-  // };
+  const [userInfo, setUser] = useState(generateInitialUserInfo());
+
+  const userId = "65c09432e170a2d423c030a3";
+  useEffect(() => {
+    axios.get('/user/'+userId)
+      .then((res) => {
+        setUser(res.data.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  
+  
 
   return (
     <div className="userProfile clearfix">
-      <div className="topRow">
 
-        <div className="leftColumn">
-          <div className="userInformation">
-            {/* <h2>User Information</h2> */}
-            <img src={profilePic} alt="Profile Picture" />
-            <div className="userInfo">
-              <h3>User Name:</h3>
-              <p>wsking233</p>
-            </div>
-            <div className="userInfo">
-              <h3>Introduction:</h3>
-              <p>Here should be some description about yourself</p>
-            </div>
+      <div className="topRow">
+        <div className="userInformation">
+          {/* <h2>User Information</h2> */}
+          <img src={profilePic} alt="Profile Picture" />
+          <div className="userInfo">
+            <h3>User Name:</h3>
+            <p>{userInfo? userInfo.userName : 'Loading'}</p>
           </div>
+          <div className="userInfo">
+            <h3>Introduction:</h3>
+            <p>Here should be some description about yourself</p>
+          </div>
+        </div>
+        <hr />
+      </div>
+
+      <div className="downRow">
+        <div className="leftColumn">
+
           <div className="userDetail">
             {/* <h2>Personal Details</h2> */}
             <div className="userInfo">
               <h3>First Name:</h3>
-              <p>William</p>
+              <p>{userInfo? userInfo.firstName : 'Loading'}</p>
             </div>
             <div className="userInfo">
               <h3>Last Name:</h3>
-              <p>Wang</p>
+              <p>{userInfo? userInfo.lastName : 'Loading'}</p>
+            </div>
+            <div>
+              <h3>Gender:</h3>
+              <p>{userInfo? userInfo.gender : 'Loading'}</p>
             </div>
             <div className="userInfo">
-              <h3>Phone:</h3>
-              <p>1234567</p>
+              <h3>Date of Birth:</h3>
+              <p>{userInfo? userInfo.dob?.toString() : 'Loading'}</p>
             </div>
             <div className="userInfo">
               <h3>Email:</h3>
-              <p>wsking233@gmail.com</p>
+              <p>{userInfo? userInfo.email : 'Loading'}</p>
             </div>
             <div className="userInfo">
-              <h3>Address:</h3>
-              <p>40 Sussex St, Grey Lynn</p>
+              <h3>Phone:</h3>
+              <p>{userInfo? userInfo.phone : 'Loading'}</p>
             </div>
           </div>
+          <Button variant="contained" >Edit</Button>
+
         </div>
         <div className="rightColumn">
           <div className="userPreference">
@@ -72,12 +104,10 @@ function ProfilePage() {
               <p>$500 - $800</p>
             </div>
           </div>
+          <Button variant="contained" >Edit</Button>
         </div>
       </div>
-      
-      <div className="buttonRow">
-        <button>Edit</button>
-      </div>
+
 
 
     </div>

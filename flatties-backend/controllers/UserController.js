@@ -32,6 +32,8 @@ const userController = {
     },
     //get user by id
     getUserById : async (req, res) => {
+        console.log("getUserById api called with id:");
+        console.log(req.params);
         try {
             const user = await userModels.findOne(req.body._id);
             if(!user){
@@ -39,6 +41,7 @@ const userController = {
             }
             const watchingList = await watchingListModel.findOne({userId: user._id});
             res.json({user: user, watchingList: watchingList});
+            console.log("User data sent to client");
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Server Error"});
