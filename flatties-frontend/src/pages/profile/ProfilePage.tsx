@@ -4,11 +4,12 @@ import "./ProfilePage.css";
 import UserInfo from "../../models/UserInfo";
 import axios from "../../services/api";
 import { Button } from "@mui/material";
+import { redirect } from "react-router-dom";
 
 
 function ProfilePage() {
 
-  const generateInitialUserInfo = (): UserInfo => {
+  const initialUserInfo = (): UserInfo => {
     return {
         userName: '',
         firstName: '',
@@ -21,7 +22,7 @@ function ProfilePage() {
     };
 };
 
-  const [userInfo, setUser] = useState(generateInitialUserInfo());
+  const [userInfo, setUser] = useState(initialUserInfo());
 
   const userId = "65d2e627dff97ae74e2c85c8";
   useEffect(() => {

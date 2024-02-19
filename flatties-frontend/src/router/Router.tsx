@@ -19,6 +19,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/listing" element={<ListingPage />} />
           <Route path="/register" element={<RegisterPage />} />
