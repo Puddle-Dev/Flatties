@@ -23,7 +23,7 @@ function ProfilePage() {
 
   const [userInfo, setUser] = useState(generateInitialUserInfo());
 
-  const userId = "65c09432e170a2d423c030a3";
+  const userId = "65d2e627dff97ae74e2c85c8";
   useEffect(() => {
     axios.get('/user/'+userId)
       .then((res) => {

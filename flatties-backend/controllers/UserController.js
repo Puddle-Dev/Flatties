@@ -3,21 +3,46 @@ const watchingListModel = require('../models/WatchingListModel');
 const propertyModel = require('../models/PropertyModel');
 
 const userController = {
+    //login
+    login : async (req, res) => {
+        console.log("login api called");
+        console.log(req.body);
+        try {
+            const user = await userModels.findOne({email: req.body.email});
+
+            if(!user){
+                return res.status(404).json({message: "User not found"});
+            }
+
+            if(req.body.password !== user.password){
+                console.log("Password is incorrect");
+                return res.status(400).json({message: "Password is incorrect"});
+            }
+
+            res.status(200).json({message: "Login successful"});
+            console.log("Login successful");
+
+        } catch (error) {
+            console.log(error + " at login controller");
+            res.status(500).json({message: "Server Error"});
+        }
+    },
+
     //create a new user
     createUser : async (req, res) => {
         console.log("createUser api called");
         console.log(req.body);
-        // try {
-        //     const user = await userModels.create(req.body);
-        //     //create a new watching list for the user
-        //     const watchingList = await watchingListModel.create({userId: user._id});
-        //     user.watchingList = watchingList._id;
-        //     const userWithWatchingList = await user.save();
-        //     res.json({user: userWithWatchingList, watchingList});
-        // } catch (error) {
-        //     console.log(error);
-        //     res.status(500).json({message: "Server Error"});
-        // }
+        try {
+            const user = await userModels.create(req.body);
+            //create a new watching list for the user
+            const watchingList = await watchingListModel.create({userId: user._id});
+            user.watchingList = watchingList._id;
+            const userWithWatchingList = await user.save();
+            res.json({user: userWithWatchingList, watchingList});
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message: "Server Error"});
+        }
     },
     //get all user
     getAllUser : async (req, res) => {
@@ -35,12 +60,13 @@ const userController = {
         console.log("getUserById api called with id:");
         console.log(req.params);
         try {
-            const user = await userModels.findOne(req.body._id);
+            const user = await userModels.findOne(req.params);
             if(!user){
                 return res.status(404).json({message: "User not found"});
             }
             const watchingList = await watchingListModel.findOne({userId: user._id});
             res.json({user: user, watchingList: watchingList});
+            console.log(user);
             console.log("User data sent to client");
         } catch (error) {
             console.log(error);
