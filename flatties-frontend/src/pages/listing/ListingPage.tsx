@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import api from "../../services/api";
 
-import { Stack, Paper, Box, List, Divider, Typography } from "@mui/material";
+import { Stack, Paper, Box, List, Grid, Typography } from "@mui/material";
 
 import PropertyInfo from "../../models/PropertyInfo";
 
 import RentalInfo from "../../models/RentalInfo";
+
+import dummyImage from "../../assets/images/flatties-icon-logo.png";
 
 function ListingPage() {
   const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
@@ -25,6 +27,22 @@ function ListingPage() {
     };
     fetchData();
   }, []);
+
+  const BedroomIcon = () => (
+    <img
+      src={dummyImage}
+      alt="Bedroom Icon"
+      style={{ width: 36, height: 36, marginRight: 8 }}
+    />
+  );
+
+  const BathroomIcon = () => (
+    <img
+      src={dummyImage}
+      alt="Bathroom Icon"
+      style={{ width: 36, height: 36, marginRight: 8 }}
+    />
+  );
 
   const combinedData = [...listingsData, ...rentalData];
   const dummyData = [
@@ -138,23 +156,68 @@ function ListingPage() {
           {dummyData.map((data, index) => (
             <Paper
               key={index}
-              sx={{ width: 500, minWidth: 250, marginBottom: "8px" }}
+              sx={{
+                width: 300,
+                marginBottom: "8px",
+                display: "inline-flex",
+                flexDirection: "row",
+              }}
             >
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
+                  alignItems: "center",
                   p: 2,
-                  fontStyle: { textAlign: "left" },
+                  textAlign: "center",
+                  backgroundColor: "rgba(255, 255, 255, 0.8)",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                 }}
               >
-                <h3>Listing Title: {data.listingTitle}</h3>
-                <h3>Asking Rent: {data.rent}</h3>
-                <h3>Address: {data.address}</h3>
-                <h3>City: {data.city}</h3>
-                <h3>Bedrooms: {data.bedRooms}</h3>
-                <h3>Bathrooms: {data.bathRooms}</h3>
+                <Typography variant="h5" gutterBottom>
+                  {data.listingTitle}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  {data.city}
+                </Typography>
+                <img
+                  src={dummyImage}
+                  alt="Property"
+                  style={{
+                    width: "100%",
+                    borderRadius: "8px",
+                    marginBottom: "16px",
+                  }}
+                />
+                <Typography variant="body1" gutterBottom>
+                  Asking Rent: {data.rent}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Address: {data.address}
+                </Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Box display="flex" alignItems="center">
+                      <BedroomIcon />
+                      <Typography variant="body1" gutterBottom>
+                        {data.bedRooms}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box display="flex" alignItems="center">
+                      <BathroomIcon />
+                      <Typography variant="body1" gutterBottom>
+                        {data.bathRooms}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
               </Box>
             </Paper>
           ))}
