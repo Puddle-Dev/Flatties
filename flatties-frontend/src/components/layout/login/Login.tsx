@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import axios from "../../../services/api";
 
 interface LoginModalProps {
@@ -12,6 +13,7 @@ function Login({ open, handleClose }: LoginModalProps) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate(); // Use the useHistory hook to get the history object
+const [cookies, setCookies] = useCookies(["isLoggedIn"]);
 
   // Add your login logic here
   const handleLogin = () => {
@@ -25,6 +27,8 @@ function Login({ open, handleClose }: LoginModalProps) {
     })
     .then((res) => {
       console.log("Login successful:", res.data);
+      // Set the cookie to track the login status
+      setCookies("isLoggedIn", true, { path: "/" });
       // Close the modal
       handleClose();
     })
