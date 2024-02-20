@@ -14,7 +14,7 @@ function Layout() {
       </header>
       <main className="maxContainer">
         <Paper elevation={3} square={false} style={{ padding: "8px" }}>
-        <Outlet />
+          <Outlet />
         </Paper>
       </main>
       <footer className="maxContainer">
