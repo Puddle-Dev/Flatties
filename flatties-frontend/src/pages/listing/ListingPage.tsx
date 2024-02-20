@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import axios from "axios";
+import api from "../../services/api";
 
 import { Stack, Paper, Box, Button, List } from "@mui/material";
 
@@ -12,14 +12,7 @@ function ListingPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/api/property/all",
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await api.get("/property/all");
         setListingsData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
