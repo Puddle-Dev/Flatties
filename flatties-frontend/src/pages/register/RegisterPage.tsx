@@ -11,15 +11,7 @@ import UserInfo from "../../models/UserInfo";
 
 function RegisterPage() {
     //initial user info
-    const generateInitialUserInfo = (): UserInfo => {
-        // const initialUserInfo: UserInfo = {} as UserInfo;
-        // Object.keys(initialUserInfo).forEach((key) => {
-        //     if (key === 'dob') {
-        //         initialUserInfo[key as keyof UserInfo] = null;
-        //     } else {
-        //         initialUserInfo[key as keyof UserInfo] = '';
-        //     }
-        // });
+    const initialUserInfo = (): UserInfo => {
         return {
             userName: '',
             firstName: '',
@@ -33,7 +25,7 @@ function RegisterPage() {
     };
 
     //to store user info
-    const [userInfo, setUserInfo] = useState<UserInfo>(generateInitialUserInfo());
+    const [userInfo, setUserInfo] = useState<UserInfo>(initialUserInfo());
 
     //to handle user input
     const handleChange = (
@@ -98,6 +90,10 @@ function RegisterPage() {
         // Save user info to the backend
         axios.post('/user/create', userInfo)
             .then((response) => {
+                // window.alert('User info saved');
+                if(window.confirm("User info saved")){
+                    window.location.href = "/home";
+                }
                 console.log('User info saved:', response.data);
             })
             .catch((error) => {
