@@ -37,124 +37,103 @@ function ListingPage() {
   const combinedData = [...listingsData, ...rentalData];
 
   return (
-    <div>
-      <Stack direction={"row"} spacing={1}>
-        <List
+    <div
+      style={
+        {
+          maxWidth: "1200px",
+          width:"100%",
+          padding: "20px",
+          margin: "0 auto",
+        }
+      }
+    >
+      <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        rowGap: "8px",
+        columnGap: "8px",
+      }}
+      >
+        
+      {DummyData.map((data, index) => (
+        <Box
           sx={{
             display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "flex-start",
-            columnGap: "16px",
-            rowGap: "16px",
+            width: "250px",
+            flexDirection: "column",
+            p: 2,
+            textAlign: "center",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
           }}
         >
-          {DummyData.map((data, index) => (
-            <div
-              style={{
-                width: "250px",
-                marginBottom: "8px",
-                display: "inline-flex",
-                flexDirection: "row",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  p: 2,
-                  textAlign: "center",
-                  backgroundColor: "rgba(255, 255, 255, 0.8)",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                <Typography variant="h5" gutterBottom>
-                  {data.listingTitle}
-                </Typography>
+          <Typography variant="h5" gutterBottom>
+            {data.listingTitle}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            gutterBottom
+          >
+            {data.city}
+          </Typography>
+          <img
+            src={dummyImage}
+            alt="Property"
+            style={{
+              width: "100%",
+              borderRadius: "8px",
+              marginBottom: "16px",
+            }}
+          />
+          <Typography variant="body1" gutterBottom>
+            {data.address}
+          </Typography>
+          <Grid container alignItems={"stretch"}>
+            <Grid item xs={4} alignItems={"stretch"}>
+              <Box display="flex" justifyContent="flex-start">
                 <Typography
-                  variant="subtitle1"
-                  color="textSecondary"
+                  variant="body1"
                   gutterBottom
+                  style={{ fontSize: "1.5rem" }}
                 >
-                  {data.city}
+                  {data.rent}
                 </Typography>
-                <img
-                  src={dummyImage}
-                  alt="Property"
-                  style={{
-                    width: "100%",
-                    borderRadius: "8px",
-                    marginBottom: "16px",
-                  }}
-                />
-                <Typography variant="body1" gutterBottom>
-                  {data.address}
-                </Typography>
-                <Grid container alignItems={"stretch"}>
-                  <Grid item xs={4} alignItems={"stretch"}>
-                    <Box display="flex" justifyContent="flex-start">
-                      <Typography
-                        variant="body1"
-                        gutterBottom
-                        style={{ fontSize: "1.5rem" }}
-                      >
-                        {data.rent}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={8}
-                    container
-                    justifyContent="flex-end"
-                    alignItems={"center"}
-                  >
-                    <Grid item xs={4}>
-                      <Box display="flex" justifyContent="flex-end">
-                        <BathroomIcon />
-                        <Typography variant="body1" gutterBottom>
-                          {data.bedRooms}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Box display="flex" justifyContent="flex-end">
-                        <BedIcon />
-                        <Typography variant="body1" gutterBottom>
-                          {data.bathRooms}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Grid>
               </Box>
-            </div>
-          ))}
-          {/* {combinedData.map((data, index) => (
-            <Paper
-              key={(data as PropertyInfo)._id}
-              sx={{ width: 500, minWidth: 250, marginBottom: "8px" }}
+            </Grid>
+            <Grid
+              item
+              xs={8}
+              container
+              justifyContent="flex-end"
+              alignItems={"center"}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  p: 2,
-                  fontStyle: { textAlign: "left" },
-                }}
-              >
-                <h3>Listing Title: {(data as RentalInfo).listingTitle}</h3>
-                <h3>Asking Rent: {(data as RentalInfo).rent}</h3>
-                <h3>Address: {(data as PropertyInfo).address}</h3>
-                <h3>City: {(data as PropertyInfo).city}</h3>
-                <h3>Bedrooms: {(data as PropertyInfo).bedRooms}</h3>
-                <h3>Bathrooms: {(data as PropertyInfo).bathRooms}</h3>
-              </Box>
-            </Paper>
-          ))} */}
-        </List>
-      </Stack>
+              <Grid item xs={4}>
+                <Box display="flex" justifyContent="flex-end">
+                  <BathroomIcon />
+                  <Typography variant="body1" gutterBottom>
+                    {data.bedRooms}
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box display="flex" justifyContent="flex-end">
+                  <BedIcon />
+                  <Typography variant="body1" gutterBottom>
+                    {data.bathRooms}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Box>
+        
+      ))}
+            </div>
+
     </div>
   );
 }
