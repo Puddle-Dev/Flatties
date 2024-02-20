@@ -39,7 +39,6 @@ function ProfilePage() {
 
   return (
     <div className="userProfile clearfix">
-
       <div className="topRow">
         <div className="userInformation">
           {/* <h2>User Information</h2> */}
@@ -57,10 +56,7 @@ function ProfilePage() {
       </div>
 
       <div className="downRow">
-        <div className="leftColumn">
-
           <div className="userDetail">
-            {/* <h2>Personal Details</h2> */}
             <div className="userInfo">
               <h3>First Name:</h3>
               <p>{userInfo? userInfo.firstName : 'Loading'}</p>
@@ -85,31 +81,9 @@ function ProfilePage() {
               <h3>Phone:</h3>
               <p>{userInfo? userInfo.phone : 'Loading'}</p>
             </div>
-          </div>
           <Button variant="contained" >Edit</Button>
-
-        </div>
-        <div className="rightColumn">
-          <div className="userPreference">
-            <h2>Preference</h2>
-            <div className="userInfo">
-              <h3>Looking for:</h3>
-              <p>3-bedroom apartment</p>
-            </div>
-            <div className="userInfo">
-              <h3>Location:</h3>
-              <p>Auckland</p>
-            </div>
-            <div className="userInfo">
-              <h3>Price:</h3>
-              <p>$500 - $800</p>
-            </div>
           </div>
-          <Button variant="contained" >Edit</Button>
-        </div>
       </div>
-
-
 
     </div>
 
