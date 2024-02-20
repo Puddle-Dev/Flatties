@@ -16,6 +16,9 @@ import BedIcon from "@mui/icons-material/Bed";
 
 import DummyData from "./dummyData.json";
 
+import ListingCard from "./ListingCard";
+import "./ListingPage.css";
+
 function ListingPage() {
   const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
   const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
@@ -37,37 +40,37 @@ function ListingPage() {
   const combinedData = [...listingsData, ...rentalData];
 
   return (
-    <div
-      style={
-        {
-          maxWidth: "1200px",
-          width:"100%",
-          padding: "20px",
-          margin: "0 auto",
-        }
+
+    <div className="listingContainer">
+
+      {
+        DummyData.map((data) => (
+          <ListingCard {...data} />
+        ))
       }
-    >
-      <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        rowGap: "8px",
-        columnGap: "8px",
-      }}
-      >
-        
-      {DummyData.map((data, index) => (
+    </div>
+  );
+}
+
+export default ListingPage;
+
+
+
+{/* {DummyData.map((data, index) => (
         <Box
           sx={{
             display: "flex",
-            width: "250px",
+            minWidth: "250px",
+            maxWidth: "250px",
+            // width:"250px",
+            width: "100%",
             flexDirection: "column",
             p: 2,
             textAlign: "center",
             backgroundColor: "rgba(255, 255, 255, 0.8)",
             borderRadius: "8px",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            flex: 1,
           }}
         >
           <Typography variant="h5" gutterBottom>
@@ -130,12 +133,5 @@ function ListingPage() {
             </Grid>
           </Grid>
         </Box>
-        
-      ))}
-            </div>
 
-    </div>
-  );
-}
-
-export default ListingPage;
+      ))} */}
