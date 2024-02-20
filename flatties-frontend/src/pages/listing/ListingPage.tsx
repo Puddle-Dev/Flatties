@@ -10,6 +10,10 @@ import RentalInfo from "../../models/RentalInfo";
 
 import dummyImage from "../../assets/images/flatties-icon-logo.png";
 
+import BathroomIcon from "@mui/icons-material/Bathroom";
+
+import BedIcon from "@mui/icons-material/Bed";
+
 function ListingPage() {
   const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
   const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
@@ -27,22 +31,6 @@ function ListingPage() {
     };
     fetchData();
   }, []);
-
-  const BedroomIcon = () => (
-    <img
-      src={dummyImage}
-      alt="Bedroom Icon"
-      style={{ width: 36, height: 36, marginRight: 8 }}
-    />
-  );
-
-  const BathroomIcon = () => (
-    <img
-      src={dummyImage}
-      alt="Bathroom Icon"
-      style={{ width: 36, height: 36, marginRight: 8 }}
-    />
-  );
 
   const combinedData = [...listingsData, ...rentalData];
   const dummyData = [
@@ -140,8 +128,6 @@ function ListingPage() {
 
   return (
     <div>
-      <Typography variant="h4">Current Listings</Typography>
-
       <Stack
         direction={"row"}
         spacing={1}
@@ -167,7 +153,6 @@ function ListingPage() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "center",
                   p: 2,
                   textAlign: "center",
                   backgroundColor: "rgba(255, 255, 255, 0.8)",
@@ -195,27 +180,43 @@ function ListingPage() {
                   }}
                 />
                 <Typography variant="body1" gutterBottom>
-                  Asking Rent: {data.rent}
+                  {data.address}
                 </Typography>
-                <Typography variant="body1" gutterBottom>
-                  Address: {data.address}
-                </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <Box display="flex" alignItems="center">
-                      <BedroomIcon />
-                      <Typography variant="body1" gutterBottom>
-                        {data.bedRooms}
+                <Grid container alignItems={"stretch"}>
+                  <Grid item xs={4} alignItems={"stretch"}>
+                    <Box display="flex" justifyContent="flex-start">
+                      <Typography
+                        variant="body1"
+                        gutterBottom
+                        style={{ fontSize: "1.5rem" }}
+                      >
+                        {data.rent}
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Box display="flex" alignItems="center">
-                      <BathroomIcon />
-                      <Typography variant="body1" gutterBottom>
-                        {data.bathRooms}
-                      </Typography>
-                    </Box>
+                  <Grid
+                    item
+                    xs={8}
+                    container
+                    justifyContent="flex-end"
+                    alignItems={"center"}
+                  >
+                    <Grid item xs={4}>
+                      <Box display="flex" justifyContent="flex-end">
+                        <BathroomIcon />
+                        <Typography variant="body1" gutterBottom>
+                          {data.bedRooms}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Box display="flex" justifyContent="flex-end">
+                        <BedIcon />
+                        <Typography variant="body1" gutterBottom>
+                          {data.bathRooms}
+                        </Typography>
+                      </Box>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Box>
