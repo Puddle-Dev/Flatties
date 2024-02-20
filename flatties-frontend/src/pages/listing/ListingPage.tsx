@@ -2,18 +2,23 @@ import React, { useState, useEffect } from "react";
 
 import api from "../../services/api";
 
-import { Stack, Paper, Box, Button, List } from "@mui/material";
+import { Stack, Paper, Box, List, Divider, Typography } from "@mui/material";
 
 import PropertyInfo from "../../models/PropertyInfo";
 
+import RentalInfo from "../../models/RentalInfo";
+
 function ListingPage() {
   const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
+  const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("/property/all");
-        setListingsData(response.data);
+        const propertiesResponse = await api.get("/property/all");
+        const listingResponse = await api.get("/listing/all");
+        setListingsData(propertiesResponse.data);
+        setRentalData(listingResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -21,11 +26,11 @@ function ListingPage() {
     fetchData();
   }, []);
 
+  const combinedData = [...listingsData, ...rentalData];
+
   return (
     <div>
-      <div>
-        <h1>Properties Page</h1>
-      </div>
+      <Typography variant="h4">Current Listings</Typography>
 
       <Stack
         direction={"row"}
@@ -38,9 +43,9 @@ function ListingPage() {
         }}
       >
         <List>
-          {listingsData.map((property, index) => (
+          {combinedData.map((data, index) => (
             <Paper
-              key={property._id}
+              key={(data as PropertyInfo)._id}
               sx={{ width: 500, minWidth: 250, marginBottom: "8px" }}
             >
               <Box
@@ -52,12 +57,12 @@ function ListingPage() {
                   fontStyle: { textAlign: "left" },
                 }}
               >
-                <h3>Index:{index + 1} </h3>
-                <h3>Property ID: {property._id}</h3>
-                <h3>City: {property.city}</h3>
-                <h3>Property Type: {property.propertyType}</h3>
-                <h3>BedRooms: {property.bedRooms}</h3>
-                <h3>BathRooms: {property.bathRooms}</h3>
+                <h3>Listing Title: {(data as RentalInfo).listingTitle}</h3>
+                <h3>Asking Rent: {(data as RentalInfo).rent}</h3>
+                <h3>Address: {(data as PropertyInfo).address}</h3>
+                <h3>City: {(data as PropertyInfo).city}</h3>
+                <h3>Bedrooms: {(data as PropertyInfo).bedRooms}</h3>
+                <h3>Bathrooms: {(data as PropertyInfo).bathRooms}</h3>
               </Box>
             </Paper>
           ))}
