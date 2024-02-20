@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "../../../services/api";
 
 interface LoginModalProps {
   open: boolean;
@@ -16,6 +17,21 @@ function Login({ open, handleClose }: LoginModalProps) {
   const handleLogin = () => {
     // Implement your login logic using email and password
     console.log("Logging in with:", email, password);
+
+    // Send a POST request to the server
+    axios.post("/user/login", {
+      email: email,
+      password: password,
+    })
+    .then((res) => {
+      console.log("Login successful:", res.data);
+      // Close the modal
+      handleClose();
+    })
+    .catch((err) => {
+      console.log("Login failed:", err);
+    });
+
   };
 
   const handleRegisterClick = () => {

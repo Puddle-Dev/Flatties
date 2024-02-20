@@ -30,6 +30,9 @@ router.put('/inactive/:_id', userController.inactiveUserById);  //test passed
 //update a property in a watching list
 router.put('/:_id/updateProperty', watchingListController.updateWatchingProperty);
 
+//login
+router.post('/login', userController.login);   //test passed
+
 //create a new user
 router.post('/create', userController.createUser);  //test passed
 
