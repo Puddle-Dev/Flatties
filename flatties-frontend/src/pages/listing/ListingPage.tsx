@@ -5,10 +5,13 @@ import RentalInfo from "../../models/RentalInfo";
 import DummyData from "./dummyData.json";
 import ListingCard from "./ListingCard";
 import "./ListingPage.css";
+import { Pagination } from "@mui/material";
 
 function ListingPage() {
   const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
   const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(12);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,13 +27,32 @@ function ListingPage() {
     fetchData();
   }, []);
 
-  const combinedData = [...listingsData, ...rentalData];
+  // const combinedData = [...listingsData, ...rentalData];
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = DummyData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="listingContainer">
-      {DummyData.map((data) => (
-        <ListingCard {...data} />
-      ))}
+    <div>
+      <div className="listingContainer">
+        {currentItems.map((data) => (
+          <ListingCard {...data} key={data._id} />
+        ))}
+      </div>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+      >
+        <Pagination
+          count={Math.ceil(DummyData.length / itemsPerPage)}
+          onChange={(event, value) => paginate(value)}
+          color="primary"
+          size="large"
+          showFirstButton
+          showLastButton
+        />
+      </div>
     </div>
   );
 }

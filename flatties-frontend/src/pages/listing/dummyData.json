@@ -88,5 +88,536 @@
     "city": "Auckland",
     "bedRooms": 3,
     "bathRooms": 2
+  },
+  {
+    "_id": "11",
+    "listingTitle": "Beautiful Villa with Ocean View",
+    "rent": "$6000",
+    "address": "1 Oceanview Drive",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 3
+  },
+  {
+    "_id": "12",
+    "listingTitle": "Rustic Cabin in the Woods",
+    "rent": "$1200",
+    "address": "5 Forest Lane",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "13",
+    "listingTitle": "Mountain Retreat with Stunning Views",
+    "rent": "$3000",
+    "address": "10 Summit Way",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "14",
+    "listingTitle": "Historic Mansion in the Heart of Auckland",
+    "rent": "$8000",
+    "address": "1 Heritage Street",
+    "city": "Auckland",
+    "bedRooms": 6,
+    "bathRooms": 4
+  },
+  {
+    "_id": "15",
+    "listingTitle": "Urban Loft with Industrial Charm",
+    "rent": "$2200",
+    "address": "25 Industrial Avenue",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 2
+  },
+  {
+    "_id": "16",
+    "listingTitle": "Secluded Beach House with Private Access",
+    "rent": "$4000",
+    "address": "5 Seaside Lane",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 3
+  },
+  {
+    "_id": "17",
+    "listingTitle": "Contemporary Townhome with Rooftop Terrace",
+    "rent": "$2800",
+    "address": "15 Terrace View",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "18",
+    "listingTitle": "Cosy Bungalow in Auckland Suburb",
+    "rent": "$1600",
+    "address": "20 Garden Lane",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "19",
+    "listingTitle": "Modern Condo with Panoramic Views",
+    "rent": "$3500",
+    "address": "10 Skyline Drive",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "20",
+    "listingTitle": "Rural Retreat with Acres of Land",
+    "rent": "$5000",
+    "address": "50 Countryside Road",
+    "city": "Auckland",
+    "bedRooms": 5,
+    "bathRooms": 3
+  },
+  {
+    "_id": "21",
+    "listingTitle": "Classic Colonial Home in Auckland",
+    "rent": "$3200",
+    "address": "10 Colonial Drive",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 2
+  },
+  {
+    "_id": "22",
+    "listingTitle": "Seaside Cottage with Stunning Views",
+    "rent": "$2800",
+    "address": "15 Seaview Road",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "23",
+    "listingTitle": "Elegant Townhouse in Auckland CBD",
+    "rent": "$4000",
+    "address": "20 CBD Street",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 3
+  },
+  {
+    "_id": "24",
+    "listingTitle": "Quaint Cottage in Auckland Suburb",
+    "rent": "$1800",
+    "address": "5 Suburbia Lane",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "25",
+    "listingTitle": "Urban Apartment with City Views",
+    "rent": "$2400",
+    "address": "10 Cityscape Road",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "26",
+    "listingTitle": "Coastal Retreat with Beach Access",
+    "rent": "$3800",
+    "address": "5 Beachside Avenue",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "27",
+    "listingTitle": "Modern Studio in Auckland CBD",
+    "rent": "$1700",
+    "address": "15 CBD Lane",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "28",
+    "listingTitle": "Chic Townhome with Courtyard",
+    "rent": "$2600",
+    "address": "5 Courtyard Way",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "29",
+    "listingTitle": "Family-Friendly Home in Auckland Suburb",
+    "rent": "$3000",
+    "address": "10 Family Lane",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 2
+  },
+  {
+    "_id": "30",
+    "listingTitle": "Luxurious Penthouse in Auckland CBD",
+    "rent": "$7000",
+    "address": "1 Skyline Tower",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 3
+  },
+  {
+    "_id": "31",
+    "listingTitle": "Countryside Farmhouse with Acres of Land",
+    "rent": "$4500",
+    "address": "50 Farm Road",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "32",
+    "listingTitle": "Modern Apartment with Balcony",
+    "rent": "$2300",
+    "address": "10 Balcony Avenue",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 2
+  },
+  {
+    "_id": "33",
+    "listingTitle": "Rustic Cabin in Auckland Woods",
+    "rent": "$1400",
+    "address": "5 Woodsy Lane",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "34",
+    "listingTitle": "Sunny Townhouse in Auckland Suburb",
+    "rent": "$2800",
+    "address": "15 Sunny Lane",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "35",
+    "listingTitle": "Seaside Villa with Private Beach",
+    "rent": "$5000",
+    "address": "1 Seashore Drive",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 3
+  },
+  {
+    "_id": "36",
+    "listingTitle": "Urban Loft with Views of Auckland Skyline",
+    "rent": "$3000",
+    "address": "10 Loft Lane",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "37",
+    "listingTitle": "Historic Home in Auckland CBD",
+    "rent": "$4500",
+    "address": "5 Heritage Drive",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "38",
+    "listingTitle": "Sleek Modern Apartment in Auckland CBD",
+    "rent": "$2800",
+    "address": "15 CBD Avenue",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "39",
+    "listingTitle": "Country Cottage in Auckland Countryside",
+    "rent": "$1600",
+    "address": "20 Country Lane",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "40",
+    "listingTitle": "Luxury Condo with Panoramic City Views",
+    "rent": "$4000",
+    "address": "10 Panorama Road",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "41",
+    "listingTitle": "Secluded Mountain Retreat",
+    "rent": "$3500",
+    "address": "5 Mountainview Drive",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "42",
+    "listingTitle": "Quaint Bungalow in Auckland Suburb",
+    "rent": "$1800",
+    "address": "15 Suburban Street",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "43",
+    "listingTitle": "Modern Apartment with Ocean Views",
+    "rent": "$2400",
+    "address": "10 Oceanview Avenue",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "44",
+    "listingTitle": "Coastal Retreat with Beachfront Access",
+    "rent": "$3800",
+    "address": "5 Beachfront Lane",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "45",
+    "listingTitle": "Stylish Studio in Auckland CBD",
+    "rent": "$1700",
+    "address": "15 CBD Street",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "46",
+    "listingTitle": "Urban Townhome with Rooftop Deck",
+    "rent": "$2600",
+    "address": "5 Rooftop Lane",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "47",
+    "listingTitle": "Family Home with Spacious Yard",
+    "rent": "$3000",
+    "address": "10 Yard Way",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 2
+  },
+  {
+    "_id": "48",
+    "listingTitle": "Luxurious Penthouse with Panoramic Views",
+    "rent": "$7000",
+    "address": "1 Panorama Tower",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 3
+  },
+  {
+    "_id": "49",
+    "listingTitle": "Farmhouse with Acres of Land",
+    "rent": "$4500",
+    "address": "50 Farm Road",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "50",
+    "listingTitle": "Modern Apartment with Private Balcony",
+    "rent": "$2300",
+    "address": "10 Balcony Avenue",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 2
+  },
+  {
+    "_id": "51",
+    "listingTitle": "Rustic Cabin in the Woods",
+    "rent": "$1400",
+    "address": "5 Woodsy Lane",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "52",
+    "listingTitle": "Sunny Townhouse in Auckland Suburb",
+    "rent": "$2800",
+    "address": "15 Sunny Lane",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "53",
+    "listingTitle": "Seaside Villa with Private Beach",
+    "rent": "$5000",
+    "address": "1 Seashore Drive",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 3
+  },
+  {
+    "_id": "54",
+    "listingTitle": "Urban Loft with Views of Auckland Skyline",
+    "rent": "$3000",
+    "address": "10 Loft Lane",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "55",
+    "listingTitle": "Historic Home in Auckland CBD",
+    "rent": "$4500",
+    "address": "5 Heritage Drive",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "56",
+    "listingTitle": "Sleek Modern Apartment in Auckland CBD",
+    "rent": "$2800",
+    "address": "15 CBD Avenue",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "57",
+    "listingTitle": "Country Cottage in Auckland Countryside",
+    "rent": "$1600",
+    "address": "20 Country Lane",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "58",
+    "listingTitle": "Luxury Condo with Panoramic City Views",
+    "rent": "$4000",
+    "address": "10 Panorama Road",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "59",
+    "listingTitle": "Secluded Mountain Retreat",
+    "rent": "$3500",
+    "address": "5 Mountainview Drive",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "60",
+    "listingTitle": "Quaint Bungalow in Auckland Suburb",
+    "rent": "$1800",
+    "address": "15 Suburban Street",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "61",
+    "listingTitle": "Modern Apartment with Ocean Views",
+    "rent": "$2400",
+    "address": "10 Oceanview Avenue",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "62",
+    "listingTitle": "Coastal Retreat with Beachfront Access",
+    "rent": "$3800",
+    "address": "5 Beachfront Lane",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "63",
+    "listingTitle": "Stylish Studio in Auckland CBD",
+    "rent": "$1700",
+    "address": "15 CBD Street",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "64",
+    "listingTitle": "Urban Townhome with Rooftop Deck",
+    "rent": "$2600",
+    "address": "5 Rooftop Lane",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "65",
+    "listingTitle": "Cozy Apartment in Downtown Auckland",
+    "rent": "$1900",
+    "address": "15 Downtown Street",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "66",
+    "listingTitle": "Family-Friendly Home in Auckland Suburb",
+    "rent": "$3200",
+    "address": "25 Suburbia Avenue",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "67",
+    "listingTitle": "Luxury Penthouse with Harbor Views",
+    "rent": "$5500",
+    "address": "1 Harbor View Terrace",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 3
+  },
+  {
+    "_id": "68",
+    "listingTitle": "Modern Apartment with City View",
+    "rent": "$2300",
+    "address": "10 Cityscape Road",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 2
+  },
+  {
+    "_id": "69",
+    "listingTitle": "Spacious Townhouse in Auckland CBD",
+    "rent": "$3000",
+    "address": "20 CBD Avenue",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
   }
 ]
