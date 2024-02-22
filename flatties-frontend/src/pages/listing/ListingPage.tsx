@@ -40,98 +40,12 @@ function ListingPage() {
   const combinedData = [...listingsData, ...rentalData];
 
   return (
-
     <div className="listingContainer">
-
-      {
-        DummyData.map((data) => (
-          <ListingCard {...data} />
-        ))
-      }
+      {DummyData.map((data) => (
+        <ListingCard {...data} />
+      ))}
     </div>
   );
 }
 
 export default ListingPage;
-
-
-
-{/* {DummyData.map((data, index) => (
-        <Box
-          sx={{
-            display: "flex",
-            minWidth: "250px",
-            maxWidth: "250px",
-            // width:"250px",
-            width: "100%",
-            flexDirection: "column",
-            p: 2,
-            textAlign: "center",
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            borderRadius: "8px",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            flex: 1,
-          }}
-        >
-          <Typography variant="h5" gutterBottom>
-            {data.listingTitle}
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            color="textSecondary"
-            gutterBottom
-          >
-            {data.city}
-          </Typography>
-          <img
-            src={dummyImage}
-            alt="Property"
-            style={{
-              width: "100%",
-              borderRadius: "8px",
-              marginBottom: "16px",
-            }}
-          />
-          <Typography variant="body1" gutterBottom>
-            {data.address}
-          </Typography>
-          <Grid container alignItems={"stretch"}>
-            <Grid item xs={4} alignItems={"stretch"}>
-              <Box display="flex" justifyContent="flex-start">
-                <Typography
-                  variant="body1"
-                  gutterBottom
-                  style={{ fontSize: "1.5rem" }}
-                >
-                  {data.rent}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={8}
-              container
-              justifyContent="flex-end"
-              alignItems={"center"}
-            >
-              <Grid item xs={4}>
-                <Box display="flex" justifyContent="flex-end">
-                  <BathroomIcon />
-                  <Typography variant="body1" gutterBottom>
-                    {data.bedRooms}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box display="flex" justifyContent="flex-end">
-                  <BedIcon />
-                  <Typography variant="body1" gutterBottom>
-                    {data.bathRooms}
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Box>
-
-      ))} */}
