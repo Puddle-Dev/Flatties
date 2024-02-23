@@ -13,7 +13,7 @@ function Login({ open, handleClose }: LoginModalProps) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate(); // Use the useHistory hook to get the history object
-const [cookies, setCookies] = useCookies(["isLoggedIn"]);
+  const [cookies, setCookies] = useCookies(["isLoggedIn", "userId"]);
 
   // Add your login logic here
   const handleLogin = () => {
@@ -21,21 +21,25 @@ const [cookies, setCookies] = useCookies(["isLoggedIn"]);
     console.log("Logging in with:", email, password);
 
     // Send a POST request to the server
-    axios.post("/user/login", {
-      email: email,
-      password: password,
-    })
-    .then((res) => {
-      console.log("Login successful:", res.data);
-      // Set the cookie to track the login status
-      setCookies("isLoggedIn", true, { path: "/" });
-      // Close the modal
-      handleClose();
-    })
-    .catch((err) => {
-      console.log("Login failed:", err);
-    });
+    axios
+      .post("/user/login", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        console.log("Login successful:", res.data);
+        // Set the cookie to track the login status
+        setCookies("isLoggedIn", true, { path: "/" });
 
+        const userId = res.data.userId;
+        setCookies("userId", userId);
+        console.log(userId);
+        // Close the modal
+        handleClose();
+      })
+      .catch((err) => {
+        console.log("Login failed:", err);
+      });
   };
 
   const handleRegisterClick = () => {

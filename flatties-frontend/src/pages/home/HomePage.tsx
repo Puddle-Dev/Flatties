@@ -13,7 +13,7 @@ import { useCookies } from "react-cookie";
 function HomePage() {
 
   const [newListings, setNewListings] = useState<PropertyInfo []>([]);
-const [cookies] = useCookies(["isLoggedIn"]);
+const [cookies] = useCookies(["isLoggedIn", "userId"]);
   useEffect(() => {
     fetch('http://localhost:4000/api/property/all',{
       method: 'GET',
@@ -25,6 +25,7 @@ const [cookies] = useCookies(["isLoggedIn"]);
     .catch ((error) => console.error("Error fetching listings", error));
   }, []);
 
+
   return (
     <div>
       {cookies.isLoggedIn ? (
@@ -32,7 +33,9 @@ const [cookies] = useCookies(["isLoggedIn"]);
           <Typography variant="h4" gutterBottom>
             Welcome back! You are logged in.
           </Typography>
-          {/* Additional content for logged-in users */}
+          <h3>User ID: {cookies.userId || "Not available"}</h3>
+          <h3>User ID: 65ab525285433a04a27e746a</h3>
+          
         </div>
       ) : (
         <div>
