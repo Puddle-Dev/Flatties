@@ -20,9 +20,9 @@ function ListingPage() {
   const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
-  const [sortOrder, setSortOrder] = useState<"priceAsc" | "priceDesc">(
-    "priceAsc"
-  );
+  const [sortOrder, setSortOrder] = useState<
+    "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
+  >("priceAsc");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,18 +43,25 @@ function ListingPage() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = DummyData.slice(indexOfFirstItem, indexOfLastItem).sort(
     (a, b) => {
-      if (sortOrder === "priceAsc") {
-        return a.rent.localeCompare(b.rent);
-      } else if (sortOrder === "priceDesc") {
-        return b.rent.localeCompare(a.rent);
-      } else {
-        return 0;
+      switch (sortOrder) {
+        case "priceAsc":
+          return a.rent.localeCompare(b.rent);
+        case "priceDesc":
+          return b.rent.localeCompare(a.rent);
+        case "nameAsc":
+          return a.listingTitle.localeCompare(b.listingTitle);
+        case "nameDesc":
+          return b.listingTitle.localeCompare(a.listingTitle);
+        default:
+          return 0;
       }
     }
   );
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-  const handleSort = (value: "priceAsc" | "priceDesc") => {
+  const handleSort = (
+    value: "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
+  ) => {
     setSortOrder(value);
   };
 
@@ -77,12 +84,20 @@ function ListingPage() {
           <InputLabel id="sort-label">Sort</InputLabel>
           <Select
             value={sortOrder}
-            onChange={(event, value) =>
-              handleSort(event.target.value as "priceAsc" | "priceDesc")
+            onChange={(event) =>
+              handleSort(
+                event.target.value as
+                  | "priceAsc"
+                  | "priceDesc"
+                  | "nameAsc"
+                  | "nameDesc"
+              )
             }
           >
             <MenuItem value="priceDesc">Price (High to Low)</MenuItem>
             <MenuItem value="priceAsc">Price (Low to High)</MenuItem>
+            <MenuItem value="nameDesc">Name (Z-A)</MenuItem>
+            <MenuItem value="nameAsc">Name (A-Z)</MenuItem>
           </Select>
         </FormControl>
       </div>
