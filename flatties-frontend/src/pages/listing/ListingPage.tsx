@@ -5,13 +5,24 @@ import RentalInfo from "../../models/RentalInfo";
 import DummyData from "./dummyData.json";
 import ListingCard from "./ListingCard";
 import "./ListingPage.css";
-import { Pagination } from "@mui/material";
+import {
+  Pagination,
+  ToggleButton,
+  ToggleButtonGroup,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 
 function ListingPage() {
   const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
   const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
+  const [sortOrder, setSortOrder] = useState<"priceAsc" | "priceDesc">(
+    "priceAsc"
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +41,51 @@ function ListingPage() {
   // const combinedData = [...listingsData, ...rentalData];
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = DummyData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = DummyData.slice(indexOfFirstItem, indexOfLastItem).sort(
+    (a, b) => {
+      if (sortOrder === "priceAsc") {
+        return a.rent.localeCompare(b.rent);
+      } else if (sortOrder === "priceDesc") {
+        return b.rent.localeCompare(a.rent);
+      } else {
+        return 0;
+      }
+    }
+  );
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const handleSort = (value: "priceAsc" | "priceDesc") => {
+    setSortOrder(value);
+  };
 
   return (
     <div>
+      <div
+        className="Filters"
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginTop: "20px",
+          marginBottom: "20px",
+        }}
+      >
+        <FormControl
+          variant="standard"
+          sx={{ m: 1, minWidth: 120 }}
+          size="small"
+        >
+          <InputLabel id="sort-label">Sort</InputLabel>
+          <Select
+            value={sortOrder}
+            onChange={(event, value) =>
+              handleSort(event.target.value as "priceAsc" | "priceDesc")
+            }
+          >
+            <MenuItem value="priceDesc">Price (High to Low)</MenuItem>
+            <MenuItem value="priceAsc">Price (Low to High)</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <div className="listingContainer">
         {currentItems.map((data) => (
           <ListingCard {...data} key={data._id} />
