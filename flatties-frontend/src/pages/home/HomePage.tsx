@@ -69,9 +69,9 @@ function HomePage() {
                 >
                 <h3>Property ID: {property._id}</h3>
                 <h3>City: {property.city}</h3>
-                <h3>Property Type: {property.propertyType}</h3>
-                <h3>BedRooms: {property.bedRooms}</h3>
-                <h3>BathRooms: {property.bathRooms}</h3>
+                <h3>Property Type: {property.type}</h3>
+                <h3>BedRooms: {property.bedrooms}</h3>
+                <h3>BathRooms: {property.bathrooms}</h3>
                 </Box>
               </Paper>
             </List>

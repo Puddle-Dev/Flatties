@@ -20,4 +20,4 @@ router.post('/create', listingController.createListing);
 //delete a listing by id
 router.delete('/delete/:id', listingController.deleteListingById);
 
-module.exports = router;
+// module.exports = router;

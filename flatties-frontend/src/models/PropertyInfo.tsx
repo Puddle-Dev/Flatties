@@ -1,11 +1,10 @@
 interface PropertyInfo{
+    ownerId: string;
     _id: string;
-    propertyType: string;
+    type: string;
     address: string;
     city: string;
-    bedRooms: string;
-    bathRooms: string;
-    updatedAt: Date;
-    createdAt: Date;
+    bedrooms: number;
+    bathrooms: number;
 }
 export default PropertyInfo;

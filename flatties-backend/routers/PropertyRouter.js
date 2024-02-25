@@ -18,7 +18,7 @@ router.put('/active/:id', propertyController.activePropertyById);
 router.put('/inactive/:id', propertyController.inactivePropertyById);
 
 //create a new property
-router.post('/create', propertyController.createProperty);
+router.post('/create', propertyController.createProperty);  //test passed
 
 
 /**

@@ -1,12 +1,27 @@
 
 const PropertyModel = require('../models/PropertyModel');
+const UserModel = require('../models/UserModel');
+const Mongoose = require('mongoose');
 
 const PropertyController = {
     //create a new property
     createProperty: async (req, res) => {
         try {
+            console.log("createProperty API called with request body: ", req.body);
+            //check the ownerId is valid
+            if(!Mongoose.Types.ObjectId.isValid(req.body.ownerId)){
+                console.log("Owner ID is not valid");
+                return res.status(400).json({message: "Owner ID is not valid"});
+            }
+            //check the ownerId is exist
+            if(!await UserModel.findOne({_id: req.body.ownerId})){
+                console.log("Owner ID is not exist");
+                return res.status(400).json({message: "Owner ID is not exist"});
+            }
+            //create a new property
             const property = await PropertyModel.create(req.body);
-            res.json(property);
+            res.status(201).json(property);
+            console.log(property);
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Server Error"});

@@ -7,8 +7,8 @@ const PropertyModel = new mongoose.Schema({
     type: {type: String, required: true},
     bedrooms: {type: Number, required: true},
     bathrooms: {type: Number, required: true},
-    title: {type: String, required: true},
-    rent: {type: Number, required: true},
+    title: String,
+    rent: Number,
     rentMethod: String,
     rentPaymentPeriod: String,
     deposit: Number,
@@ -22,6 +22,7 @@ const PropertyModel = new mongoose.Schema({
     description: String,
     nearbyFacilities: [String],
     imagesUrl: [String],
+    isActivated: {type: Boolean, default: false},
 },{
     timestamps: true,
 });
