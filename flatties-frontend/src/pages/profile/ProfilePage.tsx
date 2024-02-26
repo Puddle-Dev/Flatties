@@ -24,6 +24,7 @@ function ProfilePage() {
 };
 
   const [userInfo, setUser] = useState(initialUserInfo());
+ 
   const [cookies] = useCookies(["userId"]);
 
   const userId = cookies.userId;

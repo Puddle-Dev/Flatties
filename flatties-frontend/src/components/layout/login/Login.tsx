@@ -13,7 +13,7 @@ function Login({ open, handleClose }: LoginModalProps) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
-  const [cookies, setCookies] = useCookies(["isLoggedIn", "userId"]);
+  const [cookies, setCookies, removeCookies] = useCookies(["isLoggedIn", "userId"]);
 
   const handleLogin = () => {
     axios
@@ -34,10 +34,14 @@ function Login({ open, handleClose }: LoginModalProps) {
       .catch((err) => {
         console.log("Login failed:", err);
       });
-};
+  };
 
- 
-  
+  const handleLogout = () => {
+    // Remove cookies and navigate to the login page
+    removeCookies("isLoggedIn", { path: "/" });
+    removeCookies("userId", { path: "/" });
+    handleClose();
+  };
 
   const handleRegisterClick = () => {
     // Navigate to "/register" and close the modal
@@ -60,36 +64,44 @@ function Login({ open, handleClose }: LoginModalProps) {
         }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Login
+          {cookies.isLoggedIn ? "Welcome back!" : "Login"}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <TextField
-            fullWidth
-            label="Email"
-            variant="outlined"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            variant="outlined"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <Button variant="contained" onClick={handleLogin} sx={{ mr: 2 }}>
-            Log In
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleRegisterClick}
-            sx={{ mr: 2 }}
-          >
-            Register
-          </Button>
+          {cookies.isLoggedIn ? (
+            <Button variant="contained" onClick={handleLogout} sx={{ mr: 2 }}>
+              Log Out
+            </Button>
+          ) : (
+            <>
+              <TextField
+                fullWidth
+                label="Email"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Password"
+                type="password"
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <Button variant="contained" onClick={handleLogin} sx={{ mr: 2 }}>
+                Log In
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleRegisterClick}
+                sx={{ mr: 2 }}
+              >
+                Register
+              </Button>
+            </>
+          )}
         </Typography>
         <Button onClick={handleClose} sx={{ mt: 2 }}>
           Close

@@ -7,7 +7,6 @@ import { useCookies } from "react-cookie";
 
 /** "New Listings" will get the last "6" properties that were last listed
  * "Hottest Properties" will get the 6 listings on the most watchlists
- * "Nearest Listing" will get the 6 listings closest to the user
  */
 
 function HomePage() {
