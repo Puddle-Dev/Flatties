@@ -39,9 +39,6 @@ function NewPropertyForm() {
     //initializing the state with an empty array
     const [formData, setFormData] = useState<Property>(initialProperty());
 
-    //check if the form was submitted successfully
-    const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
 
     // Use the useHistory hook to get the history object
     const navigate = useNavigate();
@@ -80,19 +77,14 @@ function NewPropertyForm() {
             .then((res) => {
                 console.log("Property added successfully:", res.data);
                 // Close the modal
-                setIsSuccess(true);
+                setFormData(initialProperty());
+                navigate("/home");  //navigate to the home page
+                console.log("Form Data:", formData);
+
             })
             .catch((err) => {
                 console.log("Property addition failed:", err);
             });
-        
-        
-        navigate("/home");  //navigate to the home page
-        console.log("Form Data:", formData);
-
-        //reset the form after submission
-        setFormData(initialProperty());
-        setIsSuccess(false);
     }
 
     useEffect(() => {
@@ -202,9 +194,6 @@ function NewPropertyForm() {
                 </TextField>
 
                 <Button variant="contained" type="submit">Submit</Button>
-                {isSuccess && (
-                    <Alert severity="success"> Property added successfully </Alert>
-                )}
 
             </FormControl>
 
