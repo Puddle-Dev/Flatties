@@ -14,16 +14,35 @@
 require('dotenv').config();
 
 //ininialize express app
-const express = require('express'); 
+const PORT = process.env.PORT;
+const MONGODB_URL = process.env.MONGODB_URL;
+const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config/database');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-const userRoutes = require('./routes/userRoutes');
-
+//start the app
 const app = express();
 
+//use middleware
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+//import modules
+const property = require('./models/PropertyModel');
+const listing = require('./models/ListingModel');
+const user = require('./models/UserModel');
+const watchingList = require('./models/WatchingListModel');
+
+//import routers
+const userRouter = require('./routers/UserRouter');
+const propertyRouter = require('./routers/PropertyRouter');
+// const listingRouter = require('./routers/ListingRouter');
+
+
 // Connect to MongoDB
-mongoose.connect(config.connectionString,{
+mongoose.connect(MONGODB_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -36,15 +55,15 @@ db.once('open', function() {
     console.info(`----------------------------`);
 });
 
-
 // Start the server
+
+app.use('/api/user', userRouter);
+app.use('/api/property', propertyRouter);
+
 app.get('/', (req, res) => {
     res.send('Hello World! - from flatties-backend');
     });
 
-app.listen(config.port, () => {
+app.listen(PORT, () => {
     console.log(`Puddle-Server listening on port ${PORT}`);
     });
-
-
-app.use('api/users', userRoutes);
