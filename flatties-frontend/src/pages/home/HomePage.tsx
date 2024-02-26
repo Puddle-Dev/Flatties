@@ -11,29 +11,66 @@ import { useCookies } from "react-cookie";
  */
 
 function HomePage() {
-
-  const [newListings, setNewListings] = useState<PropertyInfo []>([]);
-const [cookies] = useCookies(["isLoggedIn", "userId"]);
+  const [newListings, setNewListings] = useState<PropertyInfo[]>([]);
+  const [cookies] = useCookies(["isLoggedIn", "userId"]);
   useEffect(() => {
-    fetch('http://localhost:4000/api/property/all',{
-      method: 'GET',
+    fetch("http://localhost:4000/api/property/all", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
-      },})
-    .then((response) => response.json())
-    .then((data) => setNewListings(data.slice(0, 6)))
-    .catch ((error) => console.error("Error fetching listings", error));
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setNewListings(data.slice(0, 6)))
+      .catch((error) => console.error("Error fetching listings", error));
   }, []);
-
 
   return (
     <div>
       {cookies.isLoggedIn ? (
         <div>
           <Typography variant="h4" gutterBottom>
-            Welcome back! You are logged in.
+            Welcome back {cookies.userId ? cookies.userId : "Not available"}!
+            You are logged in.
           </Typography>
-          <h3>User ID: {cookies.userId ? cookies.userId : "Not available"}</h3>
+
+          <div className="scroll-container">
+            <Typography variant="h5" gutterBottom>
+              Your Watchlist
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                overflowX: "auto",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {[1, 2, 3, 4, 5, 6].map((index) => (
+                <List key={index} sx={{ marginRight: 2 }}>
+                  <Paper
+                    sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        p: 2,
+                        fontStyle: { textAlign: "left" },
+                      }}
+                    >
+                      <h3>Index: {index}</h3>
+                      <h3>Property ID: </h3>
+                      <h3>City: </h3>
+                      <h3>Property Type: </h3>
+                      <h3>BedRooms: </h3>
+                      <h3>BathRooms: </h3>
+                    </Box>
+                  </Paper>
+                </List>
+              ))}
+            </Box>
+          </div>
         </div>
       ) : (
         <div>
@@ -55,7 +92,6 @@ const [cookies] = useCookies(["isLoggedIn", "userId"]);
               Register Here
             </Button>
           </div>
-          {/* ... Other content for non-logged-in users */}
         </div>
       )}
       <div className="scroll-container">
@@ -81,11 +117,11 @@ const [cookies] = useCookies(["isLoggedIn", "userId"]);
                     fontStyle: { textAlign: "left" },
                   }}
                 >
-                <h3>Property ID: {property._id}</h3>
-                <h3>City: {property.city}</h3>
-                <h3>Property Type: {property.propertyType}</h3>
-                <h3>BedRooms: {property.bedRooms}</h3>
-                <h3>BathRooms: {property.bathRooms}</h3>
+                  <h3>Property ID: {property._id}</h3>
+                  <h3>City: {property.city}</h3>
+                  <h3>Property Type: {property.propertyType}</h3>
+                  <h3>BedRooms: {property.bedRooms}</h3>
+                  <h3>BathRooms: {property.bathRooms}</h3>
                 </Box>
               </Paper>
             </List>
@@ -93,76 +129,40 @@ const [cookies] = useCookies(["isLoggedIn", "userId"]);
         </Box>
 
         <div className="scroll-container">
-        <Typography variant="h5" gutterBottom>
-          Hottest Properties
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            overflowX: "auto",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {[1, 2, 3, 4, 5, 6].map((index) => (
-            <List key={index} sx={{ marginRight: 2 }}>
-              <Paper sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    p: 2,
-                    fontStyle: { textAlign: "left" },
-                  }}
-                >
-                  <h3>Index: {index}</h3>
-                  <h3>Property ID: </h3>
-                  <h3>City: </h3>
-                  <h3>Property Type: </h3>
-                  <h3>BedRooms: </h3>
-                  <h3>BathRooms: </h3>
-                </Box>
-              </Paper>
-            </List>
-          ))}
-        </Box>
-      </div>
-      </div>
-
-      <div className="scroll-container">
-        <Typography variant="h5" gutterBottom>
-          Nearist Listings
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            overflowX: "auto",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {[1, 2, 3, 4, 5, 6].map((index) => (
-            <List key={index} sx={{ marginRight: 2 }}>
-              <Paper sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    p: 2,
-                    fontStyle: { textAlign: "left" },
-                  }}
-                >
-                  <h3>Index: {index}</h3>
-                  <h3>Property ID: </h3>
-                  <h3>City: </h3>
-                  <h3>Property Type: </h3>
-                  <h3>BedRooms: </h3>
-                  <h3>BathRooms: </h3>
-                </Box>
-              </Paper>
-            </List>
-          ))}
-        </Box>
+          <Typography variant="h5" gutterBottom>
+            Hottest Properties
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              overflowX: "auto",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {[1, 2, 3, 4, 5, 6].map((index) => (
+              <List key={index} sx={{ marginRight: 2 }}>
+                <Paper sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      p: 2,
+                      fontStyle: { textAlign: "left" },
+                    }}
+                  >
+                    <h3>Index: {index}</h3>
+                    <h3>Property ID: </h3>
+                    <h3>City: </h3>
+                    <h3>Property Type: </h3>
+                    <h3>BedRooms: </h3>
+                    <h3>BathRooms: </h3>
+                  </Box>
+                </Paper>
+              </List>
+            ))}
+          </Box>
+        </div>
       </div>
     </div>
   );
