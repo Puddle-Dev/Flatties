@@ -1,0 +1,92 @@
+[
+  {
+    "_id": "1",
+    "listingTitle": "Spacious Apartment in Auckland CBD",
+    "rent": "$2200",
+    "address": "123 Queen Street",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 2
+  },
+  {
+    "_id": "2",
+    "listingTitle": "Modern Townhouse with Harbor Views",
+    "rent": "$2500",
+    "address": "5 Harbor View Road",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  },
+  {
+    "_id": "3",
+    "listingTitle": "Cozy Studio near Auckland University",
+    "rent": "$1500",
+    "address": "25 University Avenue",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "4",
+    "listingTitle": "Family Home in Suburban Auckland",
+    "rent": "$2800",
+    "address": "10 Green Street",
+    "city": "Auckland",
+    "bedRooms": 4,
+    "bathRooms": 2
+  },
+  {
+    "_id": "5",
+    "listingTitle": "Luxury Penthouse in Auckland CBD",
+    "rent": "$5000",
+    "address": "1 Sky Tower Avenue",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 3
+  },
+  {
+    "_id": "6",
+    "listingTitle": "Charming Cottage in Auckland Suburb",
+    "rent": "$1800",
+    "address": "15 Park Road",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "7",
+    "listingTitle": "Sunny Apartment near Auckland Harbor",
+    "rent": "$2100",
+    "address": "30 Harbor Way",
+    "city": "Auckland",
+    "bedRooms": 2,
+    "bathRooms": 1
+  },
+  {
+    "_id": "8",
+    "listingTitle": "Modern Loft in Auckland City Center",
+    "rent": "$1900",
+    "address": "50 High Street",
+    "city": "Auckland",
+    "bedRooms": 1,
+    "bathRooms": 1
+  },
+  {
+    "_id": "9",
+    "listingTitle": "Executive Home with Pool in Auckland",
+    "rent": "$4000",
+    "address": "7 Hillside Drive",
+    "city": "Auckland",
+    "bedRooms": 5,
+    "bathRooms": 3
+  },
+  {
+    "_id": "10",
+    "listingTitle": "Beachfront Property in Auckland Suburb",
+    "rent": "$3500",
+    "address": "20 Beach Road",
+    "city": "Auckland",
+    "bedRooms": 3,
+    "bathRooms": 2
+  }
+]

@@ -13,40 +13,36 @@
 // Load environment variables
 require('dotenv').config();
 
-//get the environment variables from the .env file
-const PORT = process.env.PORT; 
-const mongodbURL = process.env.MONGODB_URL;
-
-//initialize express app
-const express = require('express'); 
+//ininialize express app
+const PORT = process.env.PORT;
+const MONGODB_URL = process.env.MONGODB_URL;
+const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+//start the app
 const app = express();
+
+//use middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//import the models
-// const user = require('./models/UserModel');
+//import modules
 const property = require('./models/PropertyModel');
 const listing = require('./models/ListingModel');
 const user = require('./models/UserModel');
 const watchingList = require('./models/WatchingListModel');
 
-//import the routers
-const propertyRouter = require('./routers/PropertyRouter');
-app.use('/api/property', propertyRouter);
-
-const listingRouter = require('./routers/ListingRouter');
-app.use('/api/listing', listingRouter);
-
+//import routers
 const userRouter = require('./routers/UserRouter');
-app.use('/api/user', userRouter);
+const propertyRouter = require('./routers/PropertyRouter');
+// const listingRouter = require('./routers/ListingRouter');
+
 
 // Connect to MongoDB
-mongoose.connect(mongodbURL,{
+mongoose.connect(MONGODB_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -60,6 +56,10 @@ db.once('open', function() {
 });
 
 // Start the server
+
+app.use('/api/user', userRouter);
+app.use('/api/property', propertyRouter);
+
 app.get('/', (req, res) => {
     res.send('Hello World! - from flatties-backend');
     });

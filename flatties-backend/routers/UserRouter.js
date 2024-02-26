@@ -3,20 +3,15 @@ const router = express.Router();
 const userController = require('../controllers/UserController');
 const watchingListController = require('../controllers/WatchingListController');
 
+
 //get all users
 router.get('/all', userController.getAllUser); //test passed
 
 //get user by id
 router.get('/:_id', userController.getUserById); //test passed
 
-//get user by search
-router.get('/search', userController.getUserBySearch);  //test not passed yet
-
 //get all properties in a watching list
 router.get('/:_id/watchingList', watchingListController.getUserWatchingList);
-
-//get all properties that a user owns
-router.get('/:_id/properties', userController.getUserProperties);
 
 //update user by id
 router.put('/update/:_id', userController.updateUserById);  //test passed
