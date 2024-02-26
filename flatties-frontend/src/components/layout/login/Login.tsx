@@ -23,28 +23,20 @@ function Login({ open, handleClose }: LoginModalProps) {
       })
       .then((res) => {
         console.log("Login successful:", res.data);
-        // Set the cookie to track the login status
+        
+        // Set the cookies to track the login status and userId
         setCookies("isLoggedIn", true, { path: "/" });
-        handleUserId();
+        setCookies("userId", res.data.userId, { path: "/" });
+        
         // Close the modal
         handleClose();
       })
       .catch((err) => {
         console.log("Login failed:", err);
       });
-  };
-
-  
-const handleUserId = async () => {
-  try {
-    const response = await axios.get("/user/:_id", );
-    const retrievedUserID = response.data.userID;
-
-    setCookies("userId", retrievedUserID, { path: "/" });
-  } catch (error) {
-    console.error("Error retrieving userID:", error);
-  }
 };
+
+ 
   
 
   const handleRegisterClick = () => {
