@@ -12,15 +12,10 @@ interface LoginModalProps {
 function Login({ open, handleClose }: LoginModalProps) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const navigate = useNavigate(); // Use the useHistory hook to get the history object
+  const navigate = useNavigate();
   const [cookies, setCookies] = useCookies(["isLoggedIn", "userId"]);
 
-  // Add your login logic here
   const handleLogin = () => {
-    // Implement your login logic using email and password
-    console.log("Logging in with:", email, password);
-
-    // Send a POST request to the server
     axios
       .post("/user/login", {
         email: email,
@@ -30,10 +25,7 @@ function Login({ open, handleClose }: LoginModalProps) {
         console.log("Login successful:", res.data);
         // Set the cookie to track the login status
         setCookies("isLoggedIn", true, { path: "/" });
-
-        const userId = res.data.userId;
-        setCookies("userId", userId);
-        console.log(userId);
+        handleUserId();
         // Close the modal
         handleClose();
       })
@@ -41,6 +33,19 @@ function Login({ open, handleClose }: LoginModalProps) {
         console.log("Login failed:", err);
       });
   };
+
+  
+const handleUserId = async () => {
+  try {
+    const response = await axios.get("/user/:_id", );
+    const retrievedUserID = response.data.userID;
+
+    setCookies("userId", retrievedUserID, { path: "/" });
+  } catch (error) {
+    console.error("Error retrieving userID:", error);
+  }
+};
+  
 
   const handleRegisterClick = () => {
     // Navigate to "/register" and close the modal

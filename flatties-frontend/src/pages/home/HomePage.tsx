@@ -33,9 +33,7 @@ const [cookies] = useCookies(["isLoggedIn", "userId"]);
           <Typography variant="h4" gutterBottom>
             Welcome back! You are logged in.
           </Typography>
-          <h3>User ID: {cookies.userId || "Not available"}</h3>
-          <h3>User ID: 65ab525285433a04a27e746a</h3>
-          
+          <h3>User ID: {cookies.userId ? cookies.userId : "Not available"}</h3>
         </div>
       ) : (
         <div>
