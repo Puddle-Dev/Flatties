@@ -4,6 +4,7 @@ import { Stack, Paper, IconButton, ListItemIcon, Typography } from "@mui/materia
 import LoginIcon from '@mui/icons-material/Login';
 import { Link, NavLink } from "react-router-dom";
 import LoginModal from "../login/Login"; // Import the LoginModal component
+import { useCookies } from "react-cookie";
 
 function NavBar() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -15,6 +16,8 @@ function NavBar() {
   const handleLoginModalClose = () => {
     setLoginModalOpen(false);
   };
+
+  const [cookies] = useCookies(["isLoggedIn"]);
 
   return (
     <Paper elevation={3} square={false} style={{ padding: "10px", backgroundColor:"#F2F6F9"}}>
@@ -48,10 +51,16 @@ function NavBar() {
 
                 <LoginIcon />
               </ListItemIcon>
-              <Typography variant="body1" component="span">
+              <Typography variant="body1" component="span">{cookies.isLoggedIn ? (
+           <Link to="#" style={{ color: 'inherit', textDecoration: 'none' }}>
+              Log Out
+              </Link>
+          ) : (
                 <Link to="#" style={{ color: 'inherit', textDecoration: 'none' }}>
+                  
                   Log In
                 </Link>
+          )}
                 </Typography>
             </IconButton>
 

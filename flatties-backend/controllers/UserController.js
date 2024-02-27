@@ -122,7 +122,7 @@ const UserController = {
                 return res.status(400).json({message: "Password is incorrect"});
             }
 
-            res.status(200).json({message: "Login successful"});
+            res.status(200).json({message: "Login successful", userId: user._id});
             console.log("Login successful");
 
         } catch (error) {
