@@ -7,12 +7,12 @@ import ListingCard from "./ListingCard";
 import "./ListingPage.css";
 import {
   Pagination,
-  ToggleButton,
-  ToggleButtonGroup,
   MenuItem,
   Select,
   FormControl,
   InputLabel,
+  Slider,
+  Box,
 } from "@mui/material";
 
 function ListingPage() {
@@ -23,6 +23,21 @@ function ListingPage() {
   const [sortOrder, setSortOrder] = useState<
     "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
   >("priceAsc");
+  const [selectedCity, setSelectedCity] = useState<string>("");
+  const [selectedBedrooms, setSelectedBedrooms] = useState<
+    [number, number] | null
+  >(null);
+  const [selectedBathrooms, setSelectedBathrooms] = useState<
+    [number, number] | null
+  >(null);
+
+  const handleBedroomsChange = (event: Event, value: number | number[]) => {
+    setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
+  };
+
+  const handleBathroomsChange = (event: Event, value: number | number[]) => {
+    setSelectedBathrooms(Array.isArray(value) ? [value[0], value[1]] : null);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +56,33 @@ function ListingPage() {
   // const combinedData = [...listingsData, ...rentalData];
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  DummyData.sort((a, b) => {
+
+  const maxBedrooms = Math.max(...DummyData.map((data) => data.bedRooms));
+  const maxBathrooms = Math.max(...DummyData.map((data) => data.bathRooms));
+
+  let filteredData = DummyData;
+
+  if (selectedCity) {
+    filteredData = filteredData.filter((data) => data.city === selectedCity);
+  }
+
+  if (selectedBedrooms !== null) {
+    filteredData = filteredData.filter(
+      (data) =>
+        data.bedRooms >= selectedBedrooms[0] &&
+        data.bedRooms <= selectedBedrooms[1]
+    );
+  }
+
+  if (selectedBathrooms !== null) {
+    filteredData = filteredData.filter(
+      (data) =>
+        data.bathRooms >= selectedBathrooms[0] &&
+        data.bathRooms <= selectedBathrooms[1]
+    );
+  }
+
+  filteredData.sort((a, b) => {
     switch (sortOrder) {
       case "priceAsc":
         return a.rent.localeCompare(b.rent);
@@ -55,7 +96,8 @@ function ListingPage() {
         return 0;
     }
   });
-  const currentItems = DummyData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const handleSort = (
@@ -67,39 +109,103 @@ function ListingPage() {
   return (
     <div>
       <div
-        className="Filters"
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginTop: "20px",
-          marginBottom: "20px",
-        }}
+        className="Options"
+        style={{ display: "flex", justifyContent: "space-between" }}
       >
-        <FormControl
-          variant="standard"
-          sx={{ m: 1, minWidth: 120 }}
-          size="small"
-        >
-          <InputLabel id="sort-label">Sort</InputLabel>
-          <Select
-            value={sortOrder}
-            onChange={(event) =>
-              handleSort(
-                event.target.value as
-                  | "priceAsc"
-                  | "priceDesc"
-                  | "nameAsc"
-                  | "nameDesc"
-              )
-            }
+        <div className="Filters">
+          <div className="Sliders" style={{ display: "grid" }}>
+            <div>
+              <FormControl style={{ width: "100%" }}>
+                <Box>
+                  <InputLabel id="bedrooms-label">Bedrooms</InputLabel>
+                  <Slider
+                    value={selectedBedrooms || [0, maxBedrooms]}
+                    onChange={handleBedroomsChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="bedrooms-label"
+                    max={maxBedrooms}
+                    marks
+                    valueLabelFormat={(value) => `${value}`}
+                    step={1}
+                    min={0}
+                    disableSwap
+                  />
+                </Box>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl style={{ width: "100%" }}>
+                <Box>
+                  <InputLabel id="bathrooms-label">Bathrooms</InputLabel>
+                  <Slider
+                    value={selectedBathrooms || [0, maxBathrooms]}
+                    onChange={handleBathroomsChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="bathrooms-label"
+                    max={maxBathrooms}
+                    marks
+                    valueLabelFormat={(value) => `${value}`}
+                    step={1}
+                    min={0}
+                    disableSwap
+                  />
+                </Box>
+              </FormControl>
+            </div>
+          </div>
+          <div className="Selections">
+            <FormControl
+              variant="standard"
+              sx={{ m: 1, minWidth: 120 }}
+              size="small"
+            >
+              <InputLabel id="city-label">City</InputLabel>
+              <Select
+                value={selectedCity}
+                onChange={(event) =>
+                  setSelectedCity(event.target.value as string)
+                }
+              >
+                <MenuItem value="">All</MenuItem>
+                {Array.from(new Set(DummyData.map((data) => data.city))).map(
+                  (city) => (
+                    <MenuItem key={city} value={city}>
+                      {city}
+                    </MenuItem>
+                  )
+                )}
+              </Select>
+            </FormControl>
+          </div>
+        </div>
+        <div className="Sort">
+          <FormControl
+            variant="standard"
+            sx={{ m: 1, minWidth: 120 }}
+            size="small"
           >
-            <MenuItem value="priceDesc">Price (High to Low)</MenuItem>
-            <MenuItem value="priceAsc">Price (Low to High)</MenuItem>
-            <MenuItem value="nameDesc">Name (Z-A)</MenuItem>
-            <MenuItem value="nameAsc">Name (A-Z)</MenuItem>
-          </Select>
-        </FormControl>
+            <InputLabel id="sort-label">Sort</InputLabel>
+            <Select
+              value={sortOrder}
+              onChange={(event) =>
+                handleSort(
+                  event.target.value as
+                    | "priceAsc"
+                    | "priceDesc"
+                    | "nameAsc"
+                    | "nameDesc"
+                )
+              }
+            >
+              <MenuItem value="priceDesc">Price (High to Low)</MenuItem>
+              <MenuItem value="priceAsc">Price (Low to High)</MenuItem>
+              <MenuItem value="nameDesc">Name (Z-A)</MenuItem>
+              <MenuItem value="nameAsc">Name (A-Z)</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
       </div>
+
       <div className="listingContainer">
         {currentItems.map((data) => (
           <ListingCard {...data} key={data._id} />
@@ -109,7 +215,7 @@ function ListingPage() {
         style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
         <Pagination
-          count={Math.ceil(DummyData.length / itemsPerPage)}
+          count={Math.ceil(filteredData.length / itemsPerPage)}
           onChange={(event, value) => paginate(value)}
           color="primary"
           size="large"
