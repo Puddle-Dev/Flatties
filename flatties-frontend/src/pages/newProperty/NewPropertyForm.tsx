@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { TextField, Button, Typography, Grid, FormControl, MenuItem } from "@mui/material";
 import axios from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import Alert from '@mui/material/Alert';
 
@@ -18,6 +19,9 @@ interface Property {
 }
 
 function NewPropertyForm() {
+
+    //usecookie
+    const [cookies] = useCookies(["userId"]);
 
     //to store number of bedrooms and bathrooms as string
     const [bedroomsInput, setBedroomsInput] = useState<string>('');
@@ -89,7 +93,8 @@ function NewPropertyForm() {
 
     useEffect(() => {
         //fetch the ownerId from the user cookie when the component is loaded
-        const ownerId = "65c09432e170a2d423c030a3";
+        // const ownerId = "65c09432e170a2d423c030a3";
+        const ownerId = cookies.userId;
         setFormData((prevState) => ({
             ...prevState,
             ownerId: ownerId,   //set the ownerId in the form data
