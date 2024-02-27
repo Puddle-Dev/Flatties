@@ -41,22 +41,21 @@ function ListingPage() {
   // const combinedData = [...listingsData, ...rentalData];
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = DummyData.slice(indexOfFirstItem, indexOfLastItem).sort(
-    (a, b) => {
-      switch (sortOrder) {
-        case "priceAsc":
-          return a.rent.localeCompare(b.rent);
-        case "priceDesc":
-          return b.rent.localeCompare(a.rent);
-        case "nameAsc":
-          return a.listingTitle.localeCompare(b.listingTitle);
-        case "nameDesc":
-          return b.listingTitle.localeCompare(a.listingTitle);
-        default:
-          return 0;
-      }
+  DummyData.sort((a, b) => {
+    switch (sortOrder) {
+      case "priceAsc":
+        return a.rent.localeCompare(b.rent);
+      case "priceDesc":
+        return b.rent.localeCompare(a.rent);
+      case "nameAsc":
+        return a.listingTitle.localeCompare(b.listingTitle);
+      case "nameDesc":
+        return b.listingTitle.localeCompare(a.listingTitle);
+      default:
+        return 0;
     }
-  );
+  });
+  const currentItems = DummyData.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const handleSort = (
