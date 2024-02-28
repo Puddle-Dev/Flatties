@@ -1,8 +1,9 @@
 import React from "react";
-import { Modal, Box, Typography, TextField, Button } from "@mui/material";
+import { Modal, Box, Typography, TextField, Button, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "../../../services/api";
+
 
 interface LoginModalProps {
   open: boolean;
@@ -37,7 +38,7 @@ function Login({ open, handleClose }: LoginModalProps) {
   };
 
   const handleLogout = () => {
-    // Remove cookies and navigate to the login page
+    // Remove cookies 
     removeCookies("isLoggedIn", { path: "/" });
     removeCookies("userId", { path: "/" });
     handleClose();
@@ -69,7 +70,7 @@ function Login({ open, handleClose }: LoginModalProps) {
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           {cookies.isLoggedIn ? (
             <Button variant="contained" onClick={handleLogout} sx={{ mr: 2 }}>
-              Log Out
+               Log out
             </Button>
           ) : (
             <>
