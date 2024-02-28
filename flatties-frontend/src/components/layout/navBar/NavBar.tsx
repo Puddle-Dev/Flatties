@@ -72,6 +72,7 @@ function NavBar() {
           <NavLink to="/profile">PROFILE</NavLink>
           <NavLink to="/listing">LISTING</NavLink>
           <NavLink to="/new-property">NEW PROPERTY</NavLink>
+          <NavLink to="/about">ABOUT</NavLink>
         </Stack>
 
         <LoginModal open={loginModalOpen} handleClose={handleLoginModalClose} />
