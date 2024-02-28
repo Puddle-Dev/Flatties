@@ -4,15 +4,15 @@ import "./AboutPage.css";
 function AboutPage() {
   return (
     <div>
-        <div>
-      <h1>About Us</h1>
-      <p>
-        Welcvome to flatties. Our goal is to prived a streamlined property
-        rentals experieance for those looking for flat mates, tennats or a new
-        place to call home! We are a dynamic team of three enthusiastic
-        developers committed to honing our skills while delivering a seamless
-        user experieance.
-      </p>
+      <div>
+        <h1>About Us</h1>
+        <p>
+          Welcvome to flatties. Our goal is to prived a streamlined property
+          rentals experieance for those looking for flat mates, tennats or a new
+          place to call home! We are a dynamic team of three enthusiastic
+          developers committed to honing our skills while delivering a seamless
+          user experieance.
+        </p>
       </div>
       <h2>Our Project:</h2>
       <p>
@@ -36,13 +36,22 @@ function AboutPage() {
         valuable services.
       </p>
 
-      <h3>Benjamin Polglase</h3>
+      <h3>Benjamin Polglase:</h3>
+      <p>
+        I'm recent graduate who decided to make a career shift to follow my
+        passion for technology and problem-solving. The aspects of software
+        development I enjoy the most are collaborating with others, creating
+        real solutions and the constant learning that is required. Beyond the
+        world of coding, you'll find me immersed in my love for football,
+        curating a diverse collection of records, and indulging in my interests
+        in history and movies. Excited about this new chapter, I bring not only
+        technical skills but also a rich set of experiences and interests to the
+        software realm.
+      </p>
+      <h3>Eirik Enriquez:</h3>
       <p>Some bio</p>
-      <h3>Eirik Enriquez</h3>
+      <h3>William Wang:</h3>
       <p>Some bio</p>
-      <h3>William Wang</h3>
-      <p>Some bio</p>
-
     </div>
   );
 }
