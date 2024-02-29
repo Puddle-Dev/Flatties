@@ -16,7 +16,7 @@ import flattieslogo from "../../assets/images/flatties-icon-logo.png";
 interface DummyDataSchema {
   _id: string;
   listingTitle: string;
-  rent: string;
+  rent: number;
   address: string;
   city: string;
   bedRooms: number;
@@ -56,7 +56,7 @@ const ListingCard = (data: DummyDataSchema) => {
                   gutterBottom
                   style={{ fontSize: "1.5rem" }}
                 >
-                  {data.rent}
+                  ${data.rent}
                 </Typography>
               </Box>
             </Grid>

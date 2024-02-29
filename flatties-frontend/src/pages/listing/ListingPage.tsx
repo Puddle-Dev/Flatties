@@ -13,6 +13,7 @@ import {
   InputLabel,
   Slider,
   Box,
+  SelectChangeEvent,
 } from "@mui/material";
 
 function ListingPage() {
@@ -20,24 +21,6 @@ function ListingPage() {
   const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
-  const [sortOrder, setSortOrder] = useState<
-    "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
-  >("priceAsc");
-  const [selectedCity, setSelectedCity] = useState<string>("");
-  const [selectedBedrooms, setSelectedBedrooms] = useState<
-    [number, number] | null
-  >(null);
-  const [selectedBathrooms, setSelectedBathrooms] = useState<
-    [number, number] | null
-  >(null);
-
-  const handleBedroomsChange = (event: Event, value: number | number[]) => {
-    setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
-  };
-
-  const handleBathroomsChange = (event: Event, value: number | number[]) => {
-    setSelectedBathrooms(Array.isArray(value) ? [value[0], value[1]] : null);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,12 +36,76 @@ function ListingPage() {
     fetchData();
   }, []);
 
+  //sorting
+  const [sortOrder, setSortOrder] = useState<
+    "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
+  >("priceAsc");
+
+  // filters
+  const [selectedCity, setSelectedCity] = useState<string>("");
+  const [selectedBedrooms, setSelectedBedrooms] = useState<
+    [number, number] | null
+  >(null);
+  const [selectedBathrooms, setSelectedBathrooms] = useState<
+    [number, number] | null
+  >(null);
+  const [selectedYearBuilt, setSelectedYearBuilt] = useState<
+    [number, number] | null
+  >(null);
+  const [selectedRent, setSelectedRent] = useState<[number, number] | null>(
+    null
+  );
+  const [isFurnished, setIsFurnished] = useState<string>("");
+
+  const handleBedroomsChange = (event: Event, value: number | number[]) => {
+    setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
+  };
+
+  const handleBathroomsChange = (event: Event, value: number | number[]) => {
+    setSelectedBathrooms(Array.isArray(value) ? [value[0], value[1]] : null);
+  };
+
+  const handleYearBuiltChange = (event: Event, value: number | number[]) => {
+    setSelectedYearBuilt(Array.isArray(value) ? [value[0], value[1]] : null);
+  };
+
+  const handleRentChange = (event: Event, value: number | number[]) => {
+    setSelectedRent(Array.isArray(value) ? [value[0], value[1]] : null);
+  };
+
+  const handleFurnishedChange = (event: SelectChangeEvent<string>) => {
+    setIsFurnished(event.target.value);
+  };
+
+  const handleCityChange = (event: SelectChangeEvent<string>) => {
+    setSelectedCity(event.target.value);
+  };
+
   // const combinedData = [...listingsData, ...rentalData];
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
+  const minBedrooms = Math.min(...DummyData.map((data) => data.bedRooms));
   const maxBedrooms = Math.max(...DummyData.map((data) => data.bedRooms));
+
+  const minBathrooms = Math.min(...DummyData.map((data) => data.bathRooms));
   const maxBathrooms = Math.max(...DummyData.map((data) => data.bathRooms));
+
+  const minRent = Math.min(...DummyData.map((data) => data.rent));
+  const maxRent = Math.max(...DummyData.map((data) => data.rent));
+
+  const minYearBuilt = Math.min(
+    ...DummyData.map((data) => {
+      const year = new Date(data.year_built).getFullYear();
+      return year;
+    })
+  );
+  const maxYearBuilt = Math.max(
+    ...DummyData.map((data) => {
+      const year = new Date(data.year_built).getFullYear();
+      return year;
+    })
+  );
 
   let filteredData = DummyData;
 
@@ -82,12 +129,33 @@ function ListingPage() {
     );
   }
 
+  if (selectedYearBuilt !== null) {
+    filteredData = filteredData.filter((data) => {
+      const yearBuilt = new Date(data.year_built).getFullYear();
+      return (
+        yearBuilt >= selectedYearBuilt[0] && yearBuilt <= selectedYearBuilt[1]
+      );
+    });
+  }
+
+  if (selectedRent !== null) {
+    filteredData = filteredData.filter(
+      (data) => data.rent >= selectedRent[0] && data.rent <= selectedRent[1]
+    );
+  }
+
+  if (isFurnished) {
+    filteredData = filteredData.filter(
+      (data) => data.isFurnished.toString() === isFurnished
+    );
+  }
+
   filteredData.sort((a, b) => {
     switch (sortOrder) {
       case "priceAsc":
-        return a.rent.localeCompare(b.rent);
+        return a.rent.toString().localeCompare(b.rent.toString()); // shit code
       case "priceDesc":
-        return b.rent.localeCompare(a.rent);
+        return b.rent.toString().localeCompare(a.rent.toString());
       case "nameAsc":
         return a.listingTitle.localeCompare(b.listingTitle);
       case "nameDesc":
@@ -119,7 +187,7 @@ function ListingPage() {
                 <Box>
                   <InputLabel id="bedrooms-label">Bedrooms</InputLabel>
                   <Slider
-                    value={selectedBedrooms || [0, maxBedrooms]}
+                    value={selectedBedrooms || [minBedrooms, maxBedrooms]}
                     onChange={handleBedroomsChange}
                     valueLabelDisplay="auto"
                     aria-labelledby="bedrooms-label"
@@ -127,7 +195,7 @@ function ListingPage() {
                     marks
                     valueLabelFormat={(value) => `${value}`}
                     step={1}
-                    min={0}
+                    min={minBedrooms}
                     disableSwap
                   />
                 </Box>
@@ -138,7 +206,7 @@ function ListingPage() {
                 <Box>
                   <InputLabel id="bathrooms-label">Bathrooms</InputLabel>
                   <Slider
-                    value={selectedBathrooms || [0, maxBathrooms]}
+                    value={selectedBathrooms || [minBathrooms, maxBathrooms]}
                     onChange={handleBathroomsChange}
                     valueLabelDisplay="auto"
                     aria-labelledby="bathrooms-label"
@@ -146,7 +214,45 @@ function ListingPage() {
                     marks
                     valueLabelFormat={(value) => `${value}`}
                     step={1}
-                    min={0}
+                    min={minBathrooms}
+                    disableSwap
+                  />
+                </Box>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl style={{ width: "100%" }}>
+                <Box>
+                  <InputLabel id="yearBuilt-label">Year Built</InputLabel>
+                  <Slider
+                    value={selectedYearBuilt || [minYearBuilt, maxYearBuilt]}
+                    onChange={handleYearBuiltChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="yearBuilt-label"
+                    max={maxYearBuilt}
+                    marks
+                    valueLabelFormat={(value) => `${value}`}
+                    step={1}
+                    min={minYearBuilt}
+                    disableSwap
+                  />
+                </Box>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl style={{ width: "100%" }}>
+                <Box>
+                  <InputLabel id="rent-label">Rent</InputLabel>
+                  <Slider
+                    value={selectedRent || [minRent, maxRent]}
+                    onChange={handleRentChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="rent-label"
+                    max={maxRent}
+                    marks
+                    valueLabelFormat={(value) => `$${value}`}
+                    step={50}
+                    min={minRent}
                     disableSwap
                   />
                 </Box>
@@ -154,28 +260,39 @@ function ListingPage() {
             </div>
           </div>
           <div className="Selections">
-            <FormControl
-              variant="standard"
-              sx={{ m: 1, minWidth: 120 }}
-              size="small"
-            >
-              <InputLabel id="city-label">City</InputLabel>
-              <Select
-                value={selectedCity}
-                onChange={(event) =>
-                  setSelectedCity(event.target.value as string)
-                }
+            <div>
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, minWidth: 120 }}
+                size="small"
               >
-                <MenuItem value="">All</MenuItem>
-                {Array.from(new Set(DummyData.map((data) => data.city))).map(
-                  (city) => (
-                    <MenuItem key={city} value={city}>
-                      {city}
-                    </MenuItem>
-                  )
-                )}
-              </Select>
-            </FormControl>
+                <InputLabel id="city-label">City</InputLabel>
+                <Select value={selectedCity} onChange={handleCityChange}>
+                  <MenuItem value="">All</MenuItem>
+                  {Array.from(new Set(DummyData.map((data) => data.city))).map(
+                    (city) => (
+                      <MenuItem key={city} value={city}>
+                        {city}
+                      </MenuItem>
+                    )
+                  )}
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, minWidth: 120 }}
+                size="small"
+              >
+                <InputLabel id="isFurnished-label">Is Furnished</InputLabel>
+                <Select value={isFurnished} onChange={handleFurnishedChange}>
+                  <MenuItem value="">All</MenuItem>
+                  <MenuItem value="true">Yes</MenuItem>
+                  <MenuItem value="false">No</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
           </div>
         </div>
         <div className="Sort">
