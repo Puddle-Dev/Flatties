@@ -42,7 +42,7 @@ function ListingPage() {
   >("priceAsc");
 
   // filters
-  const [selectedCity, setSelectedCity] = useState<string>("");
+  // sliders
   const [selectedBedrooms, setSelectedBedrooms] = useState<
     [number, number] | null
   >(null);
@@ -55,7 +55,13 @@ function ListingPage() {
   const [selectedRent, setSelectedRent] = useState<[number, number] | null>(
     null
   );
+
+  // options
+  const [selectedCity, setSelectedCity] = useState<string>("");
   const [isFurnished, setIsFurnished] = useState<string>("");
+  const [isPetAllowed, setIsPetAllowed] = useState<string>("");
+  const [isSmoking, setIsSmoking] = useState<string>("");
+  const [isParking, setIsParking] = useState<string>("");
 
   const handleBedroomsChange = (event: Event, value: number | number[]) => {
     setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
@@ -73,12 +79,24 @@ function ListingPage() {
     setSelectedRent(Array.isArray(value) ? [value[0], value[1]] : null);
   };
 
+  const handleCityChange = (event: SelectChangeEvent<string>) => {
+    setSelectedCity(event.target.value);
+  };
+
   const handleFurnishedChange = (event: SelectChangeEvent<string>) => {
     setIsFurnished(event.target.value);
   };
 
-  const handleCityChange = (event: SelectChangeEvent<string>) => {
-    setSelectedCity(event.target.value);
+  const handlePetAllowedChange = (event: SelectChangeEvent<string>) => {
+    setIsPetAllowed(event.target.value);
+  };
+
+  const handleSmokingChange = (event: SelectChangeEvent<string>) => {
+    setIsSmoking(event.target.value);
+  };
+
+  const handleParkingChange = (event: SelectChangeEvent<string>) => {
+    setIsParking(event.target.value);
   };
 
   // const combinedData = [...listingsData, ...rentalData];
@@ -109,10 +127,6 @@ function ListingPage() {
 
   let filteredData = DummyData;
 
-  if (selectedCity) {
-    filteredData = filteredData.filter((data) => data.city === selectedCity);
-  }
-
   if (selectedBedrooms !== null) {
     filteredData = filteredData.filter(
       (data) =>
@@ -138,6 +152,10 @@ function ListingPage() {
     });
   }
 
+  if (selectedCity) {
+    filteredData = filteredData.filter((data) => data.city === selectedCity);
+  }
+
   if (selectedRent !== null) {
     filteredData = filteredData.filter(
       (data) => data.rent >= selectedRent[0] && data.rent <= selectedRent[1]
@@ -147,6 +165,24 @@ function ListingPage() {
   if (isFurnished) {
     filteredData = filteredData.filter(
       (data) => data.isFurnished.toString() === isFurnished
+    );
+  }
+
+  if (isPetAllowed) {
+    filteredData = filteredData.filter(
+      (data) => data.isPetAllowed.toString() === isPetAllowed
+    );
+  }
+
+  if (isSmoking) {
+    filteredData = filteredData.filter(
+      (data) => data.isSmokingAllowed.toString() === isSmoking
+    );
+  }
+
+  if (isParking) {
+    filteredData = filteredData.filter(
+      (data) => data.isParkingAllowed.toString() === isParking
     );
   }
 
@@ -177,7 +213,7 @@ function ListingPage() {
   return (
     <div>
       <div
-        className="Options"
+        className="FiltersAndSorting"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <div className="Filters">
@@ -259,7 +295,7 @@ function ListingPage() {
               </FormControl>
             </div>
           </div>
-          <div className="Selections">
+          <div className="Options">
             <div>
               <FormControl
                 variant="standard"
@@ -287,6 +323,52 @@ function ListingPage() {
               >
                 <InputLabel id="isFurnished-label">Is Furnished</InputLabel>
                 <Select value={isFurnished} onChange={handleFurnishedChange}>
+                  <MenuItem value="">All</MenuItem>
+                  <MenuItem value="true">Yes</MenuItem>
+                  <MenuItem value="false">No</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, minWidth: 120 }}
+                size="small"
+              >
+                <InputLabel id="isPetAllowed-label">Pets Allowed?</InputLabel>
+                <Select value={isPetAllowed} onChange={handlePetAllowedChange}>
+                  <MenuItem value="">All</MenuItem>
+                  <MenuItem value="true">Yes</MenuItem>
+                  <MenuItem value="false">No</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, minWidth: 120 }}
+                size="small"
+              >
+                <InputLabel id="isSmokingAllowed-label">
+                  Smoking Allowed?
+                </InputLabel>
+                <Select value={isSmoking} onChange={handleSmokingChange}>
+                  <MenuItem value="">All</MenuItem>
+                  <MenuItem value="true">Yes</MenuItem>
+                  <MenuItem value="false">No</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, minWidth: 120 }}
+                size="small"
+              >
+                <InputLabel id="isParkingAllowedLabel">
+                  Parking Allowed?
+                </InputLabel>
+                <Select value={isParking} onChange={handleParkingChange}>
                   <MenuItem value="">All</MenuItem>
                   <MenuItem value="true">Yes</MenuItem>
                   <MenuItem value="false">No</MenuItem>
