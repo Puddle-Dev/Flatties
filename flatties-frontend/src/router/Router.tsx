@@ -6,6 +6,7 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import ListingPage from "../pages/listing/ListingPage";
 import RegisterPage from "../pages/register/RegisterPage";
 import NewPropertyForm from "../pages/newProperty/NewPropertyForm";
+import ActiveProperty from "../pages/newProperty/ActiveProperty";
 
 function Router() {
 
@@ -24,6 +25,7 @@ function Router() {
           <Route path="/listing" element={<ListingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/new-property" element={<NewPropertyForm />} />
+          <Route path="/active-property" element={<ActiveProperty />} />
 
           {/* 404 Page */}
           <Route path="*" element={<h1>Page Not Found</h1>} />
