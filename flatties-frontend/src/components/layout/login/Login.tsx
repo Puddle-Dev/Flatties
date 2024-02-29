@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Box, Typography, TextField, Button, Menu, MenuItem } from "@mui/material";
+import { Modal, Box, Typography, TextField, Button} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "../../../services/api";
@@ -65,7 +65,7 @@ function Login({ open, handleClose }: LoginModalProps) {
         }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          {cookies.isLoggedIn ? "Welcome back!" : "Login"}
+          {cookies.isLoggedIn ? "Would you like to sign out?" : "Login"}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           {cookies.isLoggedIn ? (
