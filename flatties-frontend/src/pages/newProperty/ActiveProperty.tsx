@@ -8,6 +8,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
+
 interface ActiveProperty {
     _id: string;    //property ID ref:MongoDB.ObjectId
     title: string;
@@ -110,10 +111,11 @@ function NewPropertyForm() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault(); // Prevent the default form submission
+        formData.isActivated = true;  //set the property as activated
         console.log("Form Data:", formData);
 
         //send a POST request to the server
-        axios.post("/property", formData)
+        axios.patch("/property/update", formData)
             .then((res) => {
                 console.log("Property added successfully:", res.data);
                 // Close the modal
@@ -122,16 +124,6 @@ function NewPropertyForm() {
                 console.log("Form Data:", formData);
 
             })
-            .then(
-                //activate the property
-                // axios.post("/property/activate", { _id: propetyID })
-                //     .then((res) => {
-                //         console.log("Property activated successfully:", res.data);
-                //     })
-                //     .catch((err) => {
-                //         console.log("Property activation failed:", err);
-                //     })
-            )
             .catch((err) => {
                 console.log("Property addition failed:", err);
             });
@@ -142,7 +134,7 @@ function NewPropertyForm() {
         // const ownerId = "65c09432e170a2d423c030a3";
         setFormData((prevState) => ({
             ...prevState,
-            _id: propetyID,   //set the ownerId in the form data
+            _id: "65dabb41f1099bd4436c8940",   //set the ownerId in the form data
         }));
     }, []);
 
