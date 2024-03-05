@@ -10,11 +10,11 @@ interface FilterSliderProps {
 }
 
 const FilterSlider: React.FC<FilterSliderProps> = ({
-  label: label,
-  selectedItems: selectedItems,
-  min: min,
-  max: max,
-  handleChange: handleChange,
+  label,
+  selectedItems,
+  min,
+  max,
+  handleChange,
 }) => {
   return (
     <div>
