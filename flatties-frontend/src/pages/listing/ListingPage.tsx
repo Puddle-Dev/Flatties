@@ -15,6 +15,7 @@ import {
   Box,
   SelectChangeEvent,
 } from "@mui/material";
+import FilterSlider from "../../components/filters/FilterSlider";
 
 function ListingPage() {
   const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
@@ -218,82 +219,34 @@ function ListingPage() {
       >
         <div className="Filters">
           <div className="Sliders" style={{ display: "grid" }}>
-            <div>
-              <FormControl style={{ width: "100%" }}>
-                <Box>
-                  <InputLabel id="bedrooms-label">Bedrooms</InputLabel>
-                  <Slider
-                    value={selectedBedrooms || [minBedrooms, maxBedrooms]}
-                    onChange={handleBedroomsChange}
-                    valueLabelDisplay="auto"
-                    aria-labelledby="bedrooms-label"
-                    max={maxBedrooms}
-                    marks
-                    valueLabelFormat={(value) => `${value}`}
-                    step={1}
-                    min={minBedrooms}
-                    disableSwap
-                  />
-                </Box>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl style={{ width: "100%" }}>
-                <Box>
-                  <InputLabel id="bathrooms-label">Bathrooms</InputLabel>
-                  <Slider
-                    value={selectedBathrooms || [minBathrooms, maxBathrooms]}
-                    onChange={handleBathroomsChange}
-                    valueLabelDisplay="auto"
-                    aria-labelledby="bathrooms-label"
-                    max={maxBathrooms}
-                    marks
-                    valueLabelFormat={(value) => `${value}`}
-                    step={1}
-                    min={minBathrooms}
-                    disableSwap
-                  />
-                </Box>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl style={{ width: "100%" }}>
-                <Box>
-                  <InputLabel id="yearBuilt-label">Year Built</InputLabel>
-                  <Slider
-                    value={selectedYearBuilt || [minYearBuilt, maxYearBuilt]}
-                    onChange={handleYearBuiltChange}
-                    valueLabelDisplay="auto"
-                    aria-labelledby="yearBuilt-label"
-                    max={maxYearBuilt}
-                    marks
-                    valueLabelFormat={(value) => `${value}`}
-                    step={1}
-                    min={minYearBuilt}
-                    disableSwap
-                  />
-                </Box>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl style={{ width: "100%" }}>
-                <Box>
-                  <InputLabel id="rent-label">Rent</InputLabel>
-                  <Slider
-                    value={selectedRent || [minRent, maxRent]}
-                    onChange={handleRentChange}
-                    valueLabelDisplay="auto"
-                    aria-labelledby="rent-label"
-                    max={maxRent}
-                    marks
-                    valueLabelFormat={(value) => `$${value}`}
-                    step={50}
-                    min={minRent}
-                    disableSwap
-                  />
-                </Box>
-              </FormControl>
-            </div>
+            <FilterSlider
+              label="Bedrooms"
+              selectedItems={selectedBedrooms}
+              min={minBedrooms}
+              max={maxBedrooms}
+              handleChange={handleBedroomsChange}
+            />
+            <FilterSlider
+              label="Bathrooms"
+              selectedItems={selectedBathrooms}
+              min={minBathrooms}
+              max={maxBathrooms}
+              handleChange={handleBathroomsChange}
+            />
+            <FilterSlider
+              label="Year Built"
+              selectedItems={selectedYearBuilt}
+              min={minYearBuilt}
+              max={maxYearBuilt}
+              handleChange={handleYearBuiltChange}
+            />
+            <FilterSlider
+              label="Rent"
+              selectedItems={selectedRent}
+              min={minRent}
+              max={maxRent}
+              handleChange={handleRentChange}
+            />
           </div>
           <div className="Options">
             <div>
