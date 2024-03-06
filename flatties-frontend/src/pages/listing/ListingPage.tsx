@@ -49,8 +49,8 @@ function ListingPage() {
 
   //sorting
   const [sortOrder, setSortOrder] = useState<
-    "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
-  >("priceAsc");
+    "addedAsc" | "addedDesc" | "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
+  >("addedAsc");
 
   // filters
   // sliders
@@ -189,6 +189,10 @@ function ListingPage() {
 
   filteredData.sort((a, b) => {
     switch (sortOrder) {
+      case "addedAsc":
+        return a._id.toString().localeCompare(b._id.toString());
+      case "addedDesc":
+        return b._id.toString().localeCompare(a._id.toString());
       case "priceAsc":
         return a.rent.toString().localeCompare(b.rent.toString()); // shit code
       case "priceDesc":
@@ -206,7 +210,13 @@ function ListingPage() {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const handleSort = (
-    value: "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
+    value:
+      | "addedAsc"
+      | "addedDesc"
+      | "priceAsc"
+      | "priceDesc"
+      | "nameAsc"
+      | "nameDesc"
   ) => {
     setSortOrder(value);
   };
@@ -354,6 +364,8 @@ function ListingPage() {
               onChange={(event) =>
                 handleSort(
                   event.target.value as
+                    | "addedAsc"
+                    | "addedDesc"
                     | "priceAsc"
                     | "priceDesc"
                     | "nameAsc"
@@ -361,6 +373,8 @@ function ListingPage() {
                 )
               }
             >
+              <MenuItem value="addedAsc">Date Added (Newest)</MenuItem>
+              <MenuItem value="addedDesc">Date Added (Oldest)</MenuItem>
               <MenuItem value="priceDesc">Price (High to Low)</MenuItem>
               <MenuItem value="priceAsc">Price (Low to High)</MenuItem>
               <MenuItem value="nameDesc">Name (Z-A)</MenuItem>
