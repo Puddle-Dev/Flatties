@@ -25,23 +25,24 @@ import {
 import FilterSlider from "../../components/filters/FilterSlider";
 
 function ListingPage() {
-  const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
-  const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
+  // const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
+  // const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
+  const listingsData = DummyData;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const propertiesResponse = await api.get("/property/all");
-        const listingResponse = await api.get("/listing/all");
-        setListingsData(propertiesResponse.data);
-        setRentalData(listingResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
+    // const fetchData = async () => {
+    //   try {
+    //     const propertiesResponse = await api.get("/property/all");
+    //     const listingResponse = await api.get("/listing/all");
+    //     setListingsData(propertiesResponse.data);
+    //     setRentalData(listingResponse.data);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // };
+    // fetchData();
   }, []);
 
   //sorting
@@ -66,6 +67,7 @@ function ListingPage() {
 
   // options
   const [selectedCity, setSelectedCity] = useState<string>("");
+  const [selectedSuburb, setSelectedSuburb] = useState<string>("");
   const [isFurnished, setIsFurnished] = useState<string>("");
   const [isPetAllowed, setIsPetAllowed] = useState<string>("");
   const [isSmoking, setIsSmoking] = useState<string>("");
@@ -91,6 +93,10 @@ function ListingPage() {
     setSelectedCity(event.target.value);
   };
 
+  const handleSuburbChange = (event: SelectChangeEvent<string>) => {
+    setSelectedSuburb(event.target.value);
+  };
+
   const handleFurnishedChange = (event: SelectChangeEvent<string>) => {
     setIsFurnished(event.target.value);
   };
@@ -111,29 +117,29 @@ function ListingPage() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const minBedrooms = Math.min(...DummyData.map((data) => data.bedRooms));
-  const maxBedrooms = Math.max(...DummyData.map((data) => data.bedRooms));
+  const minBedrooms = Math.min(...listingsData.map((data) => data.bedRooms));
+  const maxBedrooms = Math.max(...listingsData.map((data) => data.bedRooms));
 
-  const minBathrooms = Math.min(...DummyData.map((data) => data.bathRooms));
-  const maxBathrooms = Math.max(...DummyData.map((data) => data.bathRooms));
+  const minBathrooms = Math.min(...listingsData.map((data) => data.bathRooms));
+  const maxBathrooms = Math.max(...listingsData.map((data) => data.bathRooms));
 
-  const minRent = Math.min(...DummyData.map((data) => data.rent));
-  const maxRent = Math.max(...DummyData.map((data) => data.rent));
+  const minRent = Math.min(...listingsData.map((data) => data.rent));
+  const maxRent = Math.max(...listingsData.map((data) => data.rent));
 
   const minYearBuilt = Math.min(
-    ...DummyData.map((data) => {
+    ...listingsData.map((data) => {
       const year = new Date(data.year_built).getFullYear();
       return year;
     })
   );
   const maxYearBuilt = Math.max(
-    ...DummyData.map((data) => {
+    ...listingsData.map((data) => {
       const year = new Date(data.year_built).getFullYear();
       return year;
     })
   );
 
-  let filteredData = DummyData;
+  let filteredData = listingsData;
 
   if (selectedBedrooms !== null) {
     filteredData = filteredData.filter(
@@ -162,6 +168,12 @@ function ListingPage() {
 
   if (selectedCity) {
     filteredData = filteredData.filter((data) => data.city === selectedCity);
+  }
+
+  if (selectedSuburb) {
+    filteredData = filteredData.filter(
+      (data) => data.suburb === selectedSuburb
+    );
   }
 
   if (selectedRent !== null) {
@@ -265,13 +277,32 @@ function ListingPage() {
                 <InputLabel id="city-label">City</InputLabel>
                 <Select value={selectedCity} onChange={handleCityChange}>
                   <MenuItem value="">All</MenuItem>
-                  {Array.from(new Set(DummyData.map((data) => data.city))).map(
-                    (city) => (
-                      <MenuItem key={city} value={city}>
-                        {city}
-                      </MenuItem>
-                    )
-                  )}
+                  {Array.from(
+                    new Set(listingsData.map((data) => data.city))
+                  ).map((city) => (
+                    <MenuItem key={city} value={city}>
+                      {city}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl
+                variant="standard"
+                sx={{ m: 1, minWidth: 120 }}
+                size="small"
+              >
+                <InputLabel id="suburb-label">Suburb</InputLabel>
+                <Select value={selectedSuburb} onChange={handleSuburbChange}>
+                  <MenuItem value="">All</MenuItem>
+                  {Array.from(
+                    new Set(listingsData.map((data) => data.suburb))
+                  ).map((suburb) => (
+                    <MenuItem key={suburb} value={suburb}>
+                      {suburb}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </div>
