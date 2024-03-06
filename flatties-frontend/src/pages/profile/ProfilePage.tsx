@@ -6,6 +6,7 @@ import axios from "../../services/api";
 import { Button } from "@mui/material";
 import { redirect } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import WatchList from "../../components/watchList/WatchList"; // Import the new ScrollBox component
 
 
 function ProfilePage() {
@@ -111,7 +112,9 @@ function ProfilePage() {
           <Button variant="contained" >Edit</Button>
         </div>
       </div>
-
+<div>
+  <WatchList/>
+</div>
 
 
     </div>

@@ -6,6 +6,8 @@ import "./HomePage.css";
 import PropertyInfo from "../../models/PropertyInfo";
 import { useCookies } from "react-cookie";
 import ScrollBox from "../../components/ScrollBox/ScrollBox"; // Import the new ScrollBox component
+import WatchList from "../../components/watchList/WatchList"; // Import the new ScrollBox component
+
 
 function HomePage() {
   const [newListings, setNewListings] = useState<PropertyInfo[]>([]);
@@ -32,7 +34,7 @@ function HomePage() {
           </Typography>
 
           {/* Use the ScrollBox component for the Watchlist */}
-          <ScrollBox title="Your Watchlist" items={[1, 2, 3, 4, 5, 6]} />
+          <WatchList/>
 
           {/* Other components... */}
         </div>
