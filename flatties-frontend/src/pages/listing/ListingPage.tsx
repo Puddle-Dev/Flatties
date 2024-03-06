@@ -4,6 +4,7 @@
 // remove year built
 // availability date to filter
 // change rent to input min max
+// add submit
 
 import React, { useState, useEffect } from "react";
 import api from "../../services/api";
@@ -23,6 +24,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import FilterSlider from "../../components/filters/FilterSlider";
+import MinMaxInput from "./MinMaxInput";
 
 function ListingPage() {
   // const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
@@ -58,12 +60,10 @@ function ListingPage() {
   const [selectedBathrooms, setSelectedBathrooms] = useState<
     [number, number] | null
   >(null);
-  const [selectedYearBuilt, setSelectedYearBuilt] = useState<
-    [number, number] | null
-  >(null);
-  const [selectedRent, setSelectedRent] = useState<[number, number] | null>(
-    null
-  );
+  const minRent = Math.min(...listingsData.map((data) => data.rent));
+  const maxRent = Math.max(...listingsData.map((data) => data.rent));
+  const [selectedMinRent, setSelectedMinRent] = useState<number>(minRent);
+  const [selectedMaxRent, setSelectedMaxRent] = useState<number>(maxRent);
 
   // options
   const [selectedCity, setSelectedCity] = useState<string>("");
@@ -81,12 +81,12 @@ function ListingPage() {
     setSelectedBathrooms(Array.isArray(value) ? [value[0], value[1]] : null);
   };
 
-  const handleYearBuiltChange = (event: Event, value: number | number[]) => {
-    setSelectedYearBuilt(Array.isArray(value) ? [value[0], value[1]] : null);
+  const handleMinRentChange = (value: string) => {
+    setSelectedMinRent(parseInt(value));
   };
 
-  const handleRentChange = (event: Event, value: number | number[]) => {
-    setSelectedRent(Array.isArray(value) ? [value[0], value[1]] : null);
+  const handleMaxRentChange = (value: string) => {
+    setSelectedMaxRent(parseInt(value));
   };
 
   const handleCityChange = (event: SelectChangeEvent<string>) => {
@@ -123,22 +123,6 @@ function ListingPage() {
   const minBathrooms = Math.min(...listingsData.map((data) => data.bathRooms));
   const maxBathrooms = Math.max(...listingsData.map((data) => data.bathRooms));
 
-  const minRent = Math.min(...listingsData.map((data) => data.rent));
-  const maxRent = Math.max(...listingsData.map((data) => data.rent));
-
-  const minYearBuilt = Math.min(
-    ...listingsData.map((data) => {
-      const year = new Date(data.year_built).getFullYear();
-      return year;
-    })
-  );
-  const maxYearBuilt = Math.max(
-    ...listingsData.map((data) => {
-      const year = new Date(data.year_built).getFullYear();
-      return year;
-    })
-  );
-
   let filteredData = listingsData;
 
   if (selectedBedrooms !== null) {
@@ -157,15 +141,6 @@ function ListingPage() {
     );
   }
 
-  if (selectedYearBuilt !== null) {
-    filteredData = filteredData.filter((data) => {
-      const yearBuilt = new Date(data.year_built).getFullYear();
-      return (
-        yearBuilt >= selectedYearBuilt[0] && yearBuilt <= selectedYearBuilt[1]
-      );
-    });
-  }
-
   if (selectedCity) {
     filteredData = filteredData.filter((data) => data.city === selectedCity);
   }
@@ -176,9 +151,9 @@ function ListingPage() {
     );
   }
 
-  if (selectedRent !== null) {
+  if (selectedMinRent !== null && selectedMaxRent !== null) {
     filteredData = filteredData.filter(
-      (data) => data.rent >= selectedRent[0] && data.rent <= selectedRent[1]
+      (data) => data.rent >= selectedMinRent && data.rent <= selectedMaxRent
     );
   }
 
@@ -252,19 +227,14 @@ function ListingPage() {
               max={maxBathrooms}
               handleChange={handleBathroomsChange}
             />
-            <FilterSlider
-              label="Year Built"
-              selectedItems={selectedYearBuilt}
-              min={minYearBuilt}
-              max={maxYearBuilt}
-              handleChange={handleYearBuiltChange}
-            />
-            <FilterSlider
+            <MinMaxInput
               label="Rent"
-              selectedItems={selectedRent}
-              min={minRent}
-              max={maxRent}
-              handleChange={handleRentChange}
+              min={selectedMinRent.toString()}
+              max={selectedMaxRent.toString()}
+              defaultMin={minRent.toString()}
+              defaultMax={maxRent.toString()}
+              onMinChange={handleMinRentChange}
+              onMaxChange={handleMaxRentChange}
             />
           </div>
           <div className="Options">
