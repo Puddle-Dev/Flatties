@@ -3,8 +3,6 @@ import { TextField, Grid, InputAdornment } from "@mui/material";
 
 interface MinMaxInputProps {
   label: string;
-  min: string;
-  max: string;
   defaultMin: string;
   defaultMax: string;
   onMinChange: (value: string) => void;
@@ -13,8 +11,6 @@ interface MinMaxInputProps {
 
 const MinMaxInput: React.FC<MinMaxInputProps> = ({
   label,
-  min,
-  max,
   defaultMin,
   defaultMax,
   onMinChange,

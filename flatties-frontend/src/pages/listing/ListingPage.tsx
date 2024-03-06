@@ -82,11 +82,15 @@ function ListingPage() {
   };
 
   const handleMinRentChange = (value: string) => {
-    setSelectedMinRent(parseInt(value));
+    value === ""
+      ? setSelectedMinRent(minRent)
+      : setSelectedMinRent(parseInt(value));
   };
 
   const handleMaxRentChange = (value: string) => {
-    setSelectedMaxRent(parseInt(value));
+    value === ""
+      ? setSelectedMaxRent(maxRent)
+      : setSelectedMaxRent(parseInt(value));
   };
 
   const handleCityChange = (event: SelectChangeEvent<string>) => {
@@ -151,10 +155,12 @@ function ListingPage() {
     );
   }
 
-  if (selectedMinRent !== null && selectedMaxRent !== null) {
-    filteredData = filteredData.filter(
-      (data) => data.rent >= selectedMinRent && data.rent <= selectedMaxRent
-    );
+  if (selectedMinRent) {
+    filteredData = filteredData.filter((data) => data.rent >= selectedMinRent);
+  }
+
+  if (selectedMaxRent) {
+    filteredData = filteredData.filter((data) => data.rent <= selectedMaxRent);
   }
 
   if (isFurnished) {
@@ -229,8 +235,6 @@ function ListingPage() {
             />
             <MinMaxInput
               label="Rent"
-              min={selectedMinRent.toString()}
-              max={selectedMaxRent.toString()}
               defaultMin={minRent.toString()}
               defaultMax={maxRent.toString()}
               onMinChange={handleMinRentChange}
