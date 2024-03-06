@@ -1,3 +1,10 @@
+// todo
+// leaseterm to leasetype
+// add suburb
+// remove year built
+// availability date to filter
+// change rent to input min max
+
 import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import PropertyInfo from "../../models/PropertyInfo";

@@ -19,6 +19,7 @@ interface DummyDataSchema {
   rent: number;
   address: string;
   city: string;
+  suburb: string;
   bedRooms: number;
   bathRooms: number;
 }
@@ -43,7 +44,7 @@ const ListingCard = (data: DummyDataSchema) => {
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            {data.city}
+            {data.suburb}, {data.city}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {data.address}
