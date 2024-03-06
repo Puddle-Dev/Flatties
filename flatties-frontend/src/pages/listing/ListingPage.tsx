@@ -49,7 +49,14 @@ function ListingPage() {
 
   //sorting
   const [sortOrder, setSortOrder] = useState<
-    "addedAsc" | "addedDesc" | "priceAsc" | "priceDesc" | "nameAsc" | "nameDesc"
+    | "addedAsc"
+    | "addedDesc"
+    | "priceAsc"
+    | "priceDesc"
+    | "nameAsc"
+    | "nameDesc"
+    | "availAsc"
+    | "availDesc"
   >("addedAsc");
 
   // filters
@@ -201,6 +208,14 @@ function ListingPage() {
         return a.listingTitle.localeCompare(b.listingTitle);
       case "nameDesc":
         return b.listingTitle.localeCompare(a.listingTitle);
+      case "availAsc":
+        const aDateAsc = new Date(a.availabilityDate);
+        const bDateAsc = new Date(b.availabilityDate);
+        return aDateAsc.getTime() - bDateAsc.getTime();
+      case "availDesc":
+        const aDateDesc = new Date(a.availabilityDate);
+        const bDateDesc = new Date(b.availabilityDate);
+        return bDateDesc.getTime() - aDateDesc.getTime();
       default:
         return 0;
     }
@@ -217,6 +232,8 @@ function ListingPage() {
       | "priceDesc"
       | "nameAsc"
       | "nameDesc"
+      | "availAsc"
+      | "availDesc"
   ) => {
     setSortOrder(value);
   };
@@ -370,6 +387,8 @@ function ListingPage() {
                     | "priceDesc"
                     | "nameAsc"
                     | "nameDesc"
+                    | "availAsc"
+                    | "availDesc"
                 )
               }
             >
@@ -379,6 +398,8 @@ function ListingPage() {
               <MenuItem value="priceAsc">Price (Low to High)</MenuItem>
               <MenuItem value="nameDesc">Name (Z-A)</MenuItem>
               <MenuItem value="nameAsc">Name (A-Z)</MenuItem>
+              <MenuItem value="availAsc">Availability Date (Newest)</MenuItem>
+              <MenuItem value="availDesc">Availability Date (Oldest)</MenuItem>
             </Select>
           </FormControl>
         </div>
