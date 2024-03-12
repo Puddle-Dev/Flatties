@@ -42,7 +42,7 @@ Before you begin, ensure you have the following prerequisites installed on your 
 3. Create a `.env` file in the `flatties-backend` directory and configure your MongoDB connection string:
 
    ```env
-   MONGODB_URL=mongodb+srv://puddle:123456abc@puddledev.ww945uo.mongodb.net/?retryWrites=true&w=majority
+   MONGODB_URL=[Your mongoDB connection string]
    ```
 
 4. Run the backend server:
