@@ -62,6 +62,10 @@ const user = require('./models/UserModel');
 const userRouter = require('./routers/UserRouter');
 const propertyRouter = require('./routers/PropertyRouter');
 
+//use routers
+app.use('/api/user', userRouter);
+app.use('/api/property', propertyRouter);
+
 // Connect to MongoDB
 mongoose.connect(MONGODB_URL);
 
@@ -73,7 +77,3 @@ db.once('open', function() {
     console.info(`----------------------------`);
 });
 
-// Start the server
-
-app.use('/api/user', userRouter);
-app.use('/api/property', propertyRouter);
