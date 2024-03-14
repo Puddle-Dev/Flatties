@@ -10,12 +10,27 @@
     * 
 **/
 
-// Load environment variables
-require('dotenv').config();
+///////////////////////////////////////////////////
+/*************************************************/
 
-//ininialize express app
+//use this area in local environment only
+
+// Load local environment variables
+const dotenv = require('dotenv').config();
+if(dotenv.error){   //check if the .env file is present
+    throw dotenv.error;
+}
+
+//comment this area out before pushing to cloud
+
+/*************************************************/
+///////////////////////////////////////////////////
+
+//get environment variables
 const PORT = process.env.PORT;
 const MONGODB_URL = process.env.MONGODB_URL;
+
+//ininialize express app
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -24,28 +39,31 @@ const cors = require('cors');
 //start the app
 const app = express();
 
-//use middleware
+// Use cors to allow cross-origin requests
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+
+app.get('/', (req, res) => {
+    res.send('Hello World! - from flatties-backend');
+    });
+
+app.listen(PORT, () => {
+    console.log(`Puddle-Server listening on port ${PORT}`);
+    });
+
 
 //import modules
 const property = require('./models/PropertyModel');
-const listing = require('./models/ListingModel');
 const user = require('./models/UserModel');
-const watchingList = require('./models/WatchingListModel');
 
 //import routers
 const userRouter = require('./routers/UserRouter');
 const propertyRouter = require('./routers/PropertyRouter');
-// const listingRouter = require('./routers/ListingRouter');
-
 
 // Connect to MongoDB
-mongoose.connect(MONGODB_URL,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(MONGODB_URL);
 
 // Check if MongoDB is connected
 const db = mongoose.connection;
@@ -59,11 +77,3 @@ db.once('open', function() {
 
 app.use('/api/user', userRouter);
 app.use('/api/property', propertyRouter);
-
-app.get('/', (req, res) => {
-    res.send('Hello World! - from flatties-backend');
-    });
-
-app.listen(PORT, () => {
-    console.log(`Puddle-Server listening on port ${PORT}`);
-    });
