@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/UserController');
-const watchingListController = require('../controllers/WatchingListController');
 const { verifyToken, checkPermission } = require('../server/auth');
 
 const admin = "admin";
@@ -15,9 +14,8 @@ router.get('/find', verifyToken, checkPermission([admin]), userController.getUse
 //get user profile
 router.get('/profile', verifyToken, userController.getUserProfile);   //all users can get their own information
 
-
-//get all properties in a watching list
-// router.get('/:_id/watchingList', watchingListController.getUserWatchingList);
+//get user watching list
+router.get('/watchinglist',verifyToken, userController.getUserWatchingList);
 
 //login
 router.post('/login', userController.login);
@@ -26,19 +24,16 @@ router.post('/login', userController.login);
 router.post('/create', userController.createUser); 
 
 //add a property to a watching list
-// router.post('/:_id/addProperty/:propertyId', watchingListController.addPropertyToWatchingList);
+router.post('/watchproperty', verifyToken, userController.addPropertyToWatchingList);
 
 //update user's profile
 router.patch('/update', verifyToken, userController.updateUser);    //all user can update their own information
 
 //active user by id
-// router.put('/active/:_id', userController.activateUserById);  
+router.patch('/active', verifyToken, checkPermission([admin]), userController.switchActiveStatu);
 
-//inactive user by id
-// router.put('/inactive/:_id', userController.inactiveUserById);
-
-//update a property in a watching list
-// router.put('/:_id/updateProperty', watchingListController.updateWatchingProperty);
+// update user account type
+router.patch('/accounttype', verifyToken, checkPermission(["admin"]), userController.updateAccountType);  //only admin can update account type
 
 //remove a property from a watching list
 router.delete('/delete', verifyToken, checkPermission([admin]), userController.deleteUser); 

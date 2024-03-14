@@ -63,8 +63,8 @@ const userRouter = require('./routers/UserRouter');
 const propertyRouter = require('./routers/PropertyRouter');
 
 //use routers
-app.use('/api/user', userRouter);
-app.use('/api/property', propertyRouter);
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/property', propertyRouter);
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URL);

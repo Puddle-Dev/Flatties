@@ -29,23 +29,42 @@ const UserController = {
             res.status(500).send({ message: 'Error getting users', error: error.message });
         }
     },
-      //get user's profile
-      getUserProfile: async (req, res) => {
+    //get user's profile
+    getUserProfile: async (req, res) => {
         const userId = req.decodedToken._id;
         console.log('getUserByID called with userID:', userId);
         try {
             const user = await userModel.findById(userId);
             if (!user) {
                 console.log('User not found', userId);
-                return res.status(404).send({ message: 'User not found'});
+                return res.status(404).send({ message: 'User not found' });
             }
             console.log('User returned successfully', user);
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User returned successfully', user: removePassword(user)  });
+            delete user.wahcingList;
+            res.status(200).send({ message: 'User returned successfully', user: removePassword(user) });
         } catch (error) {
             res.status(500).send({ message: 'Error getting user', error: error.message });
         }
     },
+    //get user watching list
+    getUserWatchingList: async (req, res) => {
+        const userId = req.decodedToken._id;
+        console.log('getUserWatchingList called with userID:', userId);
+        try {
+            const user = await userModel.findById(userId);
+            if (!user) {
+                console.log('User not found', userId);
+                return res.status(404).send({ message: 'User not found' });
+            }
+            console.log('User watching list returned successfully', user.watchingList);
+            console.log("------------------------------------------")
+            res.status(200).send({ message: 'User watching list returned successfully', watchingList: user.watchingList });
+        } catch (error) {
+            res.status(500).send({ message: 'Error getting user watching list', error: error.message });
+        }
+    },
+
     //get user by id
     getUserByID: async (req, res) => {
         const adminId = req.decodedToken._id;
@@ -55,11 +74,11 @@ const UserController = {
             const user = await userModel.findById(userId);
             if (!user) {
                 console.log('User not found', userId);
-                return res.status(404).send({ message: 'User not found'});
+                return res.status(404).send({ message: 'User not found' });
             }
             console.log('User returned successfully', user);
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User returned successfully', user: removePassword(user)  });
+            res.status(200).send({ message: 'User returned successfully', user: removePassword(user) });
         } catch (error) {
             res.status(500).send({ message: 'Error getting user', error: error.message });
         }
@@ -83,21 +102,26 @@ const UserController = {
             await user.save();
             console.log('New user created successfully', user);
             console.log("------------------------------------------")
-            res.status(201).send({ message: 'New user created successfully', user: removePassword(user)  });
+            res.status(201).send({ message: 'New user created successfully', user: removePassword(user) });
         } catch (error) {
-            res.status(500).send({ message: 'Error creating user', error: error.message});
+            res.status(500).send({ message: 'Error creating user', error: error.message });
         }
     },
 
     //update user's profile
     updateUser: async (req, res) => {
         const userId = req.decodedToken._id;
-        console.log('updateUser API called with userID:',userId);
-        
-        //check if accountType is in the request body
-        if (req.body.accountType) {
-            console.log(userId + " is trying to update account type with updateUser API.")
-            return res.status(403).send({ message: 'Updating account type is not allowed' });
+        console.log('updateUser API called with userID:', userId);
+
+        //check if the request body contains accountType or isActive
+        if (req.body.accountType || req.body.isActive) {
+            console.log('User cannot update accountType or isActive status');
+            return res.status(400).send({ message: 'User cannot update accountType or isActive' });
+        }
+
+        if (req.body.watchingList) {
+            console.log('WatchingList cannot be updated by this endpoint');
+            return res.status(400).send({ message: 'WatchingList cannot be updated by this endpoint' });
         }
 
         try {
@@ -108,55 +132,92 @@ const UserController = {
             if (!user) {
                 return res.status(404).send({ message: 'User not found' });
             }
-            console.log('User updated successfully', removePassword(user) );
+            console.log('User updated successfully', removePassword(user));
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User updated successfully', user: removePassword(user)  });
+            res.status(200).send({ message: 'User updated successfully', user: removePassword(user) });
         } catch (error) {
             res.status(500).send({ message: 'Error updating user', error: error.message });
         }
     },
+    //add a property to a watching list
+    addPropertyToWatchingList: async (req, res) => {
+        const userId = req.decodedToken._id;
+        const property = {
+            propertyId: req.body.propertyId,
+            status: req.body.status,
+            note: req.body.note
+        }
+        console.log('addPropertyToWatchingList called with userID:', userId);
+        try {
+            const user = await userModel.findById(userId);
+            if (!user) {
+                console.log('User not found', userId);
+                return res.status(404).send({ message: 'User not found' });
+            }
+            user.watchingList.push({ watchingList: property });
+            await user.save();
+            console.log('Property added to watching list successfully', user.watchingList);
+            console.log("------------------------------------------")
+            res.status(200).send({ message: 'Property added to watching list successfully', watchingList: user.watchingList });
+        } catch (error) {
+            res.status(500).send({ message: 'Error adding property to watching list', error: error.message });
+        }
+    },
+    //update user account type
+    updateAccountType: async (req, res) => {
+        const adminId = req.decodedToken._id;
+        const { userId, accountType } = req.body; //get the userId and accountType from the request body
+        console.log('updateAccountType API called with userID:', adminId);
 
+        if (!accountType) {
+            console.log('Account type is required');
+            return res.status(400).send({ message: 'Account type is required' });
+        }
+
+        try {
+            const user = await userModel.findByIdAndUpdate(
+                userId,    //find the user by ID
+                { accountType },    //update the user with the accountType
+                { new: true, runValidators: true });    //returns the updated user instead of the old user
+            if (!user) {
+                return res.status(404).send({ message: 'User not found' });
+            }
+            console.log('User updated successfully', removePassword(user));
+            console.log("------------------------------------------")
+            res.status(200).send({ message: 'User account type updated successfully', user: removePassword(user) });
+        } catch (error) {
+            res.status(500).send({ message: 'Error updating user', error: error.message });
+        }
+    },
     //delete user by id
     deleteUser: async (req, res) => {
         const adminId = req.decodedToken._id;
-        const {userId} = req.body; //get the userId from the request body
+        const userId = req.body.userId; //get the userId from the request body
         console.log('deleteUser called with userID:', adminId);
         try {
             const user = await userModel.findByIdAndDelete(userId);
             if (!user) {
                 console.log('User not found', userId);
-                return res.status(404).send({ message: 'User not found'});
+                return res.status(404).send({ message: 'User not found' });
             }
             console.log("User:" + userId + " is deleted by admin:" + adminId, user);
             console.log("------------------------------------------")
-            res.status(200).send({ message: "User:" + userId + " is deleted by admin:" + adminId});
+            res.status(200).send({ message: "User:" + userId + " is deleted by admin:" + adminId });
         } catch (error) {
             res.status(500).send({ message: 'Error deleting user', error: error.message });
         }
     },
     //active user by id
-    activateUserById: async (req, res) => {
+    switchActiveStatu: async (req, res) => {
+        const adminId = req.decodedToken._id;   //get the adminId from the token
+        const userId = req.body.userId; //get the userId from the request body
+        console.log('activateUserById called with adminID:', adminId)
+
         try {
             const user = await UserModel
-                .findByIdAndUpdate({ _id: req.params._id },
-                    { isActive: true },
-                    { new: true });
-            if (!user) {
-                return res.status(404).json({ message: "User not found" });
-            }
-            res.status(200).json({ success: true, user });
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({ message: "Server Error" });
-        }
-    },
-    //inactive user by id
-    inactiveUserById: async (req, res) => {
-        try {
-            const user = await UserModel
-                .findByIdAndUpdate({ _id: req.params._id },
-                    { isActive: false },
-                    { new: true });
+                .findByIdAndUpdate({ _id: userId },
+                    { isActive: !user.isActive },
+                    { new: true, runValidators: true });
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }
@@ -172,7 +233,7 @@ const UserController = {
         console.log('login called with email:', email);
         try {
             //find a user with email
-            const user = await userModel.findOne({ email: email});
+            const user = await userModel.findOne({ email: email });
             if (!user) {
                 console.log('User not found');
                 return res.status(404).send({ message: 'User not found' });
@@ -191,7 +252,7 @@ const UserController = {
             const token = createToken(user);
             console.log('User logged in successfully', user);
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User logged in successfully', token: token});
+            res.status(200).send({ message: 'User logged in successfully', token: token });
         } catch (error) {
             res.status(500).send({ message: 'Error logging in', error: error.message });
         }

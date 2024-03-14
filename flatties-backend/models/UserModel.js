@@ -17,7 +17,14 @@ const userSchema = new mongoose.Schema({
     isATenant:{type:Boolean, default:false},
     isALandLord:{type:Boolean, default:false},
     isActive:{type:Boolean, default:true},
-    watchingList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'watchinglist' }],
+    watchingList:[
+        {
+            propertyId: { type: mongoose.Schema.Types.ObjectId, ref: 'property' },
+            dateAdded: { type: Date, required:true, default: Date.now },
+            status: { type: String, default: 'active' },
+            note: { type: String, default: '' }
+        }
+    ],
 },{
     timestamps:true,
 });
