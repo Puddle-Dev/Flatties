@@ -7,7 +7,7 @@ function AboutPage() {
       <div>
         <h1>About Us</h1>
         <p>
-          Welcvome to flatties. Our goal is to prived a streamlined property
+          Welcome to flatties. Our goal is to prived a streamlined property
           rentals experieance for those looking for flat mates, tennats or a new
           place to call home! We are a dynamic team of three enthusiastic
           developers committed to honing our skills while delivering a seamless
