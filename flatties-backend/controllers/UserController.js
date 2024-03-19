@@ -1,4 +1,4 @@
-const UserModel = require('../models/UserModel');
+const userModel = require('../models/UserModel');
 const bcrypt = require('bcrypt');
 const { createToken } = require('../server/auth');
 
@@ -15,7 +15,7 @@ const UserController = {
         const adminId = req.decodedToken._id;
         console.log("getAllUser API is called by ID: ", adminId);
         try {
-            const users = await UserModel.find();
+            const users = await userModel.find();
             if (users.length === 0) {
                 console.log("User Database is empty!");
                 return res.status(404).json({ message: "User Database is empty!" });
@@ -40,7 +40,7 @@ const UserController = {
                 return res.status(404).send({ message: 'User not found' });
             }
             console.log('User returned successfully', user);
-            console.log("------------------------------------------")
+            console.log("------------------------------------------");
             delete user.wahcingList;
             res.status(200).send({ message: 'User returned successfully', user: removePassword(user) });
         } catch (error) {
@@ -214,7 +214,7 @@ const UserController = {
         console.log('activateUserById called with adminID:', adminId)
 
         try {
-            const user = await UserModel
+            const user = await userModel
                 .findByIdAndUpdate({ _id: userId },
                     { isActive: !user.isActive },
                     { new: true, runValidators: true });
