@@ -1,56 +1,43 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/UserController');
-const watchingListController = require('../controllers/WatchingListController');
+const { verifyToken, checkPermission } = require('../server/auth');
 
+const admin = "admin";  //user
 
 //get all users
-router.get('/all', userController.getAllUser); //test passed
+router.get('/all', verifyToken, checkPermission([admin]), userController.getAllUser);
 
 //get user by id
-router.get('/:_id', userController.getUserById); //test passed
+router.get('/find', verifyToken, checkPermission([admin]), userController.getUserByID);  //only admin can get user by ID
 
-//get all properties in a watching list
-router.get('/:_id/watchingList', watchingListController.getUserWatchingList);
+//get user profile
+router.get('/profile', verifyToken, userController.getUserProfile);   //all users can get their own information
 
-//update user by id
-router.put('/update/:_id', userController.updateUserById);  //test passed
-
-//active user by id
-router.put('/active/:_id', userController.activateUserById);    //test passed
-
-//inactive user by id
-router.put('/inactive/:_id', userController.inactiveUserById);  //test passed
-
-//update a property in a watching list
-router.put('/:_id/updateProperty', watchingListController.updateWatchingProperty);
+//get user watching list
+router.get('/watchinglist',verifyToken, userController.getUserWatchingList);
 
 //login
-router.post('/login', userController.login);   //test passed
+router.post('/login', userController.login);
 
 //create a new user
-router.post('/create', userController.createUser);  //test passed
+router.post('/create', userController.createUser); 
 
 //add a property to a watching list
-router.post('/:_id/addProperty/:propertyId', watchingListController.addPropertyToWatchingList);
+router.post('/watchproperty', verifyToken, userController.addPropertyToWatchingList);
+
+//update user's profile
+router.patch('/update', verifyToken, userController.updateUser);    //all user can update their own information
+
+//active user by id
+router.patch('/active', verifyToken, checkPermission([admin]), userController.switchActiveStatu);
+
+// update user account type
+router.patch('/accounttype', verifyToken, checkPermission([admin]), userController.updateAccountType);  //only admin can update account type
 
 //remove a property from a watching list
-router.delete('/:_id/removeProperty/:propertyId', watchingListController.removePropertyFromWatchingList);
+router.delete('/delete', verifyToken, checkPermission([admin]), userController.deleteUser); 
 
-
-/**
- * -----------------------
- * Developer use only API
- * -----------------------
- */
-//create a new watching list
-router.post('/createWatchingList', watchingListController.createWatchingList);
-
-//delete a watching list by id
-router.delete('/deleteWatchingList/:id', watchingListController.deleteWatchingListById);
-
-//delete user by id
-router.delete('/delete/:_id', userController.deleteUserById);
 
 module.exports = router;
 
