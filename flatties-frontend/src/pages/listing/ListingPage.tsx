@@ -30,7 +30,7 @@ function ListingPage() {
   // const [rentalData, setRentalData] = useState<RentalInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
-  const listingsData = DummyData;
+  const [listingsData, setListingsData] = useState(DummyData);
   const [filteredData, setFilteredData] = useState(listingsData);
 
   useEffect(() => {}, []);
