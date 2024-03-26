@@ -19,12 +19,11 @@ import {
   Select,
   FormControl,
   InputLabel,
-  Slider,
-  Box,
   SelectChangeEvent,
+  Button,
 } from "@mui/material";
 import FilterSlider from "../../components/filters/FilterSlider";
-import MinMaxInput from "./MinMaxInput";
+import MinMaxInput from "../../components/filters/MinMaxInput";
 
 function ListingPage() {
   // const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
@@ -32,20 +31,9 @@ function ListingPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
   const listingsData = DummyData;
+  const [filteredData, setFilteredData] = useState(listingsData);
 
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const propertiesResponse = await api.get("/property/all");
-    //     const listingResponse = await api.get("/listing/all");
-    //     setListingsData(propertiesResponse.data);
-    //     setRentalData(listingResponse.data);
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   }
-    // };
-    // fetchData();
-  }, []);
+  useEffect(() => {}, []);
 
   //sorting
   const [sortOrder, setSortOrder] = useState<
@@ -60,6 +48,7 @@ function ListingPage() {
   >("addedAsc");
 
   // filters
+
   // sliders
   const [selectedBedrooms, setSelectedBedrooms] = useState<
     [number, number] | null
@@ -80,48 +69,101 @@ function ListingPage() {
   const [isSmoking, setIsSmoking] = useState<string>("");
   const [isParking, setIsParking] = useState<string>("");
 
+  const [selectedFilters, setSelectedFilters] = useState({
+    selectedBedrooms: selectedBedrooms,
+    selectedBathrooms: selectedBathrooms,
+    selectedMinRent: selectedMinRent,
+    selectedMaxRent: selectedMaxRent,
+    selectedCity: selectedCity,
+    selectedSuburb: selectedSuburb,
+    isFurnished: isFurnished,
+    isPetAllowed: isPetAllowed,
+    isSmoking: isSmoking,
+    isParking: isParking,
+  });
+
   const handleBedroomsChange = (event: Event, value: number | number[]) => {
     setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      selectedBedrooms: selectedBedrooms,
+    }));
   };
 
   const handleBathroomsChange = (event: Event, value: number | number[]) => {
     setSelectedBathrooms(Array.isArray(value) ? [value[0], value[1]] : null);
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      selectedBathrooms: selectedBathrooms,
+    }));
   };
 
   const handleMinRentChange = (value: string) => {
     value === ""
       ? setSelectedMinRent(minRent)
       : setSelectedMinRent(parseInt(value));
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      selectedMinRent: selectedMinRent,
+    }));
   };
 
   const handleMaxRentChange = (value: string) => {
     value === ""
       ? setSelectedMaxRent(maxRent)
       : setSelectedMaxRent(parseInt(value));
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      selectedMaxRent: selectedMaxRent,
+    }));
   };
 
   const handleCityChange = (event: SelectChangeEvent<string>) => {
     setSelectedCity(event.target.value);
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      selectedCity: selectedCity,
+    }));
   };
 
   const handleSuburbChange = (event: SelectChangeEvent<string>) => {
     setSelectedSuburb(event.target.value);
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      selectedSuburb: selectedSuburb,
+    }));
   };
 
   const handleFurnishedChange = (event: SelectChangeEvent<string>) => {
     setIsFurnished(event.target.value);
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      isFurnished: isFurnished,
+    }));
   };
 
   const handlePetAllowedChange = (event: SelectChangeEvent<string>) => {
     setIsPetAllowed(event.target.value);
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      isPetAllowed: isPetAllowed,
+    }));
   };
 
   const handleSmokingChange = (event: SelectChangeEvent<string>) => {
     setIsSmoking(event.target.value);
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      isSmoking: isSmoking,
+    }));
   };
 
   const handleParkingChange = (event: SelectChangeEvent<string>) => {
     setIsParking(event.target.value);
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      isParking: isParking,
+    }));
   };
 
   // const combinedData = [...listingsData, ...rentalData];
@@ -134,65 +176,68 @@ function ListingPage() {
   const minBathrooms = Math.min(...listingsData.map((data) => data.bathRooms));
   const maxBathrooms = Math.max(...listingsData.map((data) => data.bathRooms));
 
-  let filteredData = listingsData;
+  const handleFilterSubmit = () => {
+    let updatedData = listingsData;
+    if (selectedBedrooms !== null) {
+      updatedData = updatedData.filter(
+        (data) =>
+          data.bedRooms >= selectedBedrooms[0] &&
+          data.bedRooms <= selectedBedrooms[1]
+      );
+    }
 
-  if (selectedBedrooms !== null) {
-    filteredData = filteredData.filter(
-      (data) =>
-        data.bedRooms >= selectedBedrooms[0] &&
-        data.bedRooms <= selectedBedrooms[1]
-    );
-  }
+    if (selectedBathrooms !== null) {
+      updatedData = updatedData.filter(
+        (data) =>
+          data.bathRooms >= selectedBathrooms[0] &&
+          data.bathRooms <= selectedBathrooms[1]
+      );
+    }
 
-  if (selectedBathrooms !== null) {
-    filteredData = filteredData.filter(
-      (data) =>
-        data.bathRooms >= selectedBathrooms[0] &&
-        data.bathRooms <= selectedBathrooms[1]
-    );
-  }
+    if (selectedCity) {
+      updatedData = updatedData.filter((data) => data.city === selectedCity);
+    }
 
-  if (selectedCity) {
-    filteredData = filteredData.filter((data) => data.city === selectedCity);
-  }
+    if (selectedSuburb) {
+      updatedData = updatedData.filter(
+        (data) => data.suburb === selectedSuburb
+      );
+    }
 
-  if (selectedSuburb) {
-    filteredData = filteredData.filter(
-      (data) => data.suburb === selectedSuburb
-    );
-  }
+    if (selectedMinRent) {
+      updatedData = updatedData.filter((data) => data.rent >= selectedMinRent);
+    }
 
-  if (selectedMinRent) {
-    filteredData = filteredData.filter((data) => data.rent >= selectedMinRent);
-  }
+    if (selectedMaxRent) {
+      updatedData = updatedData.filter((data) => data.rent <= selectedMaxRent);
+    }
 
-  if (selectedMaxRent) {
-    filteredData = filteredData.filter((data) => data.rent <= selectedMaxRent);
-  }
+    if (isFurnished) {
+      updatedData = updatedData.filter(
+        (data) => data.isFurnished.toString() === isFurnished
+      );
+    }
 
-  if (isFurnished) {
-    filteredData = filteredData.filter(
-      (data) => data.isFurnished.toString() === isFurnished
-    );
-  }
+    if (isPetAllowed) {
+      updatedData = updatedData.filter(
+        (data) => data.isPetAllowed.toString() === isPetAllowed
+      );
+    }
 
-  if (isPetAllowed) {
-    filteredData = filteredData.filter(
-      (data) => data.isPetAllowed.toString() === isPetAllowed
-    );
-  }
+    if (isSmoking) {
+      updatedData = updatedData.filter(
+        (data) => data.isSmokingAllowed.toString() === isSmoking
+      );
+    }
 
-  if (isSmoking) {
-    filteredData = filteredData.filter(
-      (data) => data.isSmokingAllowed.toString() === isSmoking
-    );
-  }
+    if (isParking) {
+      updatedData = updatedData.filter(
+        (data) => data.isParkingAllowed.toString() === isParking
+      );
+    }
 
-  if (isParking) {
-    filteredData = filteredData.filter(
-      (data) => data.isParkingAllowed.toString() === isParking
-    );
-  }
+    setFilteredData(updatedData);
+  };
 
   filteredData.sort((a, b) => {
     switch (sortOrder) {
@@ -368,6 +413,9 @@ function ListingPage() {
               </FormControl>
             </div>
           </div>
+          <Button variant="contained" onClick={handleFilterSubmit}>
+            Submit
+          </Button>
         </div>
         <div className="Sort">
           <FormControl
