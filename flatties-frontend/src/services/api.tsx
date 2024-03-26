@@ -1,4 +1,7 @@
 import axios, {AxiosRequestConfig } from 'axios';
+import CookieManager from './cookies/cookieManager';
+import config from '../config';
+
 
 // Create an axios instance
 const instance = axios.create({

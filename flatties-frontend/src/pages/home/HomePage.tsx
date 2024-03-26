@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./HomePage.css";
 import PropertyInfo from "../../models/PropertyInfo";
 import { useCookies } from "react-cookie";
+import config from "../../config";
 
 /** "New Listings" will get the last "6" properties that were last listed
  * "Hottest Properties" will get the 6 listings on the most watchlists
@@ -13,6 +14,7 @@ function HomePage() {
   const [newListings, setNewListings] = useState<PropertyInfo[]>([]);
   const [cookies] = useCookies(["isLoggedIn", "userId"]);
   useEffect(() => {
+    console.log("config test "+config.baseURL);
     fetch("http://localhost:4000/api/property/all", {
       method: "GET",
       headers: {
