@@ -1,9 +1,8 @@
 import React from "react";
-import { Modal, Box, Typography, TextField, Button} from "@mui/material";
+import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import axios from "../../../services/api";
-
+import useCookieManager from "../../../services/cookies/cookieManager";
 
 interface LoginModalProps {
   open: boolean;
@@ -14,7 +13,7 @@ function Login({ open, handleClose }: LoginModalProps) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
-  const [cookies, setCookies, removeCookies] = useCookies(["isLoggedIn", "userId"]);
+  const { setCookie, getCookie, removeCookie } = useCookieManager();
 
   const handleLogin = () => {
     axios
@@ -24,11 +23,10 @@ function Login({ open, handleClose }: LoginModalProps) {
       })
       .then((res) => {
         console.log("Login successful:", res.data);
-        
+
         // Set the cookies to track the login status and userId
-        setCookies("isLoggedIn", true, { path: "/" });
-        setCookies("userId", res.data.userId, { path: "/" });
-        
+        setCookie('token', res.data.token);
+
         // Close the modal
         handleClose();
       })
@@ -38,9 +36,8 @@ function Login({ open, handleClose }: LoginModalProps) {
   };
 
   const handleLogout = () => {
-    // Remove cookies 
-    removeCookies("isLoggedIn", { path: "/" });
-    removeCookies("userId", { path: "/" });
+    // Remove cookies
+    removeCookie("userId");
     handleClose();
   };
 
@@ -49,6 +46,8 @@ function Login({ open, handleClose }: LoginModalProps) {
     navigate("/register");
     handleClose(); // Close the modal without passing any arguments
   };
+
+  const isLoggedIn = getCookie("isLoggedIn") === "true";
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -65,12 +64,12 @@ function Login({ open, handleClose }: LoginModalProps) {
         }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          {cookies.isLoggedIn ? "Would you like to sign out?" : "Login"}
+          {isLoggedIn ? "Would you like to sign out?" : "Login"}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {cookies.isLoggedIn ? (
+          {isLoggedIn ? (
             <Button variant="contained" onClick={handleLogout} sx={{ mr: 2 }}>
-               Log out
+              Log out
             </Button>
           ) : (
             <>
