@@ -24,7 +24,7 @@ function Login({ open, handleClose }: LoginModalProps) {
       .then((res) => {
         console.log("Login successful:", res.data);
 
-        // Set the cookies to track the login status and userId
+        // Set the token cookie to track the login status
         setCookie('token', res.data.token);
 
         // Close the modal
@@ -36,8 +36,8 @@ function Login({ open, handleClose }: LoginModalProps) {
   };
 
   const handleLogout = () => {
-    // Remove cookies
-    removeCookie("userId");
+    // Remove the token cookie
+    removeCookie("token");
     handleClose();
   };
 
@@ -47,7 +47,8 @@ function Login({ open, handleClose }: LoginModalProps) {
     handleClose(); // Close the modal without passing any arguments
   };
 
-  const isLoggedIn = getCookie("isLoggedIn") === "true";
+  // Check if token exists to determine login status
+  const token = getCookie("token");
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -64,10 +65,10 @@ function Login({ open, handleClose }: LoginModalProps) {
         }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          {isLoggedIn ? "Would you like to sign out?" : "Login"}
+          {token ? "Would you like to sign out?" : "Login"}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {isLoggedIn ? (
+          {token ? (
             <Button variant="contained" onClick={handleLogout} sx={{ mr: 2 }}>
               Log out
             </Button>
