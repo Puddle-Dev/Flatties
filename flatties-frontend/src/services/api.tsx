@@ -6,11 +6,12 @@ const cookieManager = CookieManager();
 cookieManager.setCookie(" ", " "); 
 
 const baseURL = config.baseURL;
+const apiVersion = config.apiVersion;
 const token = cookieManager.getCookie('token');
 
 // Create an axios instance
 const instance = axios.create({
-    baseURL: `${baseURL}`,
+    baseURL: `${baseURL}${apiVersion}`,
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' }
 });

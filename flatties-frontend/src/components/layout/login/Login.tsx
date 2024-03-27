@@ -15,8 +15,8 @@ function Login({ open, handleClose }: LoginModalProps) {
   const navigate = useNavigate();
   const { setCookie, getCookie, removeCookie } = useCookieManager();
 
-  const handleLogin = () => {
-    axios
+  const handleLogin = async () => {
+    await axios
       .post("/user/login", {
         email: email,
         password: password,
