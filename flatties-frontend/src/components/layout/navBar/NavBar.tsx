@@ -11,14 +11,15 @@ import {
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, NavLink } from "react-router-dom";
 import LoginModal from "../login/Login";
-import { useCookies } from "react-cookie";
+import useCookieManager from "../../../services/cookies/cookieManager";
 import profilePic from "../../../assets/images/flatties-icon-logo.png";
 import "./Navbar.css";
 
 function NavBar() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [cookies, setCookies] = useCookies(["isLoggedIn"]);
+  const {getCookie} = useCookieManager();
+ 
 
   const handleLoginClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,6 +37,9 @@ function NavBar() {
   const handleLoginModalClose = () => {
     setLoginModalOpen(false);
   };
+
+   // Check if token exists to determine login status
+   const token = getCookie("token");
 
   return (
     <Paper
@@ -68,7 +72,7 @@ function NavBar() {
             direction="row-reverse"
             spacing={2}
           >
-            {cookies.isLoggedIn ? (
+            {token ? (
               <>
                 <IconButton
                   edge="end"

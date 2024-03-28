@@ -9,7 +9,7 @@ interface LoginModalProps {
   handleClose: () => void;
 }
 
-function Login({ open, handleClose }: LoginModalProps) {
+function Login({ open, handleClose }: Readonly<LoginModalProps>) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
