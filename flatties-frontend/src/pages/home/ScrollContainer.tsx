@@ -20,7 +20,6 @@ function ScrollContainer({ title, children }: ScrollContainerProps) {
           whiteSpace: "nowrap",
         }}
       >
-        {/* Render ListingCard components from children */}
         {React.Children.map(children, (child) => (
           <ListingCard {...(child as any)} />
         ))}

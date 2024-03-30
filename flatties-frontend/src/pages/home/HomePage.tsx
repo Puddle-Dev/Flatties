@@ -12,10 +12,9 @@ function HomePage() {
   const [userId, setUserId] = useState<string | undefined>(undefined);
   const { getCookie } = useCookieManager();
   const token = getCookie("token");
-  const [newListings, setNewListings] = useState([]);
-  const [hottestListings, setHottestListings] = useState([]);
+  const [recentProperties, setRecentProperties] = useState<PropertyInfo[]>([]);
 
-
+ 
   const listings = [
     {
       _id: "1",
@@ -41,7 +40,7 @@ function HomePage() {
 
   useEffect(() => {
     if (token) {
-      fetch("http://localhost:4000/api/user/", {
+      fetch("http://localhost:4000/api/user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +53,20 @@ function HomePage() {
     }
   }, [getCookie]);
 
-
+  useEffect(() => {
+    fetch("http://localhost:4000/api/property/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setRecentProperties(data.slice(0, 6));
+      })
+      .catch((error) => console.error("Error fetching recent properties", error));
+  }, []);
+  
   return (
     <div>
       {token ? (
@@ -110,30 +122,31 @@ function HomePage() {
         </div>
       )}
 
-      <ScrollContainer title="Newest Properties">
-        {[1, 2, 3, 4, 5, 6].map((index) => (
-          <List key={index} sx={{ marginRight: 2 }}>
-            <Paper sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  p: 2,
-                  fontStyle: { textAlign: "left" },
-                }}
-              >
-                <h3>Index: {index}</h3>
-                <h3>Property ID: </h3>
-                <h3>City: </h3>
-                <h3>Property Type: </h3>
-                <h3>BedRooms: </h3>
-                <h3>BathRooms: </h3>
-              </Box>
-            </Paper>
-          </List>
-        ))}
-      </ScrollContainer>
+<ScrollContainer title="Newest Properties">
+  {recentProperties.map((property, index) => (
+    <List key={index} sx={{ marginRight: 2 }}>
+      <Paper sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            p: 2,
+            fontStyle: { textAlign: "left" },
+          }}
+        >
+          <h3>Index: {index}</h3>
+          <h3>Property ID: {property._id}</h3>
+          <h3>City: {property.city}</h3>
+          <h3>Property Type: {property.address}</h3>
+          <h3>BedRooms: {property.bedRooms}</h3>
+          <h3>BathRooms: {property.bathRooms}</h3>
+        </Box>
+      </Paper>
+    </List>
+  ))}
+</ScrollContainer>
+
 
       <ScrollContainer title="Hottest Properties">
         {[1, 2, 3, 4, 5, 6].map((index) => (
@@ -162,7 +175,7 @@ function HomePage() {
 
       <ScrollContainer title="Featured Listings">
       {listings.map((listing) => (
-        <ListingCard key={listing._id} {...listing} />
+        <ListingCard {...listing} key={listing._id}  />
       ))}
     </ScrollContainer>
     </div>
