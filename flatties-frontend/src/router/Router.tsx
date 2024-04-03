@@ -6,7 +6,8 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import ListingPage from "../pages/listing/ListingPage";
 import RegisterPage from "../pages/register/RegisterPage";
 import NewPropertyForm from "../pages/newProperty/NewPropertyForm";
-import AboutPage from "../pages/about/AboutPage";
+import ActiveProperty from "../pages/newProperty/ActiveProperty";
+import ListingDetail from "../pages/listing/ListingDetail";
 
 function Router() {
 
@@ -25,7 +26,8 @@ function Router() {
           <Route path="/listing" element={<ListingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/new-property" element={<NewPropertyForm />} />
-          <Route path="/about" element={<AboutPage/>} />
+          <Route path="/active-property" element={<ActiveProperty />} />
+          <Route path="/listing-details" element={<ListingDetail />} />
 
           {/* 404 Page */}
           <Route path="*" element={<h1>Page Not Found</h1>} />
