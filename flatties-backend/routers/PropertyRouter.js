@@ -4,7 +4,6 @@ const propertyController = require('../controllers/PropertyController');
 const { verifyToken, checkPermission } = require('../server/auth');
 
 const admin = "admin";
-const user = "user";
 
 //get all properties
 router.get('/all', propertyController.getAllProperties);    //test passed
@@ -24,13 +23,12 @@ router.put('/inactive/:id', propertyController.inactivePropertyById);
 //create a new property
 router.post('/create', verifyToken, propertyController.createProperty);
 
-
 /**
  * -----------------------
  * Developer use only API
  * -----------------------
  */
 //delete a property by id
-router.delete('/delete',verifyToken, checkPermission([admin, user]), propertyController.deletePropertyById);    //test passed
+router.delete('/delete',verifyToken, checkPermission([admin]), propertyController.deletePropertyById);    //test passed
 
 module.exports = router;
