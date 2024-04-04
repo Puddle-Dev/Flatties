@@ -2,41 +2,47 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import "./HomePage.css";
 import PropertyInfo from "../../models/PropertyInfo";
-import { useCookies } from "react-cookie";
-import ScrollBox from "../../components/ScrollBox/ScrollBox"; // Import the new ScrollBox component
-import WatchList from "../../components/watchList/WatchList"; // Import the new ScrollBox component
+import useCookieManager from "../../services/cookies/cookieManager";
+import ScrollContainer from "./ScrollContainer";
+import DummyData from "../listing/dummyData.json";
 
 
 function HomePage() {
-  const [newListings, setNewListings] = useState<PropertyInfo[]>([]);
-  const [cookies] = useCookies(["isLoggedIn", "userId"]);
+
+  const { getCookie } = useCookieManager();
+  const token = getCookie("token");
+  const userName = getCookie("userName");
+
+
+
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/property/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setNewListings(data.slice(0, 6)))
-      .catch((error) => console.error("Error fetching listings", error));
-  }, []);
+    if (token) {
+      console.log(token);
+      fetch("http://localhost:4000/api/v1/user/profile", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+       
+        .catch((error) => console.error("Error fetching user data", error));
+        console.log(userName);
+    }
+  }, [getCookie]);
 
+ 
   return (
     <div>
-      {cookies.isLoggedIn ? (
+      {token ? (
         <div>
           <Typography variant="h4" gutterBottom>
-            Welcome back {cookies.userId ? cookies.userId : "Not available"}! You are logged in.
+            Welcome back {userName}! You are logged in.
           </Typography>
-
-          {/* Use the ScrollBox component for the Watchlist */}
-          <WatchList/>
-
-          {/* Other components... */}
+          <ScrollContainer listings={DummyData} />
         </div>
       ) : (
         <div>
@@ -54,11 +60,6 @@ function HomePage() {
         </div>
       )}
 
-      {/* Use the ScrollBox component for Newest Listings */}
-      <ScrollBox title="Newest Listings" items={newListings} />
-
-      {/* Use the ScrollBox component for Hottest Properties */}
-      <ScrollBox title="Hottest Properties" items={[1, 2, 3, 4, 5, 6]} />
     </div>
   );
 }

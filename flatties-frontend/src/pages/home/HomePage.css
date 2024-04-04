@@ -1,1 +1,6 @@
 
+.horizontal-scroll-container {
+    overflow-x: auto;
+    white-space: nowrap; /* Ensure items stay in a single row */
+  }
+  

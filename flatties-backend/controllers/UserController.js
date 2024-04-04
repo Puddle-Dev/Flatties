@@ -23,10 +23,10 @@ const UserController = {
             const safeUsers = users.map(user => removePassword(user));  //remove password from each user
             console.log('All users returned successfully');
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'All users returned successfully', users: safeUsers });
+            res.status(200).send({ message: 'All users returned successfully', data: safeUsers });
         } catch (error) {
             console.log(error.message);
-            res.status(500).send({ message: 'Error getting users', error: error.message });
+            res.status(500).send({ message: error.message});
         }
     },
     //get user's profile
@@ -42,9 +42,9 @@ const UserController = {
             console.log('User returned successfully', user);
             console.log("------------------------------------------");
             delete user.wahcingList;
-            res.status(200).send({ message: 'User returned successfully', user: removePassword(user) });
+            res.status(200).send({ message: 'User returned successfully', data: removePassword(user) });
         } catch (error) {
-            res.status(500).send({ message: 'Error getting user', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
     //get user watching list
@@ -59,9 +59,9 @@ const UserController = {
             }
             console.log('User watching list returned successfully', user.watchingList);
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User watching list returned successfully', watchingList: user.watchingList });
+            res.status(200).send({ message: 'User watching list returned successfully', data: user.watchingList });
         } catch (error) {
-            res.status(500).send({ message: 'Error getting user watching list', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
 
@@ -78,9 +78,9 @@ const UserController = {
             }
             console.log('User returned successfully', user);
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User returned successfully', user: removePassword(user) });
+            res.status(200).send({ message: 'User returned successfully', data: removePassword(user) });
         } catch (error) {
-            res.status(500).send({ message: 'Error getting user', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
 
@@ -102,9 +102,9 @@ const UserController = {
             await user.save();
             console.log('New user created successfully', user);
             console.log("------------------------------------------")
-            res.status(201).send({ message: 'New user created successfully', user: removePassword(user) });
+            res.status(201).send({ message: 'New user created successfully', data: removePassword(user) });
         } catch (error) {
-            res.status(500).send({ message: 'Error creating user', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
 
@@ -134,9 +134,9 @@ const UserController = {
             }
             console.log('User updated successfully', removePassword(user));
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User updated successfully', user: removePassword(user) });
+            res.status(200).send({ message: 'User updated successfully', data: removePassword(user) });
         } catch (error) {
-            res.status(500).send({ message: 'Error updating user', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
     //add a property to a watching list
@@ -158,9 +158,9 @@ const UserController = {
             await user.save();
             console.log('Property added to watching list successfully', user.watchingList);
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'Property added to watching list successfully', watchingList: user.watchingList });
+            res.status(200).send({ message: 'Property added to watching list successfully', data: user.watchingList });
         } catch (error) {
-            res.status(500).send({ message: 'Error adding property to watching list', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
     //update user account type
@@ -184,9 +184,9 @@ const UserController = {
             }
             console.log('User updated successfully', removePassword(user));
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User account type updated successfully', user: removePassword(user) });
+            res.status(200).send({ message: 'User account type updated successfully', data: removePassword(user) });
         } catch (error) {
-            res.status(500).send({ message: 'Error updating user', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
     //delete user by id
@@ -204,7 +204,7 @@ const UserController = {
             console.log("------------------------------------------")
             res.status(200).send({ message: "User:" + userId + " is deleted by admin:" + adminId });
         } catch (error) {
-            res.status(500).send({ message: 'Error deleting user', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
     //active user by id
@@ -252,9 +252,9 @@ const UserController = {
             const token = createToken(user);
             console.log('User logged in successfully', user);
             console.log("------------------------------------------")
-            res.status(200).send({ message: 'User logged in successfully', token: token });
+            res.status(200).send({ message: 'User logged in successfully', token: token, userName: user.userName });
         } catch (error) {
-            res.status(500).send({ message: 'Error logging in', error: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
 
