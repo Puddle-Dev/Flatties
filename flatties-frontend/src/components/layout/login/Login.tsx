@@ -1,34 +1,34 @@
 import React from "react";
-import { Modal, Box, Typography, TextField, Button} from "@mui/material";
+import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import axios from "../../../services/api";
-
+import useCookieManager from "../../../services/cookies/cookieManager";
 
 interface LoginModalProps {
   open: boolean;
   handleClose: () => void;
 }
 
-function Login({ open, handleClose }: LoginModalProps) {
+function Login({ open, handleClose }: Readonly<LoginModalProps>) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
-  const [cookies, setCookies, removeCookies] = useCookies(["isLoggedIn", "userId"]);
+  const { setCookie, getCookie, removeCookie } = useCookieManager();
 
-  const handleLogin = () => {
-    axios
+  const handleLogin = async () => {
+    await axios
       .post("/user/login", {
         email: email,
         password: password,
       })
       .then((res) => {
         console.log("Login successful:", res.data);
-        
-        // Set the cookies to track the login status and userId
-        setCookies("isLoggedIn", true, { path: "/" });
-        setCookies("userId", res.data.userId, { path: "/" });
-        
+
+        // Set the token cookie to track the login status
+        setCookie('token', res.data.token);
+        setCookie('userName', res.data.userName);
+
+console.log(getCookie("userName"));
         // Close the modal
         handleClose();
       })
@@ -38,9 +38,8 @@ function Login({ open, handleClose }: LoginModalProps) {
   };
 
   const handleLogout = () => {
-    // Remove cookies 
-    removeCookies("isLoggedIn", { path: "/" });
-    removeCookies("userId", { path: "/" });
+    // Remove the token cookie
+    removeCookie("token");
     handleClose();
   };
 
@@ -49,6 +48,9 @@ function Login({ open, handleClose }: LoginModalProps) {
     navigate("/register");
     handleClose(); // Close the modal without passing any arguments
   };
+
+  // Check if token exists to determine login status
+  const token = getCookie("token");
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -65,12 +67,12 @@ function Login({ open, handleClose }: LoginModalProps) {
         }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          {cookies.isLoggedIn ? "Would you like to sign out?" : "Login"}
+          {token ? "Would you like to sign out?" : "Login"}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {cookies.isLoggedIn ? (
+          {token ? (
             <Button variant="contained" onClick={handleLogout} sx={{ mr: 2 }}>
-               Log out
+              Log out
             </Button>
           ) : (
             <>
