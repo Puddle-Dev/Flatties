@@ -1,75 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Button, Box, List, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
-import "./HomePage.css";
 import PropertyInfo from "../../models/PropertyInfo";
-import { useCookies } from "react-cookie";
+import useCookieManager from "../../services/cookies/cookieManager";
+import ScrollContainer from "./ScrollContainer";
+import DummyData from "../listing/dummyData.json";
 
-/** "New Listings" will get the last "6" properties that were last listed
- * "Hottest Properties" will get the 6 listings on the most watchlists
- */
 
 function HomePage() {
-  const [newListings, setNewListings] = useState<PropertyInfo[]>([]);
-  const [cookies] = useCookies(["isLoggedIn", "userId"]);
-  useEffect(() => {
-    fetch("http://localhost:4000/api/property/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setNewListings(data.slice(0, 6)))
-      .catch((error) => console.error("Error fetching listings", error));
-  }, []);
 
+  const { getCookie } = useCookieManager();
+  const token = getCookie("token");
+  const userName = getCookie("userName");
+
+
+
+
+  useEffect(() => {
+    if (token) {
+      console.log(token);
+      fetch("http://localhost:4000/api/v1/user/profile", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+       
+        .catch((error) => console.error("Error fetching user data", error));
+        console.log(userName);
+    }
+  }, [getCookie]);
+
+ 
   return (
     <div>
-      {cookies.isLoggedIn ? (
+      {token ? (
         <div>
           <Typography variant="h4" gutterBottom>
-            Welcome back {cookies.userId ? cookies.userId : "Not available"}!
-            You are logged in.
+            Welcome back {userName}! You are logged in.
           </Typography>
-
-          <div className="scroll-container">
-            <Typography variant="h5" gutterBottom>
-              Your Watchlist
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                overflowX: "auto",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {[1, 2, 3, 4, 5, 6].map((index) => (
-                <List key={index} sx={{ marginRight: 2 }}>
-                  <Paper
-                    sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        p: 2,
-                        fontStyle: { textAlign: "left" },
-                      }}
-                    >
-                      <h3>Index: {index}</h3>
-                      <h3>Property ID: </h3>
-                      <h3>City: </h3>
-                      <h3>Property Type: </h3>
-                      <h3>BedRooms: </h3>
-                      <h3>BathRooms: </h3>
-                    </Box>
-                  </Paper>
-                </List>
-              ))}
-            </Box>
-          </div>
+          <ScrollContainer listings={DummyData} />
         </div>
       ) : (
         <div>
@@ -93,76 +65,7 @@ function HomePage() {
           </div>
         </div>
       )}
-      <div className="scroll-container">
-        <Typography variant="h5" gutterBottom>
-          Newest Listings
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            overflowX: "auto",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {newListings.map((property) => (
-            <List key={property._id} sx={{ marginRight: 2 }}>
-              <Paper sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    p: 2,
-                    fontStyle: { textAlign: "left" },
-                  }}
-                >
-                  <h3>Property ID: {property._id}</h3>
-                  <h3>City: {property.city}</h3>
-                  <h3>Property Type: {property.propertyType}</h3>
-                  <h3>BedRooms: {property.bedRooms}</h3>
-                  <h3>BathRooms: {property.bathRooms}</h3>
-                </Box>
-              </Paper>
-            </List>
-          ))}
-        </Box>
 
-        <div className="scroll-container">
-          <Typography variant="h5" gutterBottom>
-            Hottest Properties
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {[1, 2, 3, 4, 5, 6].map((index) => (
-              <List key={index} sx={{ marginRight: 2 }}>
-                <Paper sx={{ width: 300, minWidth: 250, marginBottom: "8px" }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      p: 2,
-                      fontStyle: { textAlign: "left" },
-                    }}
-                  >
-                    <h3>Index: {index}</h3>
-                    <h3>Property ID: </h3>
-                    <h3>City: </h3>
-                    <h3>Property Type: </h3>
-                    <h3>BedRooms: </h3>
-                    <h3>BathRooms: </h3>
-                  </Box>
-                </Paper>
-              </List>
-            ))}
-          </Box>
-        </div>
-      </div>
     </div>
   );
 }

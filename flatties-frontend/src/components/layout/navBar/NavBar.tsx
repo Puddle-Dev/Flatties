@@ -4,18 +4,32 @@ import {
   Stack,
   Paper,
   IconButton,
-  ListItemIcon,
   Typography,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, NavLink } from "react-router-dom";
-import LoginModal from "../login/Login"; // Import the LoginModal component
-import { useCookies } from "react-cookie";
+import LoginModal from "../login/Login";
+import useCookieManager from "../../../services/cookies/cookieManager";
+import profilePic from "../../../assets/images/flatties-icon-logo.png";
+import "./Navbar.css";
 
 function NavBar() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { getCookie } = useCookieManager();
 
-  const handleLoginClick = () => {
+  const handleLoginClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLoginModalOpen = () => {
+    handleMenuClose();
     setLoginModalOpen(true);
   };
 
@@ -23,7 +37,8 @@ function NavBar() {
     setLoginModalOpen(false);
   };
 
-  const [cookies] = useCookies(["isLoggedIn"]);
+  // Check if token exists to determine login status
+  const token = getCookie("token");
 
   return (
     <Paper
@@ -44,7 +59,6 @@ function NavBar() {
               src={LOGO}
               alt="LOGO"
               style={{
-                // width: "20%",
                 maxWidth: "400px",
                 height: "auto",
                 marginRight: "10px",
@@ -57,44 +71,65 @@ function NavBar() {
             direction="row-reverse"
             spacing={2}
           >
-            <IconButton
-              edge="end"
-              aria-label="Log In"
-              size="large"
-              color="inherit"
-              style={{ background: "transparent" }}
-              onClick={handleLoginClick}
-            >
-              <ListItemIcon>
-                <LoginIcon />
-              </ListItemIcon>
-              <Typography variant="body1" component="span">
-                {cookies.isLoggedIn ? (
-                  <Link
-                    to="#"
-                    style={{ color: "inherit", textDecoration: "none" }}
+            {token ? (
+              <>
+                <IconButton
+                  edge="end"
+                  aria-label="Profile"
+                  size="large"
+                  color="inherit"
+                  style={{ background: "transparent" }}
+                  onClick={handleLoginClick}
+                >
+                  <Typography variant="body1" component="span">
+                    <img
+                      className="nav-img"
+                      src={profilePic}
+                      alt="Profile Picture"
+                    />
+                  </Typography>
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem
+                    component={Link}
+                    to="/profile"
+                    onClick={handleMenuClose}
                   >
-                    Log Out
-                  </Link>
-                ) : (
-                  <Link
-                    to="#"
-                    style={{ color: "inherit", textDecoration: "none" }}
-                  >
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={handleLoginModalOpen}>Log Out</MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <IconButton
+                edge="end"
+                aria-label="Log In"
+                size="large"
+                color="inherit"
+                style={{ background: "transparent" }}
+                onClick={handleLoginModalOpen}
+              >
+                <Typography variant="body1" component="span">
+                  <>
+                    <LoginIcon />
                     Log In
-                  </Link>
-                )}
-              </Typography>
-            </IconButton>
+                  </>
+                </Typography>
+              </IconButton>
+            )}
           </Stack>
         </Stack>
-        {/* buttom part */}
+        {/* bottom part */}
         <Stack className="NavBar" direction="row" spacing={5}>
           <NavLink to="/">HOME</NavLink>
-          <NavLink to="/profile">PROFILE</NavLink>
           <NavLink to="/listing">LISTING</NavLink>
           <NavLink to="/new-property">NEW PROPERTY</NavLink>
           <NavLink to="/active-property">ACTIVE PROPERTY</NavLink>
+          <NavLink to="/about">ABOUT</NavLink>
         </Stack>
 
         <LoginModal open={loginModalOpen} handleClose={handleLoginModalClose} />
