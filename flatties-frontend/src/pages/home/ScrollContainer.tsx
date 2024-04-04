@@ -9,7 +9,7 @@ const ListingsContainer: React.FC<{ listings: any[] }> = ({ listings }) => {
         display: 'flex', // Make children (cards) lay out horizontally
         overflowX: 'scroll', // Enable horizontal scrolling
         overflowY: 'hidden', // Disable vertical scrolling
-        maxHeight: '90vh', // Adjust based on your layout
+        maxHeight: '25%', // Adjust based on your layout
         padding: '16px',
         "&::-webkit-scrollbar": {
           height: '0.4em', // Adjust scrollbar for horizontal scrolling
