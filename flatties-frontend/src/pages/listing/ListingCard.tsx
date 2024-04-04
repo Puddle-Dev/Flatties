@@ -12,6 +12,7 @@ import {
 import { red } from "@mui/material/colors";
 import { Bathtub as BathroomIcon, Hotel as BedIcon } from "@mui/icons-material";
 import flattieslogo from "../../assets/images/flatties-icon-logo.png";
+import { Link } from "react-router-dom";
 
 interface DummyDataSchema {
   _id: string;
@@ -27,7 +28,7 @@ interface DummyDataSchema {
 const ListingCard = (data: DummyDataSchema) => {
   return (
     <Card style={{ maxWidth: 345, marginBottom: 8 }}>
-      <CardActionArea>
+      <CardActionArea component={Link} to={`/listing-details/${data._id}`}>
         <CardHeader
           title={data.listingTitle}
           sx={{
