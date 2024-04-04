@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import ListingCard from "../listing/ListingCard"; // Adjust the import path as necessary
 
-const ListingsContainer: React.FC<{ listings: any[] }> = ({ listings }) => {
+const ScrollContainer: React.FC<{ listings: any[] }> = ({ listings }) => {
   return (
     <Box
       sx={{
@@ -33,4 +33,4 @@ const ListingsContainer: React.FC<{ listings: any[] }> = ({ listings }) => {
   );
 };
 
-export default ListingsContainer;
+export default ScrollContainer;

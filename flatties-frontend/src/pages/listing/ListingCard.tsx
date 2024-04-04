@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,9 +8,10 @@ import {
   Grid,
   Box,
   CardActionArea,
+  IconButton,
+  Stack,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
-import { Bathtub as BathroomIcon, Hotel as BedIcon } from "@mui/icons-material";
+import { Favorite as FavoriteIcon, FavoriteBorder as FavoriteBorderIcon, Bathtub as BathroomIcon, Hotel as BedIcon } from "@mui/icons-material";
 import flattieslogo from "../../assets/images/flatties-icon-logo.png";
 import { Link } from "react-router-dom";
 
@@ -26,8 +27,14 @@ interface DummyDataSchema {
 }
 
 const ListingCard = (data: DummyDataSchema) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
-    <Card style={{ maxWidth: 345, minWidth: 250, maxHeight: 345, marginBottom: 8 }}>
+    <Card style={{ maxWidth: 345, minWidth: 250, position: 'relative', marginBottom: 8 }}> {/* Adjusted styles for positioning */}
       <CardActionArea component={Link} to={`/listing/${data._id}`}>
         <CardHeader
           title={data.listingTitle.length > 30
@@ -38,16 +45,18 @@ const ListingCard = (data: DummyDataSchema) => {
             color: "white",
             textAlign: "center",
             padding: "8px",
-            //whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
         />
-        <CardMedia
-          style={{ height: 0, paddingTop: "56.25%" }}
-          image={flattieslogo}
-          title="Property"
-        />
+        <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+          <CardMedia
+            style={{ height: 0, paddingTop: "56.25%", width: '100%' }}
+            image={flattieslogo}
+            title="Property"
+          />
+         
+        </Stack>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {data.suburb}, {data.city}
@@ -94,6 +103,22 @@ const ListingCard = (data: DummyDataSchema) => {
           </Grid>
         </CardContent>
       </CardActionArea>
+      <IconButton
+            onClick={toggleFavorite}
+            sx={{
+              position: 'absolute',
+              top: 75,
+              right: 0,
+              color: isFavorite ? 'red' : 'white', // Change color based on state
+              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+              margin: '8px', // Add some spacing from the corners
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.7)', // Darker on hover
+              },
+            }}
+          >
+            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </IconButton>
     </Card>
   );
 };
