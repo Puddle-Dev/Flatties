@@ -16,6 +16,10 @@ const PropertyController = {
     getAllProperties: async (req, res) => {
         try {
             const properties = await PropertyModel.find({});
+            if(properties.length == 0){
+                console.log("Database is currently empty!")
+                return res.status(500).json({message: "databse is currently empty!"})
+            }
             res.json(properties);
         } catch (error) {
             console.log(error);
@@ -83,12 +87,17 @@ const PropertyController = {
 
     //delete a property by id
     deletePropertyById: async (req, res) => {
+        const adminId = req.decodedToken._id;
+        const propertyId = req.body.propertyId; //get the userId from the request body
+        console.log('deleteUser called with userID:', adminId);
         try {
-            const property = await PropertyModel.deleteOne({_id: req.params.id});
+            const property = await PropertyModel.findOneAndDelete({_id: propertyId});
             if(!property){
+                console.log("Property not found: " + propertyId)
                 return res.status(404).json({message: "Property not found"});
             }
-            res.json(property);
+            console.log("property: " + propertyId + " has been deleted by admin: " + adminId)
+            res.json({message: "property: " + propertyId + " has been deleted by admin: " + adminId});
         } catch (error) {
             console.log(error);
             res.status(500).json({message: "Server Error"});

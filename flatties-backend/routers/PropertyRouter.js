@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const propertyController = require('../controllers/PropertyController');
+const { verifyToken, checkPermission } = require('../server/auth');
+
+const admin = "admin";
+const user = "user";
 
 //get all properties
 router.get('/all', propertyController.getAllProperties);    //test passed
@@ -27,6 +31,6 @@ router.post('/create', propertyController.createProperty);
  * -----------------------
  */
 //delete a property by id
-router.delete('/delete/:id', propertyController.deletePropertyById);
+router.delete('/delete',verifyToken, checkPermission([admin, user]), propertyController.deletePropertyById);    //test passed
 
 module.exports = router;
