@@ -26,7 +26,7 @@ function Router() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/new-property" element={<NewPropertyForm />} />
           <Route path="/active-property" element={<ActiveProperty />} />
-          <Route path="/listing-details/:id" element={<ListingDetail />} />
+          <Route path="/listing/:id" element={<ListingDetail />} />
 
           {/* 404 Page */}
           <Route path="*" element={<h1>Page Not Found</h1>} />

@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import LOGO from "../../../assets/images/flatties-long.png";
-import { Stack, Paper, IconButton, ListItemIcon, Typography } from "@mui/material";
-import LoginIcon from '@mui/icons-material/Login';
+import {
+  Stack,
+  Paper,
+  IconButton,
+  ListItemIcon,
+  Typography,
+} from "@mui/material";
+import LoginIcon from "@mui/icons-material/Login";
 import { Link, NavLink } from "react-router-dom";
 import LoginModal from "../login/Login"; // Import the LoginModal component
 import { useCookies } from "react-cookie";
@@ -20,9 +26,18 @@ function NavBar() {
   const [cookies] = useCookies(["isLoggedIn"]);
 
   return (
-    <Paper elevation={3} square={false} style={{ padding: "10px", backgroundColor:"#F2F6F9"}}>
+    <Paper
+      elevation={3}
+      square={false}
+      style={{ padding: "10px", backgroundColor: "#F2F6F9" }}
+    >
       <Stack className="Container" direction="column">
-        <Stack className="Container-top" direction="row" borderBottom={1} justifyContent={"space-between"}>
+        <Stack
+          className="Container-top"
+          direction="row"
+          borderBottom={1}
+          justifyContent={"space-between"}
+        >
           {/* top-left part */}
           <Stack className="Container-left" direction="row">
             <img
@@ -37,33 +52,40 @@ function NavBar() {
             />
           </Stack>
           {/* top-right part */}
-          <Stack className="Container-right" direction="row-reverse" spacing={2}>
-
+          <Stack
+            className="Container-right"
+            direction="row-reverse"
+            spacing={2}
+          >
             <IconButton
               edge="end"
               aria-label="Log In"
               size="large"
               color="inherit"
-              style={{ background: 'transparent' }}
+              style={{ background: "transparent" }}
               onClick={handleLoginClick}
             >
               <ListItemIcon>
-
                 <LoginIcon />
               </ListItemIcon>
-              <Typography variant="body1" component="span">{cookies.isLoggedIn ? (
-           <Link to="#" style={{ color: 'inherit', textDecoration: 'none' }}>
-              Log Out
-              </Link>
-          ) : (
-                <Link to="#" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  
-                  Log In
-                </Link>
-          )}
-                </Typography>
+              <Typography variant="body1" component="span">
+                {cookies.isLoggedIn ? (
+                  <Link
+                    to="#"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    Log Out
+                  </Link>
+                ) : (
+                  <Link
+                    to="#"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    Log In
+                  </Link>
+                )}
+              </Typography>
             </IconButton>
-
           </Stack>
         </Stack>
         {/* buttom part */}
@@ -73,7 +95,6 @@ function NavBar() {
           <NavLink to="/listing">LISTING</NavLink>
           <NavLink to="/new-property">NEW PROPERTY</NavLink>
           <NavLink to="/active-property">ACTIVE PROPERTY</NavLink>
-          <NavLink to="/listing-details">LISTING DETAILS</NavLink>
         </Stack>
 
         <LoginModal open={loginModalOpen} handleClose={handleLoginModalClose} />
