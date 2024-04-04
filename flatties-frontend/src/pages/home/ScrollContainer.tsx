@@ -1,31 +1,36 @@
-import React, { ReactNode } from "react";
-import { Typography, Box } from "@mui/material";
-import ListingCard from "../listing/ListingCard"; // Import the ListingCard component
+import React from "react";
+import { Box } from "@mui/material";
+import ListingCard from "../listing/ListingCard"; // Adjust the import path as necessary
 
-interface ScrollContainerProps {
-  title: string;
-  children: ReactNode;
-}
-
-function ScrollContainer({ title, children }: ScrollContainerProps) {
+const ListingsContainer: React.FC<{ listings: any[] }> = ({ listings }) => {
   return (
-    <div className="scroll-container">
-      <Typography variant="h5" gutterBottom>
-        {title}
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          overflowX: "auto",
-          whiteSpace: "nowrap",
-        }}
-      >
-        {React.Children.map(children, (child) => (
-          <ListingCard {...(child as any)} />
-        ))}
-      </Box>
-    </div>
+    <Box
+      sx={{
+        display: 'flex', // Make children (cards) lay out horizontally
+        overflowX: 'scroll', // Enable horizontal scrolling
+        overflowY: 'hidden', // Disable vertical scrolling
+        maxHeight: '90vh', // Adjust based on your layout
+        padding: '16px',
+        "&::-webkit-scrollbar": {
+          height: '0.4em', // Adjust scrollbar for horizontal scrolling
+        },
+        "&::-webkit-scrollbar-track": {
+          boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+          webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: 'rgba(0,0,0,.1)',
+          outline: '1px solid slategrey',
+        },
+      }}
+    >
+      {listings.map((listing) => (
+        <Box key={listing._id} sx={{ marginRight: '16px' }}> {/* Add margin between cards */}
+          <ListingCard {...listing} />
+        </Box>
+      ))}
+    </Box>
   );
-}
+};
 
-export default ScrollContainer;
+export default ListingsContainer;

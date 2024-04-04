@@ -26,7 +26,9 @@ function Login({ open, handleClose }: Readonly<LoginModalProps>) {
 
         // Set the token cookie to track the login status
         setCookie('token', res.data.token);
+        setCookie('userName', res.data.userName);
 
+console.log(getCookie("userName"));
         // Close the modal
         handleClose();
       })
