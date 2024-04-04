@@ -18,8 +18,7 @@ import "./Navbar.css";
 function NavBar() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const {getCookie} = useCookieManager();
- 
+  const { getCookie } = useCookieManager();
 
   const handleLoginClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,8 +37,8 @@ function NavBar() {
     setLoginModalOpen(false);
   };
 
-   // Check if token exists to determine login status
-   const token = getCookie("token");
+  // Check if token exists to determine login status
+  const token = getCookie("token");
 
   return (
     <Paper
@@ -95,7 +94,11 @@ function NavBar() {
                   open={Boolean(anchorEl)}
                   onClose={handleMenuClose}
                 >
-                  <MenuItem component={Link} to="/profile" onClick={handleMenuClose}>
+                  <MenuItem
+                    component={Link}
+                    to="/profile"
+                    onClick={handleMenuClose}
+                  >
                     Profile
                   </MenuItem>
                   <MenuItem onClick={handleLoginModalOpen}>Log Out</MenuItem>
@@ -125,6 +128,7 @@ function NavBar() {
           <NavLink to="/">HOME</NavLink>
           <NavLink to="/listing">LISTING</NavLink>
           <NavLink to="/new-property">NEW PROPERTY</NavLink>
+          <NavLink to="/active-property">ACTIVE PROPERTY</NavLink>
           <NavLink to="/about">ABOUT</NavLink>
         </Stack>
 

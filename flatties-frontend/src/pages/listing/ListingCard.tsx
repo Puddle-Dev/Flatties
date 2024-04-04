@@ -28,7 +28,7 @@ interface DummyDataSchema {
 const ListingCard = (data: DummyDataSchema) => {
   return (
     <Card style={{ maxWidth: 345, marginBottom: 8 }}>
-      <CardActionArea component={Link} to={`/listing-details/${data._id}`}>
+      <CardActionArea component={Link} to={`/listing/${data._id}`}>
         <CardHeader
           title={data.listingTitle}
           sx={{

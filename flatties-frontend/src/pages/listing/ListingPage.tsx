@@ -242,9 +242,9 @@ function ListingPage() {
   filteredData.sort((a, b) => {
     switch (sortOrder) {
       case "addedAsc":
-        return a._id.toString().localeCompare(b._id.toString());
+        return Number(a._id) - Number(b._id);
       case "addedDesc":
-        return b._id.toString().localeCompare(a._id.toString());
+        return Number(b._id) - Number(a._id);
       case "priceAsc":
         return a.rent.toString().localeCompare(b.rent.toString()); // shit code
       case "priceDesc":

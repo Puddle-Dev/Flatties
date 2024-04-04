@@ -8,6 +8,8 @@ import RegisterPage from "../pages/register/RegisterPage";
 import NewPropertyForm from "../pages/newProperty/NewPropertyForm";
 import ActiveProperty from "../pages/newProperty/ActiveProperty";
 import ListingDetail from "../pages/listing/ListingDetail";
+import About from "../pages/about/AboutPage";
+import AboutPage from "../pages/about/AboutPage";
 
 function Router() {
   const handlePropertySubmit = (propertyData: any) => {
@@ -26,7 +28,8 @@ function Router() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/new-property" element={<NewPropertyForm />} />
           <Route path="/active-property" element={<ActiveProperty />} />
-          <Route path="/listing-details/:id" element={<ListingDetail />} />
+          <Route path="/listing/:id" element={<ListingDetail />} />
+          <Route path="/about" element={<AboutPage />} />
 
           {/* 404 Page */}
           <Route path="*" element={<h1>Page Not Found</h1>} />
