@@ -10,7 +10,6 @@ import ActiveProperty from "../pages/newProperty/ActiveProperty";
 import ListingDetail from "../pages/listing/ListingDetail";
 
 function Router() {
-
   const handlePropertySubmit = (propertyData: any) => {
     // 处理新 property 提交逻辑
     console.log("Property submitted:", propertyData);
@@ -27,7 +26,7 @@ function Router() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/new-property" element={<NewPropertyForm />} />
           <Route path="/active-property" element={<ActiveProperty />} />
-          <Route path="/listing-details" element={<ListingDetail />} />
+          <Route path="/listing-details/:id" element={<ListingDetail />} />
 
           {/* 404 Page */}
           <Route path="*" element={<h1>Page Not Found</h1>} />
