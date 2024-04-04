@@ -38,9 +38,10 @@ const PropertyController = {
     },
     //update a property by id
     updatePropertyById: async (req, res) => {
+        console.log("updatePropertyById", req.body);
         try {
             const property = await PropertyModel.updateOne(
-                {_id: req.params.id},
+                {_id: req.body._id},
                 {$set: req.body}
             );
             if(!property){

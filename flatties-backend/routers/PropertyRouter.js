@@ -13,7 +13,7 @@ router.get('/all', propertyController.getAllProperties);    //test passed
 router.get('/city/:city', propertyController.getPropertiesByCity);  //test passed
 
 //update a property by id
-router.put('/update/:id', propertyController.updatePropertyById);
+router.patch('/update', propertyController.updatePropertyById); //test passed, and used in the frontend -wiiliam
 
 //active a property by id
 router.put('/active/:id', propertyController.activePropertyById);
