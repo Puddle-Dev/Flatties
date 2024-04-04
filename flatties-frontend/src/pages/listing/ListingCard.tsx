@@ -27,15 +27,20 @@ interface DummyDataSchema {
 
 const ListingCard = (data: DummyDataSchema) => {
   return (
-    <Card style={{ maxWidth: 345, marginBottom: 8 }}>
+    <Card style={{ maxWidth: 345, minWidth: 250, maxHeight: 345, marginBottom: 8 }}>
       <CardActionArea component={Link} to={`/listing/${data._id}`}>
         <CardHeader
-          title={data.listingTitle}
+          title={data.listingTitle.length > 30
+            ? `${data.listingTitle.substring(0, 30)}...` // If so, truncate and add "..."
+            : data.listingTitle} // Otherwise, use the title as is
           sx={{
             background: "rgb(40,47,68)",
             color: "white",
             textAlign: "center",
             padding: "8px",
+            //whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         />
         <CardMedia
