@@ -1,4 +1,5 @@
 const userModel = require('../models/UserModel');
+const propertyModel = require('../models/PropertyModel');
 const bcrypt = require('bcrypt');
 const { createToken } = require('../server/auth');
 
@@ -149,13 +150,24 @@ const UserController = {
         }
         console.log('addPropertyToWatchingList called with userID:', userId);
         try {
+            //check is the user exists
             const user = await userModel.findById(userId);
             if (!user) {
                 console.log('User not found', userId);
                 return res.status(404).send({ message: 'User not found' });
             }
-            user.watchingList.push({ watchingList: property });
-            await user.save();
+
+            //check is the property exists
+            const propertyExist = await propertyModel.findById(property.propertyId);
+            if (!propertyExist) {
+                console.log('Property not found', property.propertyId);
+                return res.status(404).send({ message: 'Property not found' });
+            }
+
+            //add the property to the watching list
+            user.watchingList.push(property); 
+            await user.save();  //save the user
+            
             console.log('Property added to watching list successfully', user.watchingList);
             console.log("------------------------------------------")
             res.status(200).send({ message: 'Property added to watching list successfully', data: user.watchingList });
