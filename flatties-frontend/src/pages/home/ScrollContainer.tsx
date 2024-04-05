@@ -25,7 +25,7 @@ const ScrollContainer: React.FC<{ listings: any[] }> = ({ listings }) => {
       }}
     >
       {listings.map((listing) => (
-        <Box key={listing._id} sx={{ marginRight: '16px' }}> {/* Add margin between cards */}
+        <Box key={listing._id} sx={{ marginRight: '16px' }}>
           <ListingCard {...listing} />
         </Box>
       ))}

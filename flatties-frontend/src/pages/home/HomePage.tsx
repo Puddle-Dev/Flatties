@@ -3,13 +3,18 @@ import { Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "../../services/api";
 import useCookieManager from "../../services/cookies/cookieManager";
-import ScrollContainer from "./ScrollContainer"; // Updated import
+import ScrollContainer from "./ScrollContainer";
 import DummyData from "../listing/dummyData.json";
 
-// Assuming listings have a specific structure, you might want to define a more specific type
 interface Listing {
   _id: string;
-  // Add other properties as needed
+  listingTitle: string;
+  rent: number;
+  address: string;
+  city: string;
+  suburb: string;
+  bedRooms: number;
+  bathRooms: number;
 }
 
 function HomePage() {
@@ -17,20 +22,18 @@ function HomePage() {
   const token = getCookie("token");
   const userName = getCookie("userName");
   const [userWatchList, setUserWatchList] = useState<Listing[]>([]);
+  const [allProperties, setAllProperties] = useState<Listing[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (token) {
         try {
-          const watchListResponse = await axios.get(
-            "/user/watchinglist",
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          const watchListResponse = await axios.get("/user/watchinglist", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
           setUserWatchList(watchListResponse.data);
           console.log("User watching list", watchListResponse.data);
         } catch (error) {
@@ -39,6 +42,19 @@ function HomePage() {
       }
     };
 
+    const fetchAllProperties = async () => {
+      try {
+        const response = await axios.get("/property/all", {
+          headers: { "Content-Type": "application/json", },
+        });
+        console.log(response.data);
+        setAllProperties(response.data);
+      } catch (error) {
+        console.error("Error fetching all properties", error);
+      }
+    };
+
+    fetchAllProperties();
     fetchData();
   }, [token, userName]);
 
@@ -64,6 +80,7 @@ function HomePage() {
             can easily search and filter available residences.
           </Typography>
           <ScrollContainer listings={DummyData} />
+          <ScrollContainer listings={allProperties} />
           <Button
             variant="contained"
             color="primary"
