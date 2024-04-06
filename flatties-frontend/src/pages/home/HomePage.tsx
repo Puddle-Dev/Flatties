@@ -45,7 +45,7 @@ function HomePage() {
     const fetchAllProperties = async () => {
       try {
         const response = await axios.get("/property/all", {
-          headers: { "Content-Type": "application/json", },
+          headers: { "Content-Type": "application/json" },
         });
         console.log(response.data);
         setAllProperties(response.data);
@@ -65,9 +65,13 @@ function HomePage() {
           <Typography variant="h4" gutterBottom>
             Welcome back {userName}! You are logged in.
           </Typography>
-          <ScrollContainer
-            listings={userWatchList.length > 0 ? userWatchList : DummyData}
-          />
+          {userWatchList.length > 0 ? (
+            <ScrollContainer listings={userWatchList} />
+          ) : (
+            <Typography variant="h6" gutterBottom style={{ textAlign: "center", marginTop: "20px" }}>
+              Your watchlist is currently empty. Click the heart icon on properties to see them here!
+            </Typography>
+          )}
         </div>
       ) : (
         <div style={{ padding: "20px", textAlign: "center" }}>
@@ -79,8 +83,6 @@ function HomePage() {
             owners and managers can showcase vacancies, and prospective tenants
             can easily search and filter available residences.
           </Typography>
-          <ScrollContainer listings={DummyData} />
-          <ScrollContainer listings={allProperties} />
           <Button
             variant="contained"
             color="primary"
@@ -91,6 +93,8 @@ function HomePage() {
           </Button>
         </div>
       )}
+      <ScrollContainer listings={DummyData} />
+      <ScrollContainer listings={allProperties} />
     </div>
   );
 }
