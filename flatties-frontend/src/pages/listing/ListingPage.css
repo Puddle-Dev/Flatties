@@ -1,0 +1,14 @@
+.listingContainer{
+
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    .listingContainer {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+}

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const propertyController = require('../controllers/PropertyController');
+const { verifyToken, checkPermission } = require('../server/auth');
+
+const admin = "admin";
 
 //get all properties
 router.get('/all', propertyController.getAllProperties);    //test passed
@@ -9,7 +12,7 @@ router.get('/all', propertyController.getAllProperties);    //test passed
 router.get('/city/:city', propertyController.getPropertiesByCity);  //test passed
 
 //update a property by id
-router.put('/update/:id', propertyController.updatePropertyById);
+router.patch('/update', verifyToken, propertyController.updatePropertyById); //test passed, and used in the frontend -wiiliam
 
 //active a property by id
 router.put('/active/:id', propertyController.activePropertyById);
@@ -18,8 +21,7 @@ router.put('/active/:id', propertyController.activePropertyById);
 router.put('/inactive/:id', propertyController.inactivePropertyById);
 
 //create a new property
-router.post('/create', propertyController.createProperty);
-
+router.post('/create', verifyToken, propertyController.createProperty);
 
 /**
  * -----------------------
@@ -27,6 +29,6 @@ router.post('/create', propertyController.createProperty);
  * -----------------------
  */
 //delete a property by id
-router.delete('/delete/:id', propertyController.deletePropertyById);
+router.delete('/delete',verifyToken, checkPermission([admin]), propertyController.deletePropertyById);    //test passed
 
 module.exports = router;

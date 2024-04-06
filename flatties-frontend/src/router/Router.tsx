@@ -6,9 +6,12 @@ import ProfilePage from "../pages/profile/ProfilePage";
 import ListingPage from "../pages/listing/ListingPage";
 import RegisterPage from "../pages/register/RegisterPage";
 import NewPropertyForm from "../pages/newProperty/NewPropertyForm";
+import ActiveProperty from "../pages/newProperty/ActiveProperty";
+import ListingDetail from "../pages/listing/ListingDetail";
+import About from "../pages/about/AboutPage";
+import AboutPage from "../pages/about/AboutPage";
 
 function Router() {
-
   const handlePropertySubmit = (propertyData: any) => {
     // 处理新 property 提交逻辑
     console.log("Property submitted:", propertyData);
@@ -24,6 +27,9 @@ function Router() {
           <Route path="/listing" element={<ListingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/new-property" element={<NewPropertyForm />} />
+          <Route path="/active-property" element={<ActiveProperty />} />
+          <Route path="/listing/:id" element={<ListingDetail />} />
+          <Route path="/about" element={<AboutPage />} />
 
           {/* 404 Page */}
           <Route path="*" element={<h1>Page Not Found</h1>} />

@@ -5,6 +5,8 @@ import UserInfo from "../../models/UserInfo";
 import axios from "../../services/api";
 import { Button } from "@mui/material";
 import { redirect } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import WatchList from "../../components/watchList/WatchList"; // Import the new ScrollBox component
 
 
 function ProfilePage() {
@@ -23,8 +25,10 @@ function ProfilePage() {
 };
 
   const [userInfo, setUser] = useState(initialUserInfo());
+ 
+  const [cookies] = useCookies(["userId"]);
 
-  const userId = "65d2e627dff97ae74e2c85c8";
+  const userId = cookies.userId;
   useEffect(() => {
     axios.get('/user/'+userId)
       .then((res) => {
@@ -84,6 +88,10 @@ function ProfilePage() {
           <Button variant="contained" >Edit</Button>
           </div>
       </div>
+<div>
+  <WatchList/>
+</div>
+
 
     </div>
 

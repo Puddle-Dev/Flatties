@@ -10,23 +10,64 @@
     * 
 **/
 
-// Load environment variables
-require('dotenv').config();
+///////////////////////////////////////////////////
+/*************************************************/
+
+//use this area in local environment only
+
+// Load local environment variables
+const dotenv = require('dotenv').config();
+if(dotenv.error){   //check if the .env file is present
+    throw dotenv.error;
+}
+
+//comment this area out before pushing to cloud
+
+/*************************************************/
+///////////////////////////////////////////////////
+
+//get environment variables
+const PORT = process.env.PORT;
+const MONGODB_URL = process.env.MONGODB_URL;
 
 //ininialize express app
-const express = require('express'); 
+const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config/database');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-const userRoutes = require('./routes/userRoutes');
-
+//start the app
 const app = express();
 
+// Use cors to allow cross-origin requests
+app.use(cors());
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+
+app.get('/', (req, res) => {
+    res.send('Hello World! - from flatties-backend');
+    });
+
+app.listen(PORT, () => {
+    console.log(`Puddle-Server listening on port ${PORT}`);
+    });
+
+
+//import modules
+const property = require('./models/PropertyModel');
+const user = require('./models/UserModel');
+
+//import routers
+const userRouter = require('./routers/UserRouter');
+const propertyRouter = require('./routers/PropertyRouter');
+
+//use routers
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/property', propertyRouter);
+
 // Connect to MongoDB
-mongoose.connect(config.connectionString,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(MONGODB_URL);
 
 // Check if MongoDB is connected
 const db = mongoose.connection;
@@ -36,15 +77,3 @@ db.once('open', function() {
     console.info(`----------------------------`);
 });
 
-
-// Start the server
-app.get('/', (req, res) => {
-    res.send('Hello World! - from flatties-backend');
-    });
-
-app.listen(config.port, () => {
-    console.log(`Puddle-Server listening on port ${PORT}`);
-    });
-
-
-app.use('api/users', userRoutes);
