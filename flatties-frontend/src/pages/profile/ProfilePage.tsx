@@ -1,55 +1,75 @@
 import React, { useEffect, useState } from "react";
-import profilePic from "../../assets/images/flatties-icon-logo.png"
+import profilePic from "../../assets/images/flatties-icon-logo.png";
 import "./ProfilePage.css";
 import UserInfo from "../../models/UserInfo";
 import axios from "../../services/api";
-import { Button } from "@mui/material";
-import { redirect } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import WatchList from "../../components/watchList/WatchList"; // Import the new ScrollBox component
+import { Button, Typography } from "@mui/material";
+import useCookieManager from "../../services/cookies/cookieManager";
+import ScrollContainer from "../home/ScrollContainer";
 
+interface Listing {
+  _id: string;
+  listingTitle: string;
+  rent: number;
+  address: string;
+  city: string;
+  suburb: string;
+  bedRooms: number;
+  bathRooms: number;
+}
 
 function ProfilePage() {
+  const initialUserInfo: UserInfo = {
+    userName: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    gender: "",
+    dob: null,
+    password: "",
+  };
 
-  const initialUserInfo = (): UserInfo => {
-    return {
-        userName: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        gender: '',
-        dob: null,
-        password: '',
-    };
-};
+  const { getCookie } = useCookieManager();
+  const token = getCookie("token");
+  const [userInfo, setUserInfo] = useState<UserInfo>(initialUserInfo);
+  const [userWatchList, setUserWatchList] = useState<Listing[]>([]);
 
-  const [userInfo, setUser] = useState(initialUserInfo());
- 
-  const [cookies] = useCookies(["userId"]);
-
-  const userId = cookies.userId;
   useEffect(() => {
-    axios.get('/user/'+userId)
-      .then((res) => {
-        setUser(res.data.user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  
-  
+    const fetchProfile = async () => {
+      if (token) {
+        try {
+          const profileResponse = await axios.get("/user/profile", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUserInfo(profileResponse.data);
+          setUserWatchList(profileResponse.data.watchinglist);
+          console.log("User profile", profileResponse.data);
+          console.log("User Watchlist ", profileResponse.data.watchinglist);
+        } catch (error) {
+          console.error("Error fetching data", error);
+        }
+      }
+    };
+    fetchProfile();
+  }, [token]);
+
+  const formatDate = (date: Date | null): string => {
+    if (!date) return "Not Provided";
+    return new Date(date).toLocaleDateString();
+  };
 
   return (
     <div className="userProfile clearfix">
       <div className="topRow">
         <div className="userInformation">
-          {/* <h2>User Information</h2> */}
-          <img src={profilePic} alt="Profile Picture" />
+          <img src={profilePic} alt="Profile" />
           <div className="userInfo">
             <h3>User Name:</h3>
-            <p>{userInfo? userInfo.userName : 'Loading'}</p>
+            <p>{userInfo.userName || "Loading"}</p>
           </div>
           <div className="userInfo">
             <h3>Introduction:</h3>
@@ -60,42 +80,49 @@ function ProfilePage() {
       </div>
 
       <div className="downRow">
-          <div className="userDetail">
-            <div className="userInfo">
-              <h3>First Name:</h3>
-              <p>{userInfo? userInfo.firstName : 'Loading'}</p>
-            </div>
-            <div className="userInfo">
-              <h3>Last Name:</h3>
-              <p>{userInfo? userInfo.lastName : 'Loading'}</p>
-            </div>
-            <div>
-              <h3>Gender:</h3>
-              <p>{userInfo? userInfo.gender : 'Loading'}</p>
-            </div>
-            <div className="userInfo">
-              <h3>Date of Birth:</h3>
-              <p>{userInfo? userInfo.dob?.toString() : 'Loading'}</p>
-            </div>
-            <div className="userInfo">
-              <h3>Email:</h3>
-              <p>{userInfo? userInfo.email : 'Loading'}</p>
-            </div>
-            <div className="userInfo">
-              <h3>Phone:</h3>
-              <p>{userInfo? userInfo.phone : 'Loading'}</p>
-            </div>
-          <Button variant="contained" >Edit</Button>
+        <div className="userDetail">
+          <div className="userInfo">
+            <h3>First Name:</h3>
+            <p>{userInfo.firstName || "Loading"}</p>
           </div>
+          <div className="userInfo">
+            <h3>Last Name:</h3>
+            <p>{userInfo.lastName || "Loading"}</p>
+          </div>
+          <div>
+            <h3>Gender:</h3>
+            <p>{userInfo.gender || "Loading"}</p>
+          </div>
+          <div className="userInfo">
+            <h3>Date of Birth:</h3>
+            <p>{formatDate(userInfo.dob)}</p>
+          </div>
+          <div className="userInfo">
+            <h3>Email:</h3>
+            <p>{userInfo.email || "Loading"}</p>
+          </div>
+          <div className="userInfo">
+            <h3>Phone:</h3>
+            <p>{userInfo.phone || "Loading"}</p>
+          </div>
+          <Button variant="contained">Edit</Button>
+        </div>
       </div>
-<div>
-  <WatchList/>
-</div>
-
-
+      <div>
+        {userWatchList.length > 0 ? (
+          <ScrollContainer listings={userWatchList} />
+        ) : (
+          <Typography
+            variant="h6"
+            gutterBottom
+            style={{ textAlign: "center", marginTop: "20px" }}
+          >
+            Your watchlist is currently empty. Click the heart icon on
+            properties to see them here!
+          </Typography>
+        )}
+      </div>
     </div>
-
-
   );
 }
 
