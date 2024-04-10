@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Typography, Grid, Paper, Avatar } from "@mui/material";
 import EirikPhoto from "../../assets/images/eirik.jpg";
+import BenPhoto from "../../assets/images/Ben.jpg";
 import "./AboutPage.css";
 
 function AboutPage() {
@@ -60,13 +61,14 @@ function AboutPage() {
                 aspects of software development I enjoy the most are
                 collaborating with others, creating real solutions, and the
                 constant learning that is required. Beyond the world of coding,
-                you'll find me immersed in my love for football, curating a
-                diverse collection of records, and indulging in my interests in
-                history and movies. Excited about this new chapter, I bring not
-                only technical skills but also a rich set of experiences and
+                you'll find me immersed in my love for football, collecting
+                records, and indulging in my interests in history and movies. I
+                am excited about starting a new chapter, I bring not only
+                technical skills but also a rich set of experiences and
                 interests to the software realm.
               </Typography>
             ),
+            image: BenPhoto,
           },
           {
             name: "Eirik Enriquez",
