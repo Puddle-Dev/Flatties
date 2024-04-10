@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import FlattiesLogo from "../../components/ImageLoader";
 import DummyData from "../listing/dummyData.json";
 import { useParams } from "react-router-dom";
+import { Typography, Grid, Divider, Paper } from "@mui/material";
 
 interface Params {
   id: string;
@@ -23,69 +24,75 @@ function ListingDetail() {
   }
 
   return (
-    <div className="listingDetailContainer">
-      {/* <h1>Listing Details</h1> */}
-      <Carousel
-        showArrows={true}
-        showThumbs={true}
-        autoPlay={true}
-        infiniteLoop={true}
-        showStatus={false}
-        showIndicators={false}
-        stopOnHover={false}
-      >
-        {FlattiesLogo.map((image) => (
-          <div key={image.id} style={{ height: "300px" }}>
-            <img
-              src={image.src}
-              alt={image.alt}
-              style={{
-                objectFit: "contain",
-                maxHeight: "100%",
-                maxWidth: "100%",
-              }}
-            />
-          </div>
-        ))}
-      </Carousel>
-      <hr />
-      <div className="detailsContainer">
-        <h2>Property overview</h2>
-        <p>{formData.listingTitle}</p>
-        <h2>Room details</h2>
-        <p>
-          Rent: {formData.rent} <br />
-          Rent Method:{formData.rentMethod} <br />
-          Payment Period: {formData.rentPaymentPeriod}
-        </p>
-
-        <h2>Amenities</h2>
-        <p>
-          Furnished: {formData.isFurnished ? "Yes" : "No"} <br />
-          Pet Allowed: {formData.isPetAllowed ? "Yes" : "No"} <br />
-          Smoking Allowed: {formData.isSmokingAllowed ? "Yes" : "No"} <br />
-          Parking Allowed: {formData.isParkingAllowed ? "Yes" : "No"}
-        </p>
-
-        {/* <p>{formData.description}</p> */}
-
-        <h2>Location</h2>
-        <p>
-          City: {formData.city} <br />
-          Address: {formData.address} <br />
-          Suburb: {formData.suburb} <br />
-        </p>
-        {/* <p>
-          Year Built: {formData.year_built} <br />
-        </p> */}
-
-        {/* <h2>Nearby facilities</h2>
-        <p>
-          {formData.nearbyFacilities.map((facility, index) => (
-            <span key={index}>{facility}, </span>
-          ))}
-        </p> */}
-      </div>
+    <div>
+      <Typography variant="h4" gutterBottom>
+        {formData.listingTitle}
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Carousel
+            showArrows={true}
+            showThumbs={true}
+            autoPlay={true}
+            infiniteLoop={true}
+            showStatus={false}
+            showIndicators={false}
+            stopOnHover={false}
+          >
+            {FlattiesLogo.map((image) => (
+              <div key={image.id} style={{ height: "300px" }}>
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  style={{
+                    objectFit: "contain",
+                    maxHeight: "100%",
+                    maxWidth: "100%",
+                  }}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper variant="outlined">
+            <Typography variant="h5" gutterBottom>
+              Property Overview
+            </Typography>
+            <Typography variant="body1" paragraph>
+              {formData.description}
+            </Typography>
+            <Divider />
+            <Typography variant="h5" gutterBottom>
+              Room Details
+            </Typography>
+            <Typography variant="body1">
+              Rent: {formData.rent} <br />
+              Rent Method: {formData.rentMethod} <br />
+              Payment Period: {formData.rentPaymentPeriod}
+            </Typography>
+            <Divider />
+            <Typography variant="h5" gutterBottom>
+              Amenities
+            </Typography>
+            <Typography variant="body1">
+              Furnished: {formData.isFurnished ? "Yes" : "No"} <br />
+              Pet Allowed: {formData.isPetAllowed ? "Yes" : "No"} <br />
+              Smoking Allowed: {formData.isSmokingAllowed ? "Yes" : "No"} <br />
+              Parking Allowed: {formData.isParkingAllowed ? "Yes" : "No"}
+            </Typography>
+            <Divider />
+            <Typography variant="h5" gutterBottom>
+              Location
+            </Typography>
+            <Typography variant="body1">
+              City: {formData.city} <br />
+              Address: {formData.address} <br />
+              Suburb: {formData.suburb} <br />
+            </Typography>
+          </Paper>
+        </Grid>
+      </Grid>
     </div>
   );
 }
