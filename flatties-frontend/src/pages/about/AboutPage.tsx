@@ -73,12 +73,16 @@ function AboutPage() {
             bio: (
               <Typography variant="body1" paragraph>
                 Hey hey, I'm Eirik Enriquez, a 21-year-old Filipino fresh out of
-                the computer science oven. I'm all about celebrating diverse
-                backgrounds, which probably explains my fascination with
-                programming, especially web development. When I'm not lost in
-                code, you might catch me gaming, cheering on my favorite boxers,
-                or perfecting the art of personal grooming. I thrive on my
-                passion for technology and interest in problem-solving.
+                the computer science oven. Currently, I'm whipping up
+                deliciousness at Taco Bell, and I absolutely love the job!
+                However, my heart is also set on transitioning into a software
+                job, where I can dive deeper into my passion for technology and
+                problem-solving. I'm all about celebrating diverse backgrounds,
+                which probably explains my fascination with programming,
+                especially web development. When I'm not lost in code, you might
+                catch me gaming, cheering on my favorite boxers, or perfecting
+                the art of personal grooming. I thrive on the passion for
+                technology and interest in problem-solving.
               </Typography>
             ),
           },
