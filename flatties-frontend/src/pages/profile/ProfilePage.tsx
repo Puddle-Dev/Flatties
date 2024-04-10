@@ -47,8 +47,8 @@ function ProfilePage() {
           });
           setUserInfo(profileResponse.data);
           setUserWatchList(profileResponse.data.watchinglist);
-          console.log("User profile", profileResponse.data);
-          console.log("User Watchlist ", profileResponse.data.watchinglist);
+          console.log("User profile", profileResponse.data.data);
+          console.log("User Watchlist ", profileResponse.data.data.watchingList);
         } catch (error) {
           console.error("Error fetching data", error);
         }
@@ -109,7 +109,7 @@ function ProfilePage() {
         </div>
       </div>
       <div>
-        {userWatchList.length > 0 ? (
+        {userWatchList !== undefined ? (
           <ScrollContainer listings={userWatchList} />
         ) : (
           <Typography
