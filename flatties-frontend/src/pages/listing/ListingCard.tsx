@@ -21,8 +21,8 @@ interface DummyDataSchema {
   address: string;
   city: string;
   suburb: string;
-  bedRooms: number;
-  bathRooms: number;
+  bedrooms: number;
+  bathrooms: number;
 }
 
 const ListingCard = (data: DummyDataSchema) => {
@@ -73,7 +73,7 @@ const ListingCard = (data: DummyDataSchema) => {
                 <Box display="flex" justifyContent="space-evenly">
                   <BathroomIcon />
                   <Typography variant="body1" gutterBottom>
-                    {data.bedRooms}
+                    {data.bedrooms}
                   </Typography>
                 </Box>
               </Grid>
@@ -81,7 +81,7 @@ const ListingCard = (data: DummyDataSchema) => {
                 <Box display="flex" justifyContent="space-evenly">
                   <BedIcon />
                   <Typography variant="body1" gutterBottom>
-                    {data.bathRooms}
+                    {data.bathrooms}
                   </Typography>
                 </Box>
               </Grid>
