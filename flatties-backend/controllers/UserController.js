@@ -175,6 +175,38 @@ const UserController = {
             res.status(500).send({ message: error.message });
         }
     },
+
+    //remove a property from a watching list
+    removePropertyFromWatchingList: async (req, res) => {
+        const userId = req.decodedToken._id;
+        const propertyId = req.body.propertyId; //get the propertyId from the request body
+        console.log('removePropertyFromWatchingList called with userID:', userId);
+        try {
+            //check is the user exists
+            const user = await userModel.findById(userId);
+            if (!user) {
+                console.log('User not found', userId);
+                return res.status(404).send({ message: 'User not found' });
+            }
+
+            //check is the property id exists in the watching list
+            const propertyExist = user.watchingList.find(property => property.propertyId === propertyId);
+            if (!propertyExist) {
+                console.log('Property not found in watching list', propertyId);
+                return res.status(404).send({ message: 'Property not found in watching list' });
+            }
+      
+            //remove the property from the watching list
+            user.watchingList = user.watchingList.filter(property => property.propertyId !== propertyId);   
+            await user.save();  //save the user
+            console.log('Property removed from watching list successfully');
+            console.log("------------------------------------------")
+            res.status(200).send({ message: 'Property removed from watching list successfully'});
+        } catch (error) {
+        res.status(500).send({ message: error.message });
+        }
+    },
+
     //update user account type
     updateAccountType: async (req, res) => {
         const adminId = req.decodedToken._id;

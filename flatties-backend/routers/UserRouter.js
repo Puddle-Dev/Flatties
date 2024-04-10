@@ -24,7 +24,10 @@ router.post('/login', userController.login);
 router.post('/create', userController.createUser); 
 
 //add a property to a watching list
-router.post('/watchproperty', verifyToken, userController.addPropertyToWatchingList);
+router.post('/watch', verifyToken, userController.addPropertyToWatchingList);
+
+//remove a property from a watching list
+router.patch('/unwatch', verifyToken, userController.removePropertyFromWatchingList);
 
 //update user's profile
 router.patch('/update', verifyToken, userController.updateUser);    //all user can update their own information
@@ -35,7 +38,7 @@ router.patch('/active', verifyToken, checkPermission([admin]), userController.sw
 // update user account type
 router.patch('/accounttype', verifyToken, checkPermission([admin]), userController.updateAccountType);  //only admin can update account type
 
-//remove a property from a watching list
+//delete a user by id
 router.delete('/delete', verifyToken, checkPermission([admin]), userController.deleteUser); 
 
 
