@@ -170,27 +170,27 @@ function ListingPage() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const minBedrooms = Math.min(...listingsData.map((data) => data.bedRooms));
-  const maxBedrooms = Math.max(...listingsData.map((data) => data.bedRooms));
+  const minBedrooms = Math.min(...listingsData.map((data) => data.bedrooms));
+  const maxBedrooms = Math.max(...listingsData.map((data) => data.bedrooms));
 
-  const minBathrooms = Math.min(...listingsData.map((data) => data.bathRooms));
-  const maxBathrooms = Math.max(...listingsData.map((data) => data.bathRooms));
+  const minBathrooms = Math.min(...listingsData.map((data) => data.bathrooms));
+  const maxBathrooms = Math.max(...listingsData.map((data) => data.bathrooms));
 
   const handleFilterSubmit = () => {
     let updatedData = listingsData;
     if (selectedBedrooms !== null) {
       updatedData = updatedData.filter(
         (data) =>
-          data.bedRooms >= selectedBedrooms[0] &&
-          data.bedRooms <= selectedBedrooms[1]
+          data.bedrooms >= selectedBedrooms[0] &&
+          data.bedrooms <= selectedBedrooms[1]
       );
     }
 
     if (selectedBathrooms !== null) {
       updatedData = updatedData.filter(
         (data) =>
-          data.bathRooms >= selectedBathrooms[0] &&
-          data.bathRooms <= selectedBathrooms[1]
+          data.bathrooms >= selectedBathrooms[0] &&
+          data.bathrooms <= selectedBathrooms[1]
       );
     }
 
