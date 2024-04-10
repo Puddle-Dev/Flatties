@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Typography, Grid, Paper, Avatar } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
+import EirikPhoto from "../../assets/images/eirik.jpg";
 import "./AboutPage.css";
 
 function AboutPage() {
@@ -14,8 +14,8 @@ function AboutPage() {
   };
 
   const avatarStyle = {
-    width: "80px",
-    height: "80px",
+    width: "160px",
+    height: "160px",
     marginBottom: "10px",
   };
 
@@ -85,13 +85,26 @@ function AboutPage() {
                 technology and interest in problem-solving.
               </Typography>
             ),
+            image: EirikPhoto,
           },
           { name: "William Wang", bio: "Some bio" },
         ].map((member, index) => (
           <Grid item xs={12} md={4} key={index}>
-            <Paper style={paperStyle} elevation={3}>
+            <Paper
+              style={{
+                ...paperStyle,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+              elevation={3}
+            >
               <Avatar style={avatarStyle}>
-                <PersonIcon />
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+                />
               </Avatar>
               <Typography variant="h5" gutterBottom>
                 {member.name}
