@@ -31,7 +31,7 @@ function AboutPage() {
 
   return (
     <Container style={containerStyle}>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         About Us
       </Typography>
       <Typography variant="body1" paragraph>
@@ -42,7 +42,7 @@ function AboutPage() {
         user experience.
       </Typography>
 
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h5" gutterBottom>
         Our Project:
       </Typography>
       <Typography variant="body1" paragraph>
@@ -56,8 +56,17 @@ function AboutPage() {
         developers.
       </Typography>
 
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h5" gutterBottom>
         Our Team:
+      </Typography>
+      <Typography variant="body1" paragraph>
+        Our team is comprised of three developers, all recent graduates from
+        Auckland University of Technology. We wanted a project that could allow
+        us to work together and continue our growth. By challenging ourselves
+        with real-world scenarios, we aim to bridge the gap between theory and
+        practice, refining our skills and knowledge in web development. Our
+        passion for creating user-friendly platforms drives us to deliver
+        valuable services.
       </Typography>
       <Grid container spacing={3}>
         {[
