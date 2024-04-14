@@ -1,5 +1,5 @@
 import axios from 'axios';
-import CookieManager from './cookies/cookieManager';
+import CookieManager from './cookies/CookieManager';
 import config from '../config';
 
 const cookieManager = CookieManager();

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../services/api";
-import useCookieManager from "../../../services/cookies/cookieManager";
+import useCookieManager from "../../../services/cookies/CookieManager";
 
 interface LoginModalProps {
   open: boolean;

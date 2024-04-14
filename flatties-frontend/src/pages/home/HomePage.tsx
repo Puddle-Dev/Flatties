@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typography, Button, Box, List, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 import PropertyInfo from "../../models/PropertyInfo";
-import useCookieManager from "../../services/cookies/cookieManager";
+import useCookieManager from "../../services/cookies/CookieManager";
 import ScrollContainer from "./ScrollContainer";
 import DummyData from "../listing/dummyData.json";
 

@@ -11,7 +11,7 @@ import {
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, NavLink } from "react-router-dom";
 import LoginModal from "../login/Login";
-import useCookieManager from "../../../services/cookies/cookieManager";
+import useCookieManager from "../../../services/cookies/CookieManager";
 import profilePic from "../../../assets/images/flatties-icon-logo.png";
 import "./Navbar.css";
 
