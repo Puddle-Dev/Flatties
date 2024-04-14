@@ -28,6 +28,12 @@ function Login({open, handleClose}: Readonly<LoginModalProps>) {
                     // Set the token cookie
                     setCookie("token", token);
                     setCookie("user", user);
+                    // console.log(response.data.message);
+                    // console.log(response.data.data);
+                    // console.log(response.data.token);
+                    // console.log("-----------------------")
+                    // console.log(getCookie("token"));
+                    // console.log(getCookie("user"));
                     handleClose();
                 }
             })

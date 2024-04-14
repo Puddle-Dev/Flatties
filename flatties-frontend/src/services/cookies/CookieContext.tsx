@@ -3,7 +3,7 @@ import CookieManager from './CookieManager';
 
 interface CookieContextType {
     setCookie: (key: string, value: string) => void;
-    getCookie: (key: string) => string | undefined;
+    getCookie: (key: string) => string | object | undefined;
     removeCookie: (key: string) => void;
     removeAllCookies: () => void;
     logout: () => void;

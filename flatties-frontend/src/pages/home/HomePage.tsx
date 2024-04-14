@@ -2,44 +2,50 @@ import React, { useEffect, useState } from "react";
 import { Typography, Button, Box, List, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 import PropertyInfo from "../../models/PropertyInfo";
-import useCookieManager from "../../services/cookies/CookieManager";
 import ScrollContainer from "./ScrollContainer";
 import DummyData from "../listing/dummyData.json";
+import { useCookie } from "../../services/cookies/CookieContext"
 
+interface User{
+    userName: string,
+    email: string,
+    firstName: string,
+    lastName: string,
+    phone: string,
+    address: string,
+}
 
 function HomePage() {
 
-  const { getCookie } = useCookieManager();
-  const token = getCookie("token");
-  const userName = getCookie("userName");
-
-
-
+  const [user, setUser] = useState<object | string | undefined>();
+  const [token, setToken] = useState<object | string | undefined>();
+  const { getCookie } = useCookie();
 
   useEffect(() => {
-    if (token) {
-      console.log(token);
-      fetch("http://localhost:4000/api/v1/user/profile", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-       
-        .catch((error) => console.error("Error fetching user data", error));
-        console.log(userName);
-    }
-  }, [getCookie]);
+        // get the user and token from the cookies
+        const cookieUser = getCookie("user");
+        const cookieToken = getCookie("token");
+
+        // check if the user and token exist
+        if (cookieUser) {
+          setUser(cookieUser);
+        }
+        if (cookieToken) {
+          setToken(cookieToken);
+        }
+
+        console.log("User: ", user)
+        console.log("Token: ", token)
+      }
+   ,[getCookie]);
 
  
   return (
     <div>
-      {token ? (
+      {user ? (
         <div>
           <Typography variant="h4" gutterBottom>
-            Welcome back {userName}! You are logged in.
+            Welcome back {user?.userName}! You are logged in.
           </Typography>
           <ScrollContainer listings={DummyData} />
         </div>

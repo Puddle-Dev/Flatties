@@ -2,7 +2,7 @@ import Cookie from "js-cookie";
 
 // CookieManager is a custom hook that provides functions to set, get and remove cookies.
 function CookieManager (){
-    const setCookie = (key: string, value: string) => {
+    const setCookie = (key: string, value: string | object) => {
         // check if the value is an object
         if (typeof value === "object") {
             // stringify the object
@@ -13,7 +13,7 @@ function CookieManager (){
         }
     }
 
-    const getCookie = (key: string) => {
+    const getCookie = (key: string) : object | string | undefined => {
         const cookieValue= Cookie.get(key);
         if (cookieValue !== undefined && cookieValue !== null) {    // check if the cookie exists
             try {
