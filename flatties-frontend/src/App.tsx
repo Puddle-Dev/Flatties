@@ -1,5 +1,5 @@
 import Router from "./router/Router";
-import { CookieProvider } from "./components/cookieManage/CookieContext";
+import { CookieProvider } from "./services/cookies/CookieContext";
 
 function App() {
   return (
