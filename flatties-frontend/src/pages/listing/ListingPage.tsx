@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import FilterSlider from "../../components/listingComponents/filters/FilterSlider";
 import MinMaxInput from "../../components/listingComponents/filters/MinMaxInput";
-import FilterOptions from "../../components/listingComponents/filterOptions";
+import FilterOptions from "../../components/listingComponents/FilterOptions";
 
 function ListingPage() {
   // const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);

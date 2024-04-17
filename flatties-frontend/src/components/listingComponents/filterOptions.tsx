@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import MinMaxInput from "./filters/MinMaxInput";
 import FilterSlider from "./filters/FilterSlider";
+import BooleanFilter from "./filters/BooleanFilter";
 
 interface Listing {
   _id: string;
@@ -156,84 +157,26 @@ function FilterOptions({
             </Select>
           </FormControl>
         </div>
-        <div>
-          <FormControl
-            variant="standard"
-            sx={{ m: 1, minWidth: 120 }}
-            size="small"
-          >
-            <InputLabel id="isFurnished-label">Is Furnished</InputLabel>
-            <Select
-              value={isFurnished}
-              onChange={(event) =>
-                handleFilterChange("isFurnished", event.target.value)
-              }
-            >
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="true">Yes</MenuItem>
-              <MenuItem value="false">No</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <div>
-          <FormControl
-            variant="standard"
-            sx={{ m: 1, minWidth: 120 }}
-            size="small"
-          >
-            <InputLabel id="isPetAllowed-label">Pets Allowed?</InputLabel>
-            <Select
-              value={isPetAllowed}
-              onChange={(event) =>
-                handleFilterChange("isPetAllowed", event.target.value)
-              }
-            >
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="true">Yes</MenuItem>
-              <MenuItem value="false">No</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <div>
-          <FormControl
-            variant="standard"
-            sx={{ m: 1, minWidth: 120 }}
-            size="small"
-          >
-            <InputLabel id="isSmokingAllowed-label">
-              Smoking Allowed?
-            </InputLabel>
-            <Select
-              value={isSmoking}
-              onChange={(event) =>
-                handleFilterChange("isSmoking", event.target.value)
-              }
-            >
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="true">Yes</MenuItem>
-              <MenuItem value="false">No</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <div>
-          <FormControl
-            variant="standard"
-            sx={{ m: 1, minWidth: 120 }}
-            size="small"
-          >
-            <InputLabel id="isParkingAllowedLabel">Parking Allowed?</InputLabel>
-            <Select
-              value={isParking}
-              onChange={(event) =>
-                handleFilterChange("isParking", event.target.value)
-              }
-            >
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="true">Yes</MenuItem>
-              <MenuItem value="false">No</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+        <BooleanFilter
+          label="Is Furnished"
+          value={isFurnished}
+          onChange={(value) => handleFilterChange("isFurnished", value)}
+        />
+        <BooleanFilter
+          label="Pets Allowed?"
+          value={isPetAllowed}
+          onChange={(value) => handleFilterChange("isPetAllowed", value)}
+        />
+        <BooleanFilter
+          label="Smoking Allowed?"
+          value={isSmoking}
+          onChange={(value) => handleFilterChange("isSmoking", value)}
+        />
+        <BooleanFilter
+          label="Parking Allowed?"
+          value={isParking}
+          onChange={(value) => handleFilterChange("isParking", value)}
+        />
       </div>
       <Button variant="contained" onClick={handleFilterSubmit}>
         Submit
