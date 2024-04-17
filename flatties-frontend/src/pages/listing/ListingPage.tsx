@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import FilterSlider from "../../components/listingComponents/filters/FilterSlider";
 import MinMaxInput from "../../components/listingComponents/filters/MinMaxInput";
+import FilterOptions from "../../components/listingComponents/filterOptions";
 
 function ListingPage() {
   // const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
@@ -244,172 +245,27 @@ function ListingPage() {
         className="FiltersAndSorting"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        <div className="Filters">
-          <div className="Sliders" style={{ display: "grid" }}>
-            <FilterSlider
-              label="Bedrooms"
-              selectedItems={selectedBedrooms}
-              min={minBedrooms}
-              max={maxBedrooms}
-              handleChange={(event, value) =>
-                handleFilterChange("selectedBedrooms", value)
-              }
-            />
-            <FilterSlider
-              label="Bathrooms"
-              selectedItems={selectedBathrooms}
-              min={minBathrooms}
-              max={maxBathrooms}
-              handleChange={(event, value) =>
-                handleFilterChange("selectedBathrooms", value)
-              }
-            />
-            <MinMaxInput
-              label="Rent"
-              defaultMin={minRent.toString()}
-              defaultMax={maxRent.toString()}
-              onMinChange={(value) =>
-                handleFilterChange("selectedMinRent", value)
-              }
-              onMaxChange={(value) =>
-                handleFilterChange("selectedMaxRent", value)
-              }
-            />
-          </div>
-          <div className="Options">
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="city-label">City</InputLabel>
-                <Select
-                  value={selectedCity}
-                  onChange={(event) =>
-                    handleFilterChange("selectedCity", event.target.value)
-                  }
-                >
-                  <MenuItem value="">All</MenuItem>
-                  {Array.from(
-                    new Set(listingsData.map((data) => data.city))
-                  ).map((city) => (
-                    <MenuItem key={city} value={city}>
-                      {city}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="suburb-label">Suburb</InputLabel>
-                <Select
-                  value={selectedSuburb}
-                  onChange={(event) =>
-                    handleFilterChange("selectedSuburb", event.target.value)
-                  }
-                >
-                  <MenuItem value="">All</MenuItem>
-                  {Array.from(
-                    new Set(listingsData.map((data) => data.suburb))
-                  ).map((suburb) => (
-                    <MenuItem key={suburb} value={suburb}>
-                      {suburb}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="isFurnished-label">Is Furnished</InputLabel>
-                <Select
-                  value={isFurnished}
-                  onChange={(event) =>
-                    handleFilterChange("isFurnished", event.target.value)
-                  }
-                >
-                  <MenuItem value="">All</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                  <MenuItem value="false">No</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="isPetAllowed-label">Pets Allowed?</InputLabel>
-                <Select
-                  value={isPetAllowed}
-                  onChange={(event) =>
-                    handleFilterChange("isPetAllowed", event.target.value)
-                  }
-                >
-                  <MenuItem value="">All</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                  <MenuItem value="false">No</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="isSmokingAllowed-label">
-                  Smoking Allowed?
-                </InputLabel>
-                <Select
-                  value={isSmoking}
-                  onChange={(event) =>
-                    handleFilterChange("isSmoking", event.target.value)
-                  }
-                >
-                  <MenuItem value="">All</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                  <MenuItem value="false">No</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="isParkingAllowedLabel">
-                  Parking Allowed?
-                </InputLabel>
-                <Select
-                  value={isParking}
-                  onChange={(event) =>
-                    handleFilterChange("isParking", event.target.value)
-                  }
-                >
-                  <MenuItem value="">All</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                  <MenuItem value="false">No</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <Button variant="contained" onClick={handleFilterSubmit}>
-            Submit
-          </Button>
-        </div>
+        <FilterOptions
+          listingsData={listingsData}
+          selectedBedrooms={selectedBedrooms}
+          selectedBathrooms={selectedBathrooms}
+          minRent={minRent}
+          maxRent={maxRent}
+          selectedMinRent={selectedMinRent}
+          selectedMaxRent={selectedMaxRent}
+          selectedCity={selectedCity}
+          selectedSuburb={selectedSuburb}
+          isFurnished={isFurnished}
+          isPetAllowed={isPetAllowed}
+          isSmoking={isSmoking}
+          isParking={isParking}
+          minBedrooms={minBedrooms}
+          maxBedrooms={maxBedrooms}
+          minBathrooms={minBathrooms}
+          maxBathrooms={maxBathrooms}
+          handleFilterChange={handleFilterChange}
+          handleFilterSubmit={handleFilterSubmit}
+        />
         <div className="Sort">
           <FormControl
             variant="standard"
