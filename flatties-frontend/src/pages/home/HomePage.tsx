@@ -17,14 +17,14 @@ interface User{
 
 function HomePage() {
 
-  const [user, setUser] = useState<object | string | undefined>();
-  const [token, setToken] = useState<object | string | undefined>();
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const { getCookie } = useCookie();
 
   useEffect(() => {
         // get the user and token from the cookies
-        const cookieUser = getCookie("user");
-        const cookieToken = getCookie("token");
+        const cookieUser = getCookie("user") as User | null;
+        const cookieToken = getCookie("token") as string | null;
 
         // check if the user and token exist
         if (cookieUser) {
@@ -37,7 +37,7 @@ function HomePage() {
         console.log("User: ", user)
         console.log("Token: ", token)
       }
-   ,[getCookie]);
+   ,[]);
 
  
   return (
