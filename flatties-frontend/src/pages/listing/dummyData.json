@@ -18,6 +18,7 @@
     "rentMethod": "Weekly",
     "rentPaymentPeriod": "Monthly",
     "deposit": 500,
+    "description": "Description"
   },
   {
     "_id": "2",

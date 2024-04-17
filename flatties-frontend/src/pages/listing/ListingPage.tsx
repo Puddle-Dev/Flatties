@@ -14,8 +14,8 @@ import {
   SelectChangeEvent,
   Button,
 } from "@mui/material";
-import FilterSlider from "../../components/filters/FilterSlider";
-import MinMaxInput from "../../components/filters/MinMaxInput";
+import FilterSlider from "../../components/listingComponents/filters/FilterSlider";
+import MinMaxInput from "../../components/listingComponents/filters/MinMaxInput";
 
 function ListingPage() {
   // const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
@@ -74,87 +74,50 @@ function ListingPage() {
     isParking: isParking,
   });
 
-  const handleBedroomsChange = (event: Event, value: number | number[]) => {
-    setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedBedrooms: selectedBedrooms,
-    }));
-  };
+  const handleFilterChange = (
+    key: string,
+    value: string | number | number[] | boolean | null
+  ) => {
+    switch (key) {
+      case "selectedBedrooms":
+        setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
+        break;
+      case "selectedBathrooms":
+        setSelectedBathrooms(
+          Array.isArray(value) ? [value[0], value[1]] : null
+        );
+        break;
+      case "selectedMinRent":
+        setSelectedMinRent(value === "" ? minRent : parseInt(value as string));
+        break;
+      case "selectedMaxRent":
+        setSelectedMaxRent(value === "" ? maxRent : parseInt(value as string));
+        break;
+      case "selectedCity":
+        setSelectedCity(value as string);
+        break;
+      case "selectedSuburb":
+        setSelectedSuburb(value as string);
+        break;
+      case "isFurnished":
+        setIsFurnished(value as string);
+        break;
+      case "isPetAllowed":
+        setIsPetAllowed(value as string);
+        break;
+      case "isSmoking":
+        setIsSmoking(value as string);
+        break;
+      case "isParking":
+        setIsParking(value as string);
+        break;
+      default:
+        break;
+    }
 
-  const handleBathroomsChange = (event: Event, value: number | number[]) => {
-    setSelectedBathrooms(Array.isArray(value) ? [value[0], value[1]] : null);
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
-      selectedBathrooms: selectedBathrooms,
-    }));
-  };
-
-  const handleMinRentChange = (value: string) => {
-    value === ""
-      ? setSelectedMinRent(minRent)
-      : setSelectedMinRent(parseInt(value));
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedMinRent: selectedMinRent,
-    }));
-  };
-
-  const handleMaxRentChange = (value: string) => {
-    value === ""
-      ? setSelectedMaxRent(maxRent)
-      : setSelectedMaxRent(parseInt(value));
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedMaxRent: selectedMaxRent,
-    }));
-  };
-
-  const handleCityChange = (event: SelectChangeEvent<string>) => {
-    setSelectedCity(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedCity: selectedCity,
-    }));
-  };
-
-  const handleSuburbChange = (event: SelectChangeEvent<string>) => {
-    setSelectedSuburb(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedSuburb: selectedSuburb,
-    }));
-  };
-
-  const handleFurnishedChange = (event: SelectChangeEvent<string>) => {
-    setIsFurnished(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      isFurnished: isFurnished,
-    }));
-  };
-
-  const handlePetAllowedChange = (event: SelectChangeEvent<string>) => {
-    setIsPetAllowed(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      isPetAllowed: isPetAllowed,
-    }));
-  };
-
-  const handleSmokingChange = (event: SelectChangeEvent<string>) => {
-    setIsSmoking(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      isSmoking: isSmoking,
-    }));
-  };
-
-  const handleParkingChange = (event: SelectChangeEvent<string>) => {
-    setIsParking(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      isParking: isParking,
+      [key]: value,
     }));
   };
 
@@ -288,21 +251,29 @@ function ListingPage() {
               selectedItems={selectedBedrooms}
               min={minBedrooms}
               max={maxBedrooms}
-              handleChange={handleBedroomsChange}
+              handleChange={(event, value) =>
+                handleFilterChange("selectedBedrooms", value)
+              }
             />
             <FilterSlider
               label="Bathrooms"
               selectedItems={selectedBathrooms}
               min={minBathrooms}
               max={maxBathrooms}
-              handleChange={handleBathroomsChange}
+              handleChange={(event, value) =>
+                handleFilterChange("selectedBathrooms", value)
+              }
             />
             <MinMaxInput
               label="Rent"
               defaultMin={minRent.toString()}
               defaultMax={maxRent.toString()}
-              onMinChange={handleMinRentChange}
-              onMaxChange={handleMaxRentChange}
+              onMinChange={(value) =>
+                handleFilterChange("selectedMinRent", value)
+              }
+              onMaxChange={(value) =>
+                handleFilterChange("selectedMaxRent", value)
+              }
             />
           </div>
           <div className="Options">
@@ -313,7 +284,12 @@ function ListingPage() {
                 size="small"
               >
                 <InputLabel id="city-label">City</InputLabel>
-                <Select value={selectedCity} onChange={handleCityChange}>
+                <Select
+                  value={selectedCity}
+                  onChange={(event) =>
+                    handleFilterChange("selectedCity", event.target.value)
+                  }
+                >
                   <MenuItem value="">All</MenuItem>
                   {Array.from(
                     new Set(listingsData.map((data) => data.city))
@@ -332,7 +308,12 @@ function ListingPage() {
                 size="small"
               >
                 <InputLabel id="suburb-label">Suburb</InputLabel>
-                <Select value={selectedSuburb} onChange={handleSuburbChange}>
+                <Select
+                  value={selectedSuburb}
+                  onChange={(event) =>
+                    handleFilterChange("selectedSuburb", event.target.value)
+                  }
+                >
                   <MenuItem value="">All</MenuItem>
                   {Array.from(
                     new Set(listingsData.map((data) => data.suburb))
@@ -351,7 +332,12 @@ function ListingPage() {
                 size="small"
               >
                 <InputLabel id="isFurnished-label">Is Furnished</InputLabel>
-                <Select value={isFurnished} onChange={handleFurnishedChange}>
+                <Select
+                  value={isFurnished}
+                  onChange={(event) =>
+                    handleFilterChange("isFurnished", event.target.value)
+                  }
+                >
                   <MenuItem value="">All</MenuItem>
                   <MenuItem value="true">Yes</MenuItem>
                   <MenuItem value="false">No</MenuItem>
@@ -365,7 +351,12 @@ function ListingPage() {
                 size="small"
               >
                 <InputLabel id="isPetAllowed-label">Pets Allowed?</InputLabel>
-                <Select value={isPetAllowed} onChange={handlePetAllowedChange}>
+                <Select
+                  value={isPetAllowed}
+                  onChange={(event) =>
+                    handleFilterChange("isPetAllowed", event.target.value)
+                  }
+                >
                   <MenuItem value="">All</MenuItem>
                   <MenuItem value="true">Yes</MenuItem>
                   <MenuItem value="false">No</MenuItem>
@@ -381,7 +372,12 @@ function ListingPage() {
                 <InputLabel id="isSmokingAllowed-label">
                   Smoking Allowed?
                 </InputLabel>
-                <Select value={isSmoking} onChange={handleSmokingChange}>
+                <Select
+                  value={isSmoking}
+                  onChange={(event) =>
+                    handleFilterChange("isSmoking", event.target.value)
+                  }
+                >
                   <MenuItem value="">All</MenuItem>
                   <MenuItem value="true">Yes</MenuItem>
                   <MenuItem value="false">No</MenuItem>
@@ -397,7 +393,12 @@ function ListingPage() {
                 <InputLabel id="isParkingAllowedLabel">
                   Parking Allowed?
                 </InputLabel>
-                <Select value={isParking} onChange={handleParkingChange}>
+                <Select
+                  value={isParking}
+                  onChange={(event) =>
+                    handleFilterChange("isParking", event.target.value)
+                  }
+                >
                   <MenuItem value="">All</MenuItem>
                   <MenuItem value="true">Yes</MenuItem>
                   <MenuItem value="false">No</MenuItem>
