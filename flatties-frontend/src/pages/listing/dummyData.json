@@ -13,11 +13,12 @@
     "isFurnished": true,
     "isPetAllowed": false,
     "isSmokingAllowed": false,
-    "isParkingAllowed": true,
+    "isParkingAllowed": false,
     "yearBuilt": "2020-01-01T00:00:00Z",
     "rentMethod": "Weekly",
     "rentPaymentPeriod": "Monthly",
     "deposit": 500,
+    "description": "Description"
   },
   {
     "_id": "2",

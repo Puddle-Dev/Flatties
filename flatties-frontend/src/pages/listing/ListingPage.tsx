@@ -1,11 +1,3 @@
-// todo
-// leaseterm to leasetype
-// add suburb
-// remove year built
-// availability date to filter
-// change rent to input min max
-// add submit
-
 import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import PropertyInfo from "../../models/PropertyInfo";
@@ -22,8 +14,10 @@ import {
   SelectChangeEvent,
   Button,
 } from "@mui/material";
-import FilterSlider from "../../components/filters/FilterSlider";
-import MinMaxInput from "../../components/filters/MinMaxInput";
+import FilterSlider from "../../components/listingComponents/filters/FilterSlider";
+import MinMaxInput from "../../components/listingComponents/filters/MinMaxInput";
+import FilterOptions from "../../components/listingComponents/FilterOptions";
+import SortControl from "../../components/listingComponents/SortControl";
 
 function ListingPage() {
   // const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
@@ -82,87 +76,50 @@ function ListingPage() {
     isParking: isParking,
   });
 
-  const handleBedroomsChange = (event: Event, value: number | number[]) => {
-    setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedBedrooms: selectedBedrooms,
-    }));
-  };
+  const handleFilterChange = (
+    key: string,
+    value: string | number | number[] | boolean | null
+  ) => {
+    switch (key) {
+      case "selectedBedrooms":
+        setSelectedBedrooms(Array.isArray(value) ? [value[0], value[1]] : null);
+        break;
+      case "selectedBathrooms":
+        setSelectedBathrooms(
+          Array.isArray(value) ? [value[0], value[1]] : null
+        );
+        break;
+      case "selectedMinRent":
+        setSelectedMinRent(value === "" ? minRent : parseInt(value as string));
+        break;
+      case "selectedMaxRent":
+        setSelectedMaxRent(value === "" ? maxRent : parseInt(value as string));
+        break;
+      case "selectedCity":
+        setSelectedCity(value as string);
+        break;
+      case "selectedSuburb":
+        setSelectedSuburb(value as string);
+        break;
+      case "isFurnished":
+        setIsFurnished(value as string);
+        break;
+      case "isPetAllowed":
+        setIsPetAllowed(value as string);
+        break;
+      case "isSmoking":
+        setIsSmoking(value as string);
+        break;
+      case "isParking":
+        setIsParking(value as string);
+        break;
+      default:
+        break;
+    }
 
-  const handleBathroomsChange = (event: Event, value: number | number[]) => {
-    setSelectedBathrooms(Array.isArray(value) ? [value[0], value[1]] : null);
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
-      selectedBathrooms: selectedBathrooms,
-    }));
-  };
-
-  const handleMinRentChange = (value: string) => {
-    value === ""
-      ? setSelectedMinRent(minRent)
-      : setSelectedMinRent(parseInt(value));
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedMinRent: selectedMinRent,
-    }));
-  };
-
-  const handleMaxRentChange = (value: string) => {
-    value === ""
-      ? setSelectedMaxRent(maxRent)
-      : setSelectedMaxRent(parseInt(value));
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedMaxRent: selectedMaxRent,
-    }));
-  };
-
-  const handleCityChange = (event: SelectChangeEvent<string>) => {
-    setSelectedCity(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedCity: selectedCity,
-    }));
-  };
-
-  const handleSuburbChange = (event: SelectChangeEvent<string>) => {
-    setSelectedSuburb(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      selectedSuburb: selectedSuburb,
-    }));
-  };
-
-  const handleFurnishedChange = (event: SelectChangeEvent<string>) => {
-    setIsFurnished(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      isFurnished: isFurnished,
-    }));
-  };
-
-  const handlePetAllowedChange = (event: SelectChangeEvent<string>) => {
-    setIsPetAllowed(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      isPetAllowed: isPetAllowed,
-    }));
-  };
-
-  const handleSmokingChange = (event: SelectChangeEvent<string>) => {
-    setIsSmoking(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      isSmoking: isSmoking,
-    }));
-  };
-
-  const handleParkingChange = (event: SelectChangeEvent<string>) => {
-    setIsParking(event.target.value);
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      isParking: isParking,
+      [key]: value,
     }));
   };
 
@@ -289,167 +246,29 @@ function ListingPage() {
         className="FiltersAndSorting"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        <div className="Filters">
-          <div className="Sliders" style={{ display: "grid" }}>
-            <FilterSlider
-              label="Bedrooms"
-              selectedItems={selectedBedrooms}
-              min={minBedrooms}
-              max={maxBedrooms}
-              handleChange={handleBedroomsChange}
-            />
-            <FilterSlider
-              label="Bathrooms"
-              selectedItems={selectedBathrooms}
-              min={minBathrooms}
-              max={maxBathrooms}
-              handleChange={handleBathroomsChange}
-            />
-            <MinMaxInput
-              label="Rent"
-              defaultMin={minRent.toString()}
-              defaultMax={maxRent.toString()}
-              onMinChange={handleMinRentChange}
-              onMaxChange={handleMaxRentChange}
-            />
-          </div>
-          <div className="Options">
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="city-label">City</InputLabel>
-                <Select value={selectedCity} onChange={handleCityChange}>
-                  <MenuItem value="">All</MenuItem>
-                  {Array.from(
-                    new Set(listingsData.map((data) => data.city))
-                  ).map((city) => (
-                    <MenuItem key={city} value={city}>
-                      {city}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="suburb-label">Suburb</InputLabel>
-                <Select value={selectedSuburb} onChange={handleSuburbChange}>
-                  <MenuItem value="">All</MenuItem>
-                  {Array.from(
-                    new Set(listingsData.map((data) => data.suburb))
-                  ).map((suburb) => (
-                    <MenuItem key={suburb} value={suburb}>
-                      {suburb}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="isFurnished-label">Is Furnished</InputLabel>
-                <Select value={isFurnished} onChange={handleFurnishedChange}>
-                  <MenuItem value="">All</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                  <MenuItem value="false">No</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="isPetAllowed-label">Pets Allowed?</InputLabel>
-                <Select value={isPetAllowed} onChange={handlePetAllowedChange}>
-                  <MenuItem value="">All</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                  <MenuItem value="false">No</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="isSmokingAllowed-label">
-                  Smoking Allowed?
-                </InputLabel>
-                <Select value={isSmoking} onChange={handleSmokingChange}>
-                  <MenuItem value="">All</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                  <MenuItem value="false">No</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                variant="standard"
-                sx={{ m: 1, minWidth: 120 }}
-                size="small"
-              >
-                <InputLabel id="isParkingAllowedLabel">
-                  Parking Allowed?
-                </InputLabel>
-                <Select value={isParking} onChange={handleParkingChange}>
-                  <MenuItem value="">All</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                  <MenuItem value="false">No</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <Button variant="contained" onClick={handleFilterSubmit}>
-            Submit
-          </Button>
-        </div>
+        <FilterOptions
+          listingsData={listingsData}
+          selectedBedrooms={selectedBedrooms}
+          selectedBathrooms={selectedBathrooms}
+          minRent={minRent}
+          maxRent={maxRent}
+          selectedMinRent={selectedMinRent}
+          selectedMaxRent={selectedMaxRent}
+          selectedCity={selectedCity}
+          selectedSuburb={selectedSuburb}
+          isFurnished={isFurnished}
+          isPetAllowed={isPetAllowed}
+          isSmoking={isSmoking}
+          isParking={isParking}
+          minBedrooms={minBedrooms}
+          maxBedrooms={maxBedrooms}
+          minBathrooms={minBathrooms}
+          maxBathrooms={maxBathrooms}
+          handleFilterChange={handleFilterChange}
+          handleFilterSubmit={handleFilterSubmit}
+        />
         <div className="Sort">
-          <FormControl
-            variant="standard"
-            sx={{ m: 1, minWidth: 120 }}
-            size="small"
-          >
-            <InputLabel id="sort-label">Sort</InputLabel>
-            <Select
-              value={sortOrder}
-              onChange={(event) =>
-                handleSort(
-                  event.target.value as
-                    | "addedAsc"
-                    | "addedDesc"
-                    | "priceAsc"
-                    | "priceDesc"
-                    | "nameAsc"
-                    | "nameDesc"
-                    | "availAsc"
-                    | "availDesc"
-                )
-              }
-            >
-              <MenuItem value="addedAsc">Date Added (Newest)</MenuItem>
-              <MenuItem value="addedDesc">Date Added (Oldest)</MenuItem>
-              <MenuItem value="priceDesc">Price (High to Low)</MenuItem>
-              <MenuItem value="priceAsc">Price (Low to High)</MenuItem>
-              <MenuItem value="nameDesc">Name (Z-A)</MenuItem>
-              <MenuItem value="nameAsc">Name (A-Z)</MenuItem>
-              <MenuItem value="availAsc">Availability Date (Newest)</MenuItem>
-              <MenuItem value="availDesc">Availability Date (Oldest)</MenuItem>
-            </Select>
-          </FormControl>
+          <SortControl sortOrder={sortOrder} handleSort={handleSort} />
         </div>
       </div>
 
