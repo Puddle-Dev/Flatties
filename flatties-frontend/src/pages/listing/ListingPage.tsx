@@ -17,6 +17,7 @@ import {
 import FilterSlider from "../../components/listingComponents/filters/FilterSlider";
 import MinMaxInput from "../../components/listingComponents/filters/MinMaxInput";
 import FilterOptions from "../../components/listingComponents/FilterOptions";
+import SortControl from "../../components/listingComponents/SortControl";
 
 function ListingPage() {
   // const [listingsData, setListingsData] = useState<PropertyInfo[]>([]);
@@ -267,38 +268,7 @@ function ListingPage() {
           handleFilterSubmit={handleFilterSubmit}
         />
         <div className="Sort">
-          <FormControl
-            variant="standard"
-            sx={{ m: 1, minWidth: 120 }}
-            size="small"
-          >
-            <InputLabel id="sort-label">Sort</InputLabel>
-            <Select
-              value={sortOrder}
-              onChange={(event) =>
-                handleSort(
-                  event.target.value as
-                    | "addedAsc"
-                    | "addedDesc"
-                    | "priceAsc"
-                    | "priceDesc"
-                    | "nameAsc"
-                    | "nameDesc"
-                    | "availAsc"
-                    | "availDesc"
-                )
-              }
-            >
-              <MenuItem value="addedAsc">Date Added (Newest)</MenuItem>
-              <MenuItem value="addedDesc">Date Added (Oldest)</MenuItem>
-              <MenuItem value="priceDesc">Price (High to Low)</MenuItem>
-              <MenuItem value="priceAsc">Price (Low to High)</MenuItem>
-              <MenuItem value="nameDesc">Name (Z-A)</MenuItem>
-              <MenuItem value="nameAsc">Name (A-Z)</MenuItem>
-              <MenuItem value="availAsc">Availability Date (Newest)</MenuItem>
-              <MenuItem value="availDesc">Availability Date (Oldest)</MenuItem>
-            </Select>
-          </FormControl>
+          <SortControl sortOrder={sortOrder} handleSort={handleSort} />
         </div>
       </div>
 
